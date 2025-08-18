@@ -8,7 +8,6 @@ export default {
     },
     {
       name: "1. Centricidad al Consumidor",
-      path: "/pages/consumidor/",
       pages: [
         { name: "1.1 Ubicaciones Relevantes", path: "/pages/consumidor/ubicaciones" },
         { name: "1.2 Competencia", path: "/pages/consumidor/competencia" },
@@ -19,7 +18,6 @@ export default {
     },
     {
       name: "2. Evaluación de la industria",
-      path: "/pages/industria/",
       pages: [
         { name: "2.1 Propuesta de Valor", path: "/pages/industria/valor" },
         { name: "2.2 Análisis de Precio", path: "/pages/industria/precios" },
