@@ -1,8 +1,7 @@
 ---
 title: Soft Landing en Houston | Pastes Kikos
 theme: [glacier, wide]
-sidebar:
-toc: 
+sidebar: true
 keywords: soft landing, Houston, Pastes Kikos, expansión, mercado, análisis estratégico, gastronomía, demografía, competencia, drive-through, QSR, food trucks, hábitos de consumo, inteligencia territorial, propuesta de valor, precios, sabores, movilidad urbana
 ---
 
