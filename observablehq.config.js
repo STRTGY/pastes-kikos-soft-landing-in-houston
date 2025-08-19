@@ -10,10 +10,9 @@ export default {
       name: "1. Centricidad al Consumidor",
       pages: [
         { name: "1.1 Ubicaciones Relevantes", path: "/pages/consumidor/ubicaciones" },
-        { name: "1.2 Competencia", path: "/pages/consumidor/competencia" },
-        { name: "1.3 Hábitos de Consumo", path: "/pages/consumidor/habitos" },
-        { name: "1.4 Demografía y Comportamiento", path: "/pages/consumidor/demografia" },
-        { name: "1.5 Mapas y Hunger Index", path: "/pages/consumidor/mapas" }
+        { name: "1.2 Hábitos de Consumo", path: "/pages/consumidor/habitos" },
+        { name: "1.3 Demografía y Comportamiento", path: "/pages/consumidor/demografia" },
+        { name: "1.4 Mapas y Hunger Index", path: "/pages/consumidor/mapas" }
       ]
     },
     {
