@@ -9,6 +9,16 @@ keywords: soft landing, Houston, Pastes Kikos, expansión, mercado, análisis es
 
 Este proyecto corresponde a la **Propuesta de Expansión de Pastes Kikos en Houston, Texas**, desarrollada bajo un enfoque de investigación territorial y análisis estratégico de mercado. Se enmarca en un *soft landing*, es decir, un proceso de entrada gradual y estructurado en un nuevo mercado, minimizando riesgos y maximizando las oportunidades de adopción de un producto con características diferenciales.
 
+## Contexto de la Marca Pastes Kikos
+
+**Pastes Kikos** es una marca mexicana dedicada a la elaboración de pastes: empanadas horneadas de tradición minera con rellenos dulces y salados. La empresa ha construido su identidad en torno a tres pilares:
+
+- **Autenticidad:** Rescata la herencia gastronómica de Pachuca, Hidalgo, adaptándola al formato moderno de comida rápida.
+- **Calidad:** Utiliza ingredientes frescos, sin conservadores, ofreciendo un producto consistente que puede representar una comida completa en dos piezas.
+- **Versatilidad:** Su portafolio abarca tanto sabores tradicionales (papa con carne, frijol, mole) como opciones dulces y ediciones limitadas.
+
+Con una operación consolidada en México y un modelo replicable, la marca busca proyectarse internacionalmente destacando la *frescura, practicidad y autenticidad mexicana* frente a competidores de comida rápida convencional.
+
 ## Objetivos del Proyecto
 
 - **Comprender el mercado de Houston** desde una perspectiva macro a micro, considerando corredores gastronómicos, hábitos de consumo, dinámica demográfica y patrones de movilidad.

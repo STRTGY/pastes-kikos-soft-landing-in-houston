@@ -29,7 +29,8 @@ export function consumerCentricityMap({
   demographicProperty,
   choropleths = [],
   pointsLayers = {},
-  size
+  size,
+  layerStyles = {}
 } = {}) {
   // Helpers to validate/coerce incoming data to valid GeoJSON
   const isFeature = (obj) => obj && obj.type === "Feature" && obj.geometry != null;
@@ -103,6 +104,7 @@ export function consumerCentricityMap({
   baseLayers["OSM Light"].addTo(map);
 
   const overlays = {};
+  const overlayNameByLayer = new Map();
 
   // Default distinctive styles per overlay name
   const namedLayerStyles = {
@@ -115,7 +117,11 @@ export function consumerCentricityMap({
     "Centros educativos": { color: "#6366f1", fillColor: "#818cf8", weight: 1, fillOpacity: 0.6 },
     "Congestión futura": { color: "#a16207", fillColor: "#fde68a", weight: 2.5, fillOpacity: 0.3 }
   };
-  const getNamedStyle = (name) => namedLayerStyles[name] || { color: "#0ea5e9", fillColor: "#38bdf8", weight: 1, fillOpacity: 0.5 };
+  const getNamedStyle = (name) => {
+    const base = namedLayerStyles[name] || { color: "#0ea5e9", fillColor: "#38bdf8", weight: 1, fillOpacity: 0.5 };
+    const override = layerStyles?.[name]?.point || layerStyles?.[name] || {};
+    return { ...base, ...override };
+  };
 
   // Roads layer (hierarchy styling by FC_DESC/F_SYSTEM)
   if (roads) {
@@ -125,16 +131,55 @@ export function consumerCentricityMap({
     const roadsGeo = coerceGeoJSON(roads);
     if (!roadsGeo) {
       if (typeof window !== "undefined" && window.console && window.console.error) {
-        window.console.error("[consumerCentricityMap] Invalid GeoJSON for roads; skipping layer");
+        window.console.error("[consumerCentricityMap] Invalfid GeoJSON for roads; skipping layer");
       }
     } else {
       const byFSystem = {
-        1: { label: "Interstate", color: "#e41a1c", weight: 3.5 },
-        2: { label: "Principal Arterial (Fwy/Exp)", color: "#377eb8", weight: 3 },
-        3: { label: "Principal Arterial (Other)", color: "#4daf4a", weight: 2.5 },
+        3: { label: "Principal Arterial (Other)", color: "#4daf4a", weight: 4 },
         4: { label: "Minor Arterial", color: "#984ea3", weight: 2 },
-        5: { label: "Major Collector", color: "#ff7f00", weight: 1.75 },
-        6: { label: "Minor Collector", color: "#a65628", weight: 1.5 }
+      };
+      // Allow overrides for road classes
+      const roadOverrides = layerStyles?.["Jerarquía vial"]?.byFSystem || {};
+      for (const [k, v] of Object.entries(roadOverrides)) {
+        if (!byFSystem[k]) byFSystem[k] = {};
+        byFSystem[k] = { ...byFSystem[k], ...v };
+      }
+      // Detect if the GeoJSON coordinates are in EPSG:3857 (meters) and need reprojection
+      const isLikelyEPSG3857 = (() => {
+        const crsName = roadsGeo?.crs?.properties?.name || roadsGeo?.crs?.name || "";
+        if (typeof crsName === "string" && /(3857|900913)/i.test(crsName)) return true;
+        try {
+          const getFirstCoord = (geom) => {
+            if (!geom) return null;
+            const t = geom.type;
+            const c = geom.coordinates;
+            if (!t || !c) return null;
+            if (t === "Point") return c;
+            if (t === "LineString" || t === "MultiPoint") return c[0];
+            if (t === "MultiLineString" || t === "Polygon") return c[0][0];
+            if (t === "MultiPolygon") return c[0][0][0];
+            return null;
+          };
+          const firstFeature = (roadsGeo.features || [])[0];
+          const coord = firstFeature ? getFirstCoord(firstFeature.geometry) : null;
+          if (Array.isArray(coord) && coord.length >= 2) {
+            const x = coord[0], y = coord[1];
+            if (Number.isFinite(x) && Number.isFinite(y)) {
+              return Math.abs(x) > 180 || Math.abs(y) > 90;
+            }
+          }
+        } catch { /* ignore */ }
+        return false;
+      })();
+
+      // Reprojection from EPSG:3857 meters to WGS84 degrees
+      const coordsToLatLng3857 = (coords) => {
+        const R = 6378137;
+        const x = coords[0];
+        const y = coords[1];
+        const lng = (x / R) * 180 / Math.PI;
+        const lat = (2 * Math.atan(Math.exp(y / R)) - (Math.PI / 2)) * 180 / Math.PI;
+        return L.latLng(lat, lng);
       };
       const roadStyle = (feature) => {
         const code = feature?.properties?.F_SYSTEM;
@@ -142,12 +187,14 @@ export function consumerCentricityMap({
           const s = byFSystem[code];
           return { color: s.color, weight: s.weight };
         }
-        return { color: "#6b7280", weight: 1.25 };
+        const fallback = layerStyles?.["Jerarquía vial"]?.line || {};
+        return { color: fallback.color || "#6b7280", weight: fallback.weight || 1.25 };
       };
 
       try {
-        const roadsLayer = L.geoJSON(roadsGeo, { style: roadStyle });
+        const roadsLayer = L.geoJSON(roadsGeo, { style: roadStyle, ...(isLikelyEPSG3857 ? { coordsToLatLng: coordsToLatLng3857 } : {}) });
         overlays["Jerarquía vial"] = roadsLayer;
+        overlayNameByLayer.set(roadsLayer, "Jerarquía vial");
         // Legend for F_SYSTEM
         const legend = L.control({ position: "bottomright" });
         legend.onAdd = function () {
@@ -164,7 +211,8 @@ export function consumerCentricityMap({
           }).join("");
           return div;
         };
-        legend.addTo(map);
+        roadsLayer.on("add", () => legend.addTo(map));
+        roadsLayer.on("remove", () => map.removeControl(legend));
       } catch (e) {
         if (typeof window !== "undefined" && window.console && window.console.error) {
           window.console.error("[consumerCentricityMap] Failed to add roads layer:", e);
@@ -230,6 +278,103 @@ export function consumerCentricityMap({
     }
   };
 
+  // Helper to create a polygon choropleth layer with legend for a numeric property
+  const createPolygonChoroplethLayer = ({ data, property, name, colors, range, steps = 5, format, borderColor, borderWidth, fillOpacity }) => {
+    const geo = coerceGeoJSON(data);
+    if (!geo) return null;
+
+    const values = [];
+    try {
+      for (const f of geo.features || []) {
+        const v = f?.properties?.[property];
+        if (typeof v === "number" && Number.isFinite(v)) values.push(v);
+      }
+    } catch { /* ignore */ }
+
+    const dataMin = values.length ? Math.min(...values) : 0;
+    const dataMax = values.length ? Math.max(...values) : 1;
+    const [minRange, maxRange] = Array.isArray(range) && range.length === 2
+      ? range
+      : (dataMax <= 100 && dataMin >= 0 ? [0, 100] : [dataMin, dataMax]);
+
+    const clamp01 = (x) => Math.max(0, Math.min(1, x));
+    const mixHex = (a, b, t) => {
+      const hex = (n) => (n.toString(16).padStart(2, "0"));
+      const pa = a.replace("#", "");
+      const pb = b.replace("#", "");
+      const ar = parseInt(pa.slice(0,2),16), ag = parseInt(pa.slice(2,4),16), ab = parseInt(pa.slice(4,6),16);
+      const br = parseInt(pb.slice(0,2),16), bg = parseInt(pb.slice(2,4),16), bb = parseInt(pb.slice(4,6),16);
+      const r = Math.round(ar + (br - ar) * t);
+      const g = Math.round(ag + (bg - ag) * t);
+      const b2 = Math.round(ab + (bb - ab) * t);
+      return `#${hex(r)}${hex(g)}${hex(b2)}`;
+    };
+    const colorFor = (v) => {
+      if (v == null || !Number.isFinite(v) || maxRange === minRange) return "#e5e7eb";
+      const t = clamp01((v - minRange) / (maxRange - minRange));
+      if (Array.isArray(colors) && colors.length === 2) {
+        return mixHex(colors[0], colors[1], t);
+      }
+      const hue = 225 - t * 180; // default blue→orange
+      return `hsl(${hue}, 80%, 45%)`;
+    };
+
+    const style = (feature) => {
+      const v = feature?.properties?.[property];
+      return {
+        color: borderColor ?? "#1f3a8a",
+        weight: borderWidth ?? 0.5,
+        fillColor: colorFor(typeof v === "number" ? v : NaN),
+        fillOpacity: typeof fillOpacity === "number" ? fillOpacity : 0.6
+      };
+    };
+    const valueFormatter = typeof format === "function"
+      ? format
+      : ((v) => {
+          if (v == null || !Number.isFinite(v)) return "N/A";
+          if (minRange >= 0 && maxRange <= 100) return `${v.toFixed(0)}%`;
+          if (maxRange <= 1 && minRange >= 0) return `${(v * 100).toFixed(0)}%`;
+          return `${v.toFixed(2)}`;
+        });
+
+    const onEachFeature = (feature, layer) => {
+      const v = feature?.properties?.[property];
+      const title = feature?.properties?.NAME || feature?.properties?.GEOID || "Área";
+      layer.bindPopup(`<strong>${title}</strong><br>${property}: ${valueFormatter(v)}`);
+    };
+
+    const layer = L.geoJSON(geo, { style, onEachFeature });
+
+    // Build a simple equal-interval legend
+    const legend = L.control({ position: "bottomright" });
+    legend.onAdd = function () {
+      const div = L.DomUtil.create("div", "info legend");
+      div.style.background = "rgba(255,255,255,0.9)";
+      div.style.padding = "8px";
+      div.style.borderRadius = "6px";
+      const stepsCount = Math.max(2, Math.min(9, steps));
+      const stepSize = (maxRange - minRange) / stepsCount;
+      const rows = [];
+      for (let i = 0; i < stepsCount; i++) {
+        const a = minRange + i * stepSize;
+        const b = i === stepsCount - 1 ? maxRange : (minRange + (i + 1) * stepSize);
+        const mid = (a + b) / 2;
+        const swatch = colorFor(mid);
+        const label = `${valueFormatter(a)} – ${valueFormatter(b)}`;
+        rows.push(`<div style="display:flex;align-items:center;margin:2px 0;">
+          <span style="display:inline-block;width:14px;height:14px;background:${swatch};border:1px solid #9ca3af;margin-right:6px;"></span>
+          <span>${label}</span>
+        </div>`);
+      }
+      div.innerHTML = `<div style="font-weight:600;margin-bottom:4px;">${name || property}</div>` + rows.join("");
+      return div;
+    };
+    layer.on("add", () => legend.addTo(map));
+    layer.on("remove", () => map.removeControl(legend));
+
+    return { layer, name: name || `Coropleta: ${property}` };
+  };
+
   // Helper to create future congestion categorical line layer by FUT_CONG
   const createFutureCongestionLayer = (data) => {
     const geo = coerceGeoJSON(data);
@@ -241,6 +386,9 @@ export function consumerCentricityMap({
       "Severely Congested": "#991b1b",
       "Heavily Congested": "#7f1d1d"
     };
+    // Apply overrides from layerStyles if provided
+    const override = layerStyles?.["Congestión futura"]?.categories || {};
+    Object.assign(colorByStatus, override);
     const presentStatuses = new Set();
     try {
       for (const f of geo.features || []) {
@@ -263,7 +411,7 @@ export function consumerCentricityMap({
       layer.bindPopup(`<strong>${rte}</strong><div>${status}${year}</div>`);
     };
     const layer = L.geoJSON(geo, { style, onEachFeature });
-    // Legend control
+    // Legend control (attach only when layer is visible)
     const legend = L.control({ position: "bottomright" });
     legend.onAdd = function () {
       const div = L.DomUtil.create("div", "info legend");
@@ -279,7 +427,8 @@ export function consumerCentricityMap({
       }).join("");
       return div;
     };
-    legend.addTo(map);
+    layer.on("add", () => legend.addTo(map));
+    layer.on("remove", () => map.removeControl(legend));
     return layer;
   };
 
@@ -291,12 +440,24 @@ export function consumerCentricityMap({
     ];
   }
 
-  // Add all line property layers (previously choropleths)
+  // Add all numeric property layers; choose polygons as choropleth, others as styled lines
   for (const entry of choropleths) {
     if (!entry || !entry.data || !entry.property) continue;
-    const result = createLinePropertyLayer(entry);
+    const name = entry.name || entry.property;
+    let result = null;
+    try {
+      const maybeGeo = coerceGeoJSON(entry.data);
+      const firstType = maybeGeo?.features?.[0]?.geometry?.type || "";
+      const isPolygon = /Polygon/i.test(firstType);
+      const styleOverride = layerStyles?.[name]?.choropleth || layerStyles?.[name] || {};
+      const merged = { ...entry, ...styleOverride };
+      result = isPolygon
+        ? createPolygonChoroplethLayer(merged)
+        : createLinePropertyLayer({ ...entry, ...(layerStyles?.[name]?.line || {}) });
+    } catch { /* ignore */ }
     if (result && result.layer) {
       overlays[result.name] = result.layer;
+      overlayNameByLayer.set(result.layer, result.name);
     }
   }
 
@@ -324,24 +485,28 @@ export function consumerCentricityMap({
           continue;
         }
       }
+      const pointCfg = layerStyles?.[name]?.point || {};
       layer = L.geoJSON(geo, {
         pointToLayer: (feature, latlng) => {
           const score = feature?.properties?.totalScore;
-          const base = 6;
-          const radius = Number.isFinite(score) ? base + Math.max(0, Math.min(10, score)) : base;
+          const base = typeof pointCfg.radiusBase === "number" ? pointCfg.radiusBase : 2;
+          const scale = typeof pointCfg.radiusScale === "number" ? pointCfg.radiusScale : 0.2;
+          const radius = Number.isFinite(score)
+            ? base + Math.max(0, Math.min(10, score)) * scale
+            : base;
           return L.circleMarker(latlng, {
             radius,
-            color: namedStyle.color,
-            weight: namedStyle.weight ?? 1,
-            fillColor: namedStyle.fillColor,
-            fillOpacity: 0.8
+            color: pointCfg.color || namedStyle.color,
+            weight: pointCfg.weight ?? (namedStyle.weight ?? 1),
+            fillColor: pointCfg.fillColor || namedStyle.fillColor,
+            fillOpacity: typeof pointCfg.fillOpacity === "number" ? pointCfg.fillOpacity : 0.8
           });
         },
         style: {
-          color: namedStyle.color,
-          weight: namedStyle.weight ?? 1,
-          fillColor: namedStyle.fillColor,
-          fillOpacity: namedStyle.fillOpacity ?? 0.5
+          color: pointCfg.color || namedStyle.color,
+          weight: pointCfg.weight ?? (namedStyle.weight ?? 1),
+          fillColor: pointCfg.fillColor || namedStyle.fillColor,
+          fillOpacity: typeof pointCfg.fillOpacity === "number" ? pointCfg.fillOpacity : (namedStyle.fillOpacity ?? 0.5)
         },
         onEachFeature: (feature, layer) => {
           const p = feature?.properties || {};
@@ -359,6 +524,7 @@ export function consumerCentricityMap({
         }
       });
       overlays[name] = layer;
+      overlayNameByLayer.set(layer, name);
     } catch (e) {
       if (typeof window !== "undefined" && window.console && window.console.error) {
         window.console.error(`[consumerCentricityMap] Failed to add points layer: ${name}:`, e);
@@ -366,18 +532,29 @@ export function consumerCentricityMap({
     }
   }
 
-  // Add selected overlays and control
-  const added = [];
-  for (const [name, layer] of Object.entries(overlays)) {
-    layer.addTo(map);
-    added.push(name);
+  // Do not add overlays by default; keep them off initially
+  if (typeof window !== "undefined" && window.console && window.console.debug) {
+    window.console.debug("[consumerCentricityMap] Overlays initialized but not added by default:", Object.keys(overlays));
   }
 
-  if (typeof window !== "undefined" && window.console && window.console.debug) {
-    window.console.debug("[consumerCentricityMap] Overlays added:", added);
-  }
+  // Helper: dispatch custom event with visible overlay names
+  const notifyOverlayVisibility = () => {
+    try {
+      const visible = Object.entries(overlays)
+        .filter(([, layer]) => map.hasLayer(layer))
+        .map(([name]) => name);
+      const all = Object.keys(overlays);
+      container.dispatchEvent(new CustomEvent("layerschange", { detail: { visible, all } }));
+    } catch { /* ignore */ }
+  };
+
+  // Listen to overlay add/remove via the map events (triggered by the control)
+  map.on("overlayadd", notifyOverlayVisibility);
+  map.on("overlayremove", notifyOverlayVisibility);
 
   L.control.layers(baseLayers, overlays, { collapsed: false }).addTo(map);
+  // Initial notify (none visible by default)
+  notifyOverlayVisibility();
 
   // Invalidate size after mount to ensure proper initial render in responsive containers
   setTimeout(() => map.invalidateSize(), 0);
