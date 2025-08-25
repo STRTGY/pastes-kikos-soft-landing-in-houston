@@ -6,8 +6,8 @@ keywords: soft landing, Houston, Pastes Kikos, expansión, mercado, análisis es
 ---
 
 ```js
-// Renderizar el componente de mapa
-import {consumerCentricityMap} from "../../components/consumer_centricity_map.js";
+// Renderizar el componente de mapa (versión Mapbox)
+import consumerCentricityMap from "../../components/consumer_centricity_map_mapbox.js";
 ```
 
 ## Consumer Centricity Houston
@@ -98,7 +98,7 @@ const layerDescriptions = {
 // Instanciar el mapa y exponer el elemento para escuchar eventos de visibilidad de capas
 const mapEl = consumerCentricityMap({
   center: [29.7604, -95.3698],
-  zoom: 10,
+  zoom:10,
   roads: roads,
   demographics: demog,
   demographicProperty: "White_vs_Total",
@@ -108,7 +108,9 @@ const mapEl = consumerCentricityMap({
   ],
   pointsLayers,
   layerStyles,
-  size: {height: 720}
+  size: {height: 720},
+  mapboxStyle: "mapbox://styles/feipower/cmcxpeo3v017i01s0dl5cf8re",
+  mapboxToken: "pk.eyJ1IjoiZmVpcG93ZXIiLCJhIjoiY21jeHVyaHJyMGdnbjJrb2tzZWlwaXh1dyJ9.gp0JyqMwW4czxwqqZQUOtw"
 });
 ```
 
