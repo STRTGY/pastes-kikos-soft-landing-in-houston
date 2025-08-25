@@ -35,7 +35,7 @@ const hungerEl = hungerIndexMap({
 
 <div class="hero">
   <h1>Soft Landing de Pastes Kikos en Houston, TX</h1>
-  <h2></h2>
+  <h2>Índice de Hambre</h2>
 </div>
 
 <div class="grid grid-cols-1">

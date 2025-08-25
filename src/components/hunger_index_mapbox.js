@@ -398,8 +398,8 @@ export default function hungerIndexMapbox({
 	// Info panel (counts, cell area, non-empty cells)
 	infoEl = document.createElement("div");
 	infoEl.style.position = "absolute";
-	infoEl.style.right = "10px";
-	infoEl.style.top = "10px";
+	infoEl.style.left = "10px";
+	infoEl.style.bottom = "10px";
 	infoEl.style.zIndex = "1000";
 	infoEl.style.background = "rgba(255,255,255,0.9)";
 	infoEl.style.padding = "8px";
