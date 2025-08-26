@@ -524,14 +524,6 @@ export default function hungerIndexMapbox({
 				paint: { "line-color": "#9ca3af", "line-width": 0.2, "line-opacity": 0.25 }
 			});
 		}
-		// Hover interaction for grid cells
-		if (!map.getLayer("hunger-grid-hover")) {
-			map.addLayer({ id: "hunger-grid-hover", type: "line", source: "hunger-grid",
-				layout: { visibility: showGrid ? "visible" : "none" },
-				paint: { "line-color": "#111827", "line-width": 1.2, "line-opacity": 0 },
-				filter: ["==", "id", -1]
-			});
-		}
 	};
 
 	function addRestaurantsLayersOnce() {
@@ -739,25 +731,7 @@ export default function hungerIndexMapbox({
 		}
 	});
 
-	// Hover and click on grid cells
-	let hoveredGridId = null;
-	map.on("mousemove", (e) => {
-		const feats = map.queryRenderedFeatures(e.point, { layers: ["hunger-grid-fill"] });
-		if (!feats || !feats.length) {
-			if (hoveredGridId != null) {
-				map.setPaintProperty("hunger-grid-hover", "line-opacity", 0);
-				hoveredGridId = null;
-			}
-			return;
-		}
-		const f = feats[0];
-		const id = f.id ?? f.properties?.id;
-		if (id == null) return;
-		hoveredGridId = id;
-		map.setFilter("hunger-grid-hover", ["==", "id", id]);
-		map.setPaintProperty("hunger-grid-hover", "line-opacity", 0.9);
-	});
-
+	// Click on grid cells
 	map.on("click", "hunger-grid-fill", (e) => {
 		const f = e?.features?.[0]; if (!f) return;
 		const id = f.id ?? f.properties?.id; if (id == null) return;

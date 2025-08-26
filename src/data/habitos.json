@@ -1,0 +1,15 @@
+{
+  "gasto_anual": 776,
+  "gasto_mensual": 65,
+  "porcentaje_restaurantes": 31.72,
+  "porcentaje_otros": 68.28,
+  "inflacion_reduce_gasto_pct": 50,
+  "restaurantes_total": 11000,
+  "cocinas_representadas": "70+",
+  "formatos": [
+    { "formato": "QSR", "cantidad": 558 },
+    { "formato": "Food trucks", "cantidad": 700 },
+    { "formato": "Food halls", "cantidad": 3 }
+  ]
+}
+
