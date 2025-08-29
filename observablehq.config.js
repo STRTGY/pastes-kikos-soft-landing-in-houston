@@ -18,6 +18,7 @@ export default {
     {
       name: "2. Evaluación de la industria",
       pages: [
+        { name: "2.0 Evaluation", path: "/pages/industria/evaluation" },
         { name: "2.1 Propuesta de Valor", path: "/pages/industria/valor" },
         { name: "2.2 Análisis de Precio", path: "/pages/industria/precios" },
         { name: "2.3 Adaptación de Sabores", path: "/pages/industria/sabores" },

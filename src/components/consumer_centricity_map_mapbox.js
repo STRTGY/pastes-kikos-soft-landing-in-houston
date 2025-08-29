@@ -95,10 +95,15 @@ export function consumerCentricityMapMapbox({
 	demographicProperty,
 	choropleths = [],
 	pointsLayers = {},
+	// New optional overlays for restaurants/points use-cases
+	categoricalPoints = null, // { data, name, property }
+	heatmapPoints = null, // { data, name }
 	size,
 	layerStyles = {},
 	mapboxToken,
-	mapboxStyle = DEFAULT_STYLE
+	mapboxStyle = DEFAULT_STYLE,
+	// Always-on points layer that sits on top of all others and is not toggleable
+	alwaysOnTopPoints = null // { data, name }
 } = {}) {
 	ensureMapboxAccessToken(mapboxToken);
 	const container = document.createElement("div");
@@ -113,6 +118,7 @@ export function consumerCentricityMapMapbox({
 	const allOverlayNames = [];
 	const visibleNames = new Set();
 	let demoPopup = null; // popup for Demografía: White_vs_Total
+	let dtPopup = null; // popup for Drive-through sobre restaurantes
 
 	const addSourceOnce = (id, def) => { if (!map.getSource(id)) map.addSource(id, def); };
 	const addLayerOnce = (layer) => { if (!map.getLayer(layer.id)) map.addLayer(layer); };
@@ -154,6 +160,10 @@ export function consumerCentricityMapMapbox({
 		if (!visible && (name === "Demografía: White_vs_Total")) {
 			try { if (demoPopup) { demoPopup.remove(); demoPopup = null; } } catch { /* ignore */ }
 		}
+		// Close popup if hiding Drive-through sobre restaurantes overlay
+		if (!visible && (name === "% Drive-through sobre restaurantes" || name === "has_drive_thru_vs_total_restaurants")) {
+			try { if (dtPopup) { dtPopup.remove(); dtPopup = null; } } catch { /* ignore */ }
+		}
 		notifyOverlayVisibility();
 	};
 
@@ -182,85 +192,362 @@ export function consumerCentricityMapMapbox({
 		container.appendChild(ctrl);
 	};
 
+	// ------------------------------
+	// Helpers: formatting and ids
+	// ------------------------------
+	const formatInteger = (n, locale = 'es-MX') => Number.isFinite(n) ? n.toLocaleString(locale) : 'N/A';
+	const formatPercent = (p) => Number.isFinite(p) ? `${Math.round(p)}%` : 'N/A';
+	const clampPercent = (p) => Number.isFinite(p) ? Math.max(0, Math.min(100, p)) : NaN;
+
+	// ------------------------------
+	// Overlay builders and strategies
+	// ------------------------------
+	const buildRoadsOverlay = (roadsGeo) => {
+		try {
+			const byFSystem = {
+				3: { label: "Principal Arterial (Other)", color: "#4daf4a", weight: 4 },
+				4: { label: "Minor Arterial", color: "#984ea3", weight: 2 }
+			};
+			const overrides = (layerStyles?.["Jerarquía vial"]?.byFSystem) || {};
+			for (const [k, v] of Object.entries(overrides)) {
+				const code = Number(k);
+				if (!Number.isFinite(code)) continue;
+				byFSystem[code] = { ...(byFSystem[code] || {}), ...v };
+			}
+			const present = new Set();
+			try {
+				for (const f of (roadsGeo.features || [])) {
+					const code = Number(f?.properties?.F_SYSTEM);
+					if (Number.isFinite(code)) present.add(code);
+				}
+			} catch { /* ignore */ }
+			const fallback = layerStyles?.["Jerarquía vial"]?.line || {};
+			const fallbackColor = fallback.color || "#6b7280";
+			const fallbackWidth = typeof fallback.weight === "number" ? fallback.weight : 1.25;
+			const matchInput = ["to-number", ["get", "F_SYSTEM"]];
+			const colorExpr = ["match", matchInput];
+			const widthExpr = ["match", matchInput];
+			const sortedCodes = Array.from(new Set([...Object.keys(byFSystem).map(Number), ...present])).filter(Number.isFinite).sort((a,b)=>a-b);
+			for (const code of sortedCodes) {
+				const s = byFSystem[code] || {};
+				colorExpr.push(code, s.color || fallbackColor);
+				widthExpr.push(code, typeof s.weight === "number" ? s.weight : fallbackWidth);
+			}
+			colorExpr.push(fallbackColor);
+			widthExpr.push(fallbackWidth);
+			addSourceOnce("roads-src", { type: "geojson", data: roadsGeo });
+			addLayerOnce({
+				id: "roads-line",
+				type: "line",
+				source: "roads-src",
+				paint: { "line-color": colorExpr, "line-width": widthExpr, "line-opacity": 0.9 },
+				layout: { "line-cap": "round", "line-join": "round" }
+			});
+			const legend = document.createElement("div");
+			legend.style.position = "absolute";
+			legend.style.right = "10px";
+			legend.style.bottom = "10px";
+			legend.style.zIndex = "1000";
+			legend.style.background = "rgba(255,255,255,0.9)";
+			legend.style.padding = "8px";
+			legend.style.borderRadius = "6px";
+			const entries = sortedCodes.length ? sortedCodes : Object.keys(byFSystem).map(Number);
+			legend.innerHTML = `<div style="font-weight:600;margin-bottom:4px;">F_SYSTEM</div>` + entries.map((code) => {
+				const s = byFSystem[code] || {};
+				const color = s.color || fallbackColor;
+				const weight = typeof s.weight === "number" ? s.weight : fallbackWidth;
+				const label = s.label || `F_SYSTEM ${code}`;
+				return `<div style=\"display:flex;align-items:center;margin:2px 0;\">\n\t\t\t\t\t\t<span style=\"display:inline-block;width:14px;height:3px;background:${color};margin-right:6px;\"></span>\n\t\t\t\t\t\t<span>${code} — ${label} (w=${weight})</span>\n\t\t\t\t\t</div>`;
+			}).join("");
+			legend.style.display = "none";
+			container.appendChild(legend);
+			return { name: "Jerarquía vial", sources: ["roads-src"], layers: ["roads-line"], legendEl: legend };
+		} catch (e) { derror("roads layer failed", e); }
+		return null;
+	};
+
+	const buildChoroplethWhiteVsTotal = ({ geo, name, property }) => {
+		try {
+			const sourceId = `ch-src-${name}`;
+			const fillId = `ch-fill-${name}`;
+			const lineId = `ch-line-${name}`;
+			addSourceOnce(sourceId, { type: "geojson", data: geo });
+			const values = [];
+			try {
+				for (const f of (geo.features || [])) {
+					const v = f?.properties?.[property];
+					if (typeof v === "number" && Number.isFinite(v)) values.push(v);
+				}
+			} catch { /* ignore */ }
+			const dataMin = values.length ? Math.min(...values) : 0;
+			const dataMax = values.length ? Math.max(...values) : 1;
+			const rangeOverride = layerStyles?.[name]?.choropleth?.range;
+			const minRange = Array.isArray(rangeOverride) && rangeOverride.length === 2 ? Number(rangeOverride[0]) : (dataMin >= 0 && dataMax <= 100 ? 0 : dataMin);
+			const maxRange = Array.isArray(rangeOverride) && rangeOverride.length === 2 ? Number(rangeOverride[1]) : (dataMin >= 0 && dataMax <= 100 ? 100 : dataMax);
+			const denom = (maxRange - minRange) === 0 ? 1 : (maxRange - minRange);
+			const tExpr = ["max", 0, ["min", 1, ["/", ["-", ["to-number", ["get", property]], minRange], denom]]];
+			const red = "#dc2626";
+			const blue = "#1d4ed8";
+			addLayerOnce({ id: fillId, type: "fill", source: sourceId, paint: { "fill-color": ["interpolate", ["linear"], tExpr, 0, red, 1, blue], "fill-opacity": ["interpolate", ["linear"], tExpr, 0, 0.2, 1, 0.8] } });
+			addLayerOnce({ id: lineId, type: "line", source: sourceId, paint: { "line-color": layerStyles?.[name]?.choropleth?.borderColor || "#1f3a8a", "line-width": layerStyles?.[name]?.choropleth?.borderWidth || 0.5, "line-opacity": 0.7 } });
+			const legend = makeLegendContainer();
+			legend.style.display = "none";
+			const steps = Math.max(3, Math.min(9, layerStyles?.[name]?.choropleth?.steps || 6));
+			const stepSize = (maxRange - minRange) / steps;
+			const rows = [];
+			for (let i = 0; i < steps; i++) {
+				const a = minRange + i * stepSize;
+				const b = i === steps - 1 ? maxRange : (minRange + (i + 1) * stepSize);
+				const mid = (a + b) / 2;
+				const tMid = Math.max(0, Math.min(1, (mid - minRange) / denom));
+				const color = tMid <= 0 ? red : (tMid >= 1 ? blue : undefined);
+				const label = (minRange >= 0 && maxRange <= 100) ? `${a.toFixed(0)}% – ${b.toFixed(0)}%` : `${a.toFixed(2)} – ${b.toFixed(2)}`;
+				const opacity = (0.2 + 0.6 * tMid).toFixed(2);
+				if (color) {
+					rows.push(`<div style="display:flex;align-items:center;margin:2px 0;">\n\t\t\t\t\t\t<span style=\"display:inline-block;width:14px;height:14px;background:${color};opacity:${opacity};border:1px solid #9ca3af;margin-right:6px;\"></span>\n\t\t\t\t\t\t<span>${label}</span>\n\t\t\t\t\t</div>`);
+				} else {
+					rows.push(`<div style="display:flex;align-items:center;margin:2px 0;">\n\t\t\t\t\t\t<span style=\"display:inline-block;width:14px;height:14px;background:linear-gradient(90deg, ${red}, ${blue});opacity:${opacity};border:1px solid #9ca3af;margin-right:6px;\"></span>\n\t\t\t\t\t\t<span>${label}</span>\n\t\t\t\t\t</div>`);
+				}
+			}
+			legend.innerHTML = `<div style=\"font-weight:600;margin-bottom:4px;\">${name}</div>` + rows.join("");
+			container.appendChild(legend);
+			try {
+				map.on("mouseenter", fillId, () => { container.style.cursor = "pointer"; });
+				map.on("mouseleave", fillId, () => { container.style.cursor = ""; });
+				map.on("click", fillId, (e) => {
+					const feat = (e?.features && e.features[0]) || null;
+					const props = feat?.properties || {};
+					const totalPop = Number(props.POB_TOT);
+					const pctWhite = Number(props.White_vs_Total);
+					const pctClamped = clampPercent(pctWhite);
+					const whiteCount = (Number.isFinite(totalPop) && Number.isFinite(pctClamped)) ? Math.round(totalPop * pctClamped / 100) : NaN;
+					const html = `\n\t\t\t\t\t\t\t\t<div style=\"font: 13px/1.3 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;\">\n\t\t\t\t\t\t\t\t\t<div style=\"font-weight:600;margin-bottom:4px;\">Demografía: White_vs_Total</div>\n\t\t\t\t\t\t\t\t\t<div>% Población blanca: <strong>${formatPercent(pctClamped)}</strong></div>\n\t\t\t\t\t\t\t\t\t<div>Población blanca: <strong>${formatInteger(whiteCount)}</strong></div>\n\t\t\t\t\t\t\t\t\t<div>Población total: <strong>${formatInteger(totalPop)}</strong></div>\n\t\t\t\t\t\t\t\t</div>`;
+					try { if (demoPopup) { demoPopup.remove(); } } catch { /* ignore */ }
+					demoPopup = new mapboxgl.Popup({ closeButton: true, closeOnMove: true }).setLngLat(e.lngLat).setHTML(html).addTo(map);
+				});
+			} catch { /* ignore */ }
+			return { name, sources: [sourceId], layers: [fillId, lineId], legendEl: legend };
+		} catch (e) { derror("choropleth White_vs_Total failed", e); }
+		return null;
+	};
+
+	const buildChoroplethDriveThru = ({ geo, name, property }) => {
+		try {
+			const sourceId = `ch-src-${name}`;
+			const fillId = `ch-fill-${name}`;
+			const lineId = `ch-line-${name}`;
+			addSourceOnce(sourceId, { type: "geojson", data: geo });
+			const prop = property === "has_drive_thru_vs_total_restaurants" ? "has_drive_thru_vs_total_restaurants" : property;
+			const valueExpr = ["to-number", ["get", prop]];
+			const clamped = ["max", 0, ["min", 100, valueExpr]];
+			const colorLow = "#f3f4f6";
+			const colorHigh = "#b91c1c";
+			addLayerOnce({ id: fillId, type: "fill", source: sourceId, paint: {
+				"fill-color": ["interpolate", ["exponential", .1], clamped, 0, colorLow, 5, "#fecaca", 15, "#f87171", 35, "#ef4444", 60, "#dc2626", 100, colorHigh],
+				"fill-opacity": ["interpolate", ["exponential", .1], clamped, 0, 0.18, 5, 0.32, 15, 0.45, 35, 0.62, 60, 0.75, 100, 0.85]
+			}});
+			addLayerOnce({ id: lineId, type: "line", source: sourceId, paint: { "line-color": layerStyles?.[name]?.choropleth?.borderColor || "#7f1d1d", "line-width": layerStyles?.[name]?.choropleth?.borderWidth || 0.4, "line-opacity": 0.6 } });
+			const legend = makeLegendContainer(); legend.style.display = "none";
+			const stops = [0, 2, 5, 10, 20, 40, 60, 80, 100];
+			legend.innerHTML = `<div style=\"font-weight:600;margin-bottom:4px;\">${name}</div>` + stops.map((s) => {
+				const opacity = (0.2 + 0.65 * Math.pow(s / 100, 3)).toFixed(2);
+				return `<div style=\"display:flex;align-items:center;margin:2px 0;\">\n\t\t\t\t\t\t<span style=\"display:inline-block;width:14px;height:14px;background:linear-gradient(90deg, ${colorLow}, ${colorHigh});opacity:${opacity};border:1px solid #9ca3af;margin-right:6px;\"></span>\n\t\t\t\t\t\t<span>${s}%</span>\n\t\t\t\t\t</div>`;
+			}).join("");
+			container.appendChild(legend);
+			try {
+				map.on("mouseenter", fillId, () => { container.style.cursor = "pointer"; });
+				map.on("mouseleave", fillId, () => { container.style.cursor = ""; });
+				map.on("click", fillId, (e) => {
+					const feat = (e?.features && e.features[0]) || null;
+					const props = feat?.properties || {};
+					const pct = Number(props.has_drive_thru_vs_total_restaurants);
+					const pctClamped = clampPercent(pct);
+					const totalRest = Number(props.total_restaurants);
+					const knownDriveThru = Number(props.count_has_drive_through);
+					const driveThruCount = Number.isFinite(knownDriveThru) ? knownDriveThru : (Number.isFinite(totalRest) && Number.isFinite(pctClamped)) ? Math.round(totalRest * pctClamped / 100) : NaN;
+					const html = `\n\t\t\t\t\t\t\t\t<div style=\"font: 13px/1.3 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;\">\n\t\t\t\t\t\t\t\t\t<div style=\"font-weight:600;margin-bottom:4px;\">% Drive-through sobre restaurantes</div>\n\t\t\t\t\t\t\t\t\t<div>Porcentaje: <strong>${formatPercent(pctClamped)}</strong></div>\n\t\t\t\t\t\t\t\t\t<div>Restaurantes con drive-through: <strong>${formatInteger(driveThruCount)}</strong></div>\n\t\t\t\t\t\t\t\t\t<div>Restaurantes totales: <strong>${formatInteger(totalRest)}</strong></div>\n\t\t\t\t\t\t\t\t</div>`;
+					try { if (dtPopup) { dtPopup.remove(); } } catch { /* ignore */ }
+					dtPopup = new mapboxgl.Popup({ closeButton: true, closeOnMove: true }).setLngLat(e.lngLat).setHTML(html).addTo(map);
+				});
+			} catch { /* ignore */ }
+			return { name, sources: [sourceId], layers: [fillId, lineId], legendEl: legend };
+		} catch (e) { derror("choropleth drive-thru failed", e); }
+		return null;
+	};
+
+	const buildChoroplethGeneric = ({ geo, name }) => {
+		try {
+			const sourceId = `ch-src-${name}`;
+			const fillId = `ch-fill-${name}`;
+			const lineId = `ch-line-${name}`;
+			addSourceOnce(sourceId, { type: "geojson", data: geo });
+			const fillOpacity = typeof layerStyles?.[name]?.choropleth?.fillOpacity === "number" ? layerStyles[name].choropleth.fillOpacity : 0.6;
+			addLayerOnce({ id: fillId, type: "fill", source: sourceId, paint: { "fill-color": "#60a5fa", "fill-opacity": fillOpacity } });
+			addLayerOnce({ id: lineId, type: "line", source: sourceId, paint: { "line-color": layerStyles?.[name]?.choropleth?.borderColor || "#1f3a8a", "line-width": layerStyles?.[name]?.choropleth?.borderWidth || 0.5 } });
+			const legend = makeLegendContainer(); legend.style.display = "none"; legend.innerHTML = `<div style=\"font-weight:600;margin-bottom:4px;\">${name}</div>`;
+			container.appendChild(legend);
+			return { name, sources: [sourceId], layers: [fillId, lineId], legendEl: legend };
+		} catch (e) { derror("choropleth generic failed", e); }
+		return null;
+	};
+
+	const buildPointsOverlay = (name, geo) => {
+		try {
+			const sourceId = `pt-src-${name}`;
+			const circleId = `pt-circle-${name}`;
+			addSourceOnce(sourceId, { type: "geojson", data: geo });
+			const cfg = layerStyles?.[name]?.point || {};
+			addLayerOnce({ id: circleId, type: "circle", source: sourceId, paint: {
+				"circle-radius": cfg.radiusBase ?? 3,
+				"circle-color": cfg.fillColor || cfg.color || "#38bdf8",
+				"circle-stroke-color": cfg.color || "#0ea5e9",
+				"circle-stroke-width": cfg.weight ?? 1,
+				"circle-opacity": typeof cfg.fillOpacity === "number" ? cfg.fillOpacity : 0.8
+			}});
+			// Cursor + popup
+			try {
+				map.on("mouseenter", circleId, () => { container.style.cursor = "pointer"; });
+				map.on("mouseleave", circleId, () => { container.style.cursor = ""; });
+				map.on("click", circleId, (e) => {
+					const f = e?.features?.[0]; if (!f) return;
+					const coords = f.geometry?.coordinates;
+					const p = f.properties || {};
+					const title = p.title || p.name || "Restaurante";
+					const cat = p.categoryName || p.category || "";
+					const reviews = Number(p.reviewsCount) || 0;
+					const hood = p.neighborhood || "";
+					const stars = Number(p.totalScore);
+					const estrellas = Number.isFinite(stars) ? stars.toFixed(1) : "";
+					new mapboxgl.Popup({ closeButton: true })
+						.setLngLat(coords)
+						.setHTML(`<div style=\"font-weight:600;margin-bottom:4px;\">${title}</div>
+						  <div style=\"font-size:12px;color:#374151;\">${cat}</div>
+						  <div style=\"font-size:12px;color:#374151;\">Barrio: ${hood}</div>
+						  <div style=\"font-size:12px;color:#374151;\">Estrellas: ${estrellas}</div>
+						  <div style=\"font-size:12px;color:#374151;\">Reseñas: ${reviews}</div>`)
+						.addTo(map);
+				});
+			} catch { /* ignore */ }
+			// Legend
+			const legend = makeLegendContainer();
+			legend.style.display = "none";
+			const color = cfg.fillColor || cfg.color || "#38bdf8";
+			legend.innerHTML = `<div style=\"font-weight:600;margin-bottom:4px;\">${name}</div>`
+				+ `<div style=\"display:flex;align-items:center;margin:2px 0;\">`
+				+ `<span style=\"display:inline-block;width:14px;height:14px;background:${color};border:1px solid #9ca3af;margin-right:6px;\"></span>`
+				+ `<span>Punto</span>`
+				+ `</div>`;
+			container.appendChild(legend);
+			return { name, sources: [sourceId], layers: [circleId], legendEl: legend };
+		} catch (e) { derror("points layer failed", e); }
+		return null;
+	};
+
+	const buildCategoricalPointsOverlay = ({ name, geo, property = "categoryName" }) => {
+		try {
+			const sourceId = `pt-cat-src-${name}`;
+			const layerId = `pt-cat-circle-${name}`;
+			addSourceOnce(sourceId, { type: "geojson", data: geo });
+			// Collect categories and frequencies
+			const freq = new Map();
+			for (const f of (geo.features || [])) {
+				const v = String(f?.properties?.[property] ?? "Otros");
+				freq.set(v, (freq.get(v) || 0) + 1);
+			}
+			const cats = Array.from(freq.entries()).sort((a,b)=>b[1]-a[1]).map(([k])=>k);
+			const maxCats = Math.max(1, Math.min(12, Number(layerStyles?.[name]?.categoriesLimit) || 12));
+			const topCats = cats.slice(0, maxCats);
+			const othersLabel = "Otros";
+			// Qualitative palette (12 distinct)
+			const palette = layerStyles?.[name]?.palette || [
+				"#1f77b4","#ff7f0e","#2ca02c","#d62728","#9467bd","#8c564b",
+				"#e377c2","#7f7f7f","#bcbd22","#17becf","#6b7280","#22c55e"
+			];
+			const colorByCat = new Map();
+			for (let i = 0; i < topCats.length; i++) colorByCat.set(topCats[i], palette[i % palette.length]);
+			const defaultColor = layerStyles?.[name]?.defaultColor || "#9ca3af";
+			const matchInput = ["coalesce", ["to-string", ["get", property]], othersLabel];
+			const colorExpr = ["match", matchInput];
+			for (const c of topCats) { colorExpr.push(c, colorByCat.get(c) || defaultColor); }
+			colorExpr.push(othersLabel, defaultColor);
+			colorExpr.push(defaultColor);
+			const cfg = layerStyles?.[name]?.point || {};
+			addLayerOnce({ id: layerId, type: "circle", source: sourceId, paint: {
+				"circle-radius": cfg.radiusBase ?? 3,
+				"circle-color": colorExpr,
+				"circle-stroke-color": cfg.strokeColor || "#111827",
+				"circle-stroke-width": cfg.weight ?? 0.5,
+				"circle-opacity": typeof cfg.fillOpacity === "number" ? cfg.fillOpacity : 0.9
+			}});
+			// Cursor + popup
+			try {
+				map.on("mouseenter", layerId, () => { container.style.cursor = "pointer"; });
+				map.on("mouseleave", layerId, () => { container.style.cursor = ""; });
+				map.on("click", layerId, (e) => {
+					const f = e?.features?.[0]; if (!f) return;
+					const coords = f.geometry?.coordinates;
+					const p = f.properties || {};
+					const title = p.title || p.name || "Restaurante";
+					const cat = String(p[property] ?? p.categoryName ?? "");
+					const reviews = Number(p.reviewsCount) || 0;
+					const hood = p.neighborhood || "";
+					const stars = Number(p.totalScore);
+					const estrellas = Number.isFinite(stars) ? stars.toFixed(1) : "";
+					new mapboxgl.Popup({ closeButton: true })
+						.setLngLat(coords)
+						.setHTML(`<div style=\"font-weight:600;margin-bottom:4px;\">${title}</div>
+						  <div style=\"font-size:12px;color:#374151;\">${cat}</div>
+						  <div style=\"font-size:12px;color:#374151;\">Barrio: ${hood}</div>
+						  <div style=\"font-size:12px;color:#374151;\">Estrellas: ${estrellas}</div>
+						  <div style=\"font-size:12px;color:#374151;\">Reseñas: ${reviews}</div>`)
+						.addTo(map);
+				});
+			} catch { /* ignore */ }
+			// Legend
+			const legend = makeLegendContainer();
+			legend.style.display = "none";
+			legend.innerHTML = `<div style="font-weight:600;margin-bottom:4px;">${name}</div>`
+				+ topCats.map((c) => `<div style="display:flex;align-items:center;margin:2px 0;">
+					<span style="display:inline-block;width:14px;height:14px;background:${colorByCat.get(c)};border:1px solid #9ca3af;margin-right:6px;"></span>
+					<span>${c}</span>
+				</div>`).join("")
+				+ (cats.length > topCats.length ? `<div style="margin-top:4px;color:#374151;font-size:12px;">+ ${(cats.length - topCats.length)} categorías agrupadas como "${othersLabel}"</div>` : "");
+			container.appendChild(legend);
+			return { name, sources: [sourceId], layers: [layerId], legendEl: legend };
+		} catch (e) { derror("categorical points layer failed", e); }
+		return null;
+	};
+
+	const buildHeatmapOverlay = ({ name, geo }) => {
+		try {
+			const sourceId = `pt-heat-src-${name}`;
+			const layerId = `pt-heat-${name}`;
+			addSourceOnce(sourceId, { type: "geojson", data: geo });
+			addLayerOnce({ id: layerId, type: "heatmap", source: sourceId, paint: {
+				"heatmap-weight": 1,
+				"heatmap-intensity": 1.0,
+				"heatmap-radius": ["interpolate", ["linear"], ["zoom"], 10, 18, 14, 28, 16, 40],
+				"heatmap-opacity": 0.7
+			}});
+			return { name, sources: [sourceId], layers: [layerId], legendEl: null };
+		} catch (e) { derror("heatmap layer failed", e); }
+		return null;
+	};
+
+	const getChoroplethStrategy = (name, property) => {
+		if (name === "Demografía: White_vs_Total" || property === "White_vs_Total") return buildChoroplethWhiteVsTotal;
+		if (name === "% Drive-through sobre restaurantes" || property === "has_drive_thru_vs_total_restaurants") return buildChoroplethDriveThru;
+		return ({ geo, name }) => buildChoroplethGeneric({ geo, name });
+	};
+
 	map.on("load", () => {
 		// Roads — style by F_SYSTEM with overrides and legend
 		if (roads) {
 			try {
 				const roadsGeo = maybeReproject3857To4326(coerceGeoJSON(roads));
 				if (roadsGeo) {
-					// Base mapping and overrides
-					const byFSystem = {
-						3: { label: "Principal Arterial (Other)", color: "#4daf4a", weight: 4 },
-						4: { label: "Minor Arterial", color: "#984ea3", weight: 2 }
-					};
-					const overrides = (layerStyles?.["Jerarquía vial"]?.byFSystem) || {};
-					for (const [k, v] of Object.entries(overrides)) {
-						const code = Number(k);
-						if (!Number.isFinite(code)) continue;
-						byFSystem[code] = { ...(byFSystem[code] || {}), ...v };
-					}
-					// Collect present codes from data
-					const present = new Set();
-					try {
-						for (const f of roadsGeo.features || []) {
-							const code = Number(f?.properties?.F_SYSTEM);
-							if (Number.isFinite(code)) present.add(code);
-						}
-					} catch { /* ignore */ }
-					// Fallback style
-					const fallback = layerStyles?.["Jerarquía vial"]?.line || {};
-					const fallbackColor = fallback.color || "#6b7280";
-					const fallbackWidth = typeof fallback.weight === "number" ? fallback.weight : 1.25;
-					// Build expressions for color and width by F_SYSTEM
-					const matchInput = ["to-number", ["get", "F_SYSTEM"]];
-					const colorExpr = ["match", matchInput];
-					const widthExpr = ["match", matchInput];
-					const sortedCodes = Array.from(new Set([...Object.keys(byFSystem).map(Number), ...present])).filter(Number.isFinite).sort((a,b)=>a-b);
-					for (const code of sortedCodes) {
-						const s = byFSystem[code] || {};
-						colorExpr.push(code, s.color || fallbackColor);
-						widthExpr.push(code, typeof s.weight === "number" ? s.weight : fallbackWidth);
-					}
-					colorExpr.push(fallbackColor);
-					widthExpr.push(fallbackWidth);
-
-					addSourceOnce("roads-src", { type: "geojson", data: roadsGeo });
-					addLayerOnce({
-						id: "roads-line",
-						type: "line",
-						source: "roads-src",
-						paint: {
-							"line-color": colorExpr,
-							"line-width": widthExpr,
-							"line-opacity": 0.9
-						},
-						layout: { "line-cap": "round", "line-join": "round" }
-					});
-
-					// Legend DOM showing present codes
-					const legend = document.createElement("div");
-					legend.style.position = "absolute";
-					legend.style.right = "10px";
-					legend.style.bottom = "10px";
-					legend.style.zIndex = "1000";
-					legend.style.background = "rgba(255,255,255,0.9)";
-					legend.style.padding = "8px";
-					legend.style.borderRadius = "6px";
-					const entries = sortedCodes.length ? sortedCodes : Object.keys(byFSystem).map(Number);
-					legend.innerHTML = `<div style="font-weight:600;margin-bottom:4px;">F_SYSTEM</div>` + entries.map((code) => {
-						const s = byFSystem[code] || {};
-						const color = s.color || fallbackColor;
-						const weight = typeof s.weight === "number" ? s.weight : fallbackWidth;
-						const label = s.label || `F_SYSTEM ${code}`;
-						return `<div style=\"display:flex;align-items:center;margin:2px 0;\">
-							<span style=\"display:inline-block;width:14px;height:3px;background:${color};margin-right:6px;\"></span>
-							<span>${code} — ${label} (w=${weight})</span>
-						</div>`;
-					}).join("");
-					legend.style.display = "none";
-					container.appendChild(legend);
-
-					addOverlay("Jerarquía vial", ["roads-src"], ["roads-line"], legend);
+					const od = buildRoadsOverlay(roadsGeo);
+					if (od) addOverlay(od.name, od.sources, od.layers, od.legendEl);
 				}
 			} catch (e) { derror("roads layer failed", e); }
 		}
@@ -271,159 +558,9 @@ export function consumerCentricityMapMapbox({
 			try {
 				const geo = coerceGeoJSON(entry.data); if (!geo) continue;
 				const name = entry.name || entry.property;
-				const sourceId = `ch-src-${name}`;
-				const fillId = `ch-fill-${name}`;
-				const lineId = `ch-line-${name}`;
-				addSourceOnce(sourceId, { type: "geojson", data: geo });
-
-				// Specialized implementation for Demografía: White_vs_Total
-				if (name === "Demografía: White_vs_Total" || entry.property === "White_vs_Total") {
-					// Compute range
-					const values = [];
-					try {
-						for (const f of geo.features || []) {
-							const v = f?.properties?.[entry.property];
-							if (typeof v === "number" && Number.isFinite(v)) values.push(v);
-						}
-					} catch { /* ignore */ }
-					const dataMin = values.length ? Math.min(...values) : 0;
-					const dataMax = values.length ? Math.max(...values) : 1;
-					const rangeOverride = layerStyles?.[name]?.choropleth?.range;
-					const minRange = Array.isArray(rangeOverride) && rangeOverride.length === 2 ? Number(rangeOverride[0]) : (dataMin >= 0 && dataMax <= 100 ? 0 : dataMin);
-					const maxRange = Array.isArray(rangeOverride) && rangeOverride.length === 2 ? Number(rangeOverride[1]) : (dataMin >= 0 && dataMax <= 100 ? 100 : dataMax);
-					const denom = (maxRange - minRange) === 0 ? 1 : (maxRange - minRange);
-					// Normalized t in [0,1]
-					const tExpr = ["max", 0, ["min", 1, ["/", ["-", ["to-number", ["get", entry.property]], minRange], denom]]];
-					const red = "#dc2626";  // red-600
-					const blue = "#1d4ed8"; // indigo-600
-					addLayerOnce({
-						id: fillId,
-						type: "fill",
-						source: sourceId,
-						paint: {
-							"fill-color": ["interpolate", ["linear"], tExpr, 0, red, 1, blue],
-							"fill-opacity": ["interpolate", ["linear"], tExpr, 0, 0.2, 1, 0.8]
-						}
-					});
-					addLayerOnce({ id: lineId, type: "line", source: sourceId, paint: { "line-color": layerStyles?.[name]?.choropleth?.borderColor || "#1f3a8a", "line-width": layerStyles?.[name]?.choropleth?.borderWidth || 0.5, "line-opacity": 0.7 } });
-					// Legend with equal intervals and opacity-coded swatches
-					const legend = makeLegendContainer();
-					legend.style.display = "none";
-					const steps = Math.max(3, Math.min(9, layerStyles?.[name]?.choropleth?.steps || 6));
-					const stepSize = (maxRange - minRange) / steps;
-					const rows = [];
-					for (let i = 0; i < steps; i++) {
-						const a = minRange + i * stepSize;
-						const b = i === steps - 1 ? maxRange : (minRange + (i + 1) * stepSize);
-						const mid = (a + b) / 2;
-						const tMid = Math.max(0, Math.min(1, (mid - minRange) / denom));
-						const color = tMid <= 0 ? red : (tMid >= 1 ? blue : undefined);
-						const label = (minRange >= 0 && maxRange <= 100) ? `${a.toFixed(0)}% – ${b.toFixed(0)}%` : `${a.toFixed(2)} – ${b.toFixed(2)}`;
-						const opacity = (0.2 + 0.6 * tMid).toFixed(2);
-						if (color) {
-							rows.push(`<div style="display:flex;align-items:center;margin:2px 0;">
-								<span style="display:inline-block;width:14px;height:14px;background:${color};opacity:${opacity};border:1px solid #9ca3af;margin-right:6px;"></span>
-								<span>${label}</span>
-							</div>`);
-						} else {
-							rows.push(`<div style="display:flex;align-items:center;margin:2px 0;">
-								<span style="display:inline-block;width:14px;height:14px;background:linear-gradient(90deg, ${red}, ${blue});opacity:${opacity};border:1px solid #9ca3af;margin-right:6px;"></span>
-								<span>${label}</span>
-							</div>`);
-						}
-					}
-					legend.innerHTML = `<div style="font-weight:600;margin-bottom:4px;">${name}</div>` + rows.join("");
-					container.appendChild(legend);
-					addOverlay(name, [sourceId], [fillId, lineId], legend);
-
-					// Interactivity: hover cursor and popup on click
-					try {
-						map.on("mouseenter", fillId, () => { container.style.cursor = "pointer"; });
-						map.on("mouseleave", fillId, () => { container.style.cursor = ""; });
-						map.on("click", fillId, (e) => {
-							const feat = (e?.features && e.features[0]) || null;
-							const props = feat?.properties || {};
-							const totalPop = Number(props.POB_TOT);
-							const pctWhite = Number(props.White_vs_Total);
-							const pctClamped = Number.isFinite(pctWhite) ? Math.max(0, Math.min(100, pctWhite)) : NaN;
-							const whiteCount = (Number.isFinite(totalPop) && Number.isFinite(pctClamped))
-								? Math.round(totalPop * pctClamped / 100)
-								: NaN;
-							const fmtInt = (n) => Number.isFinite(n) ? n.toLocaleString('es-MX') : 'N/A';
-							const fmtPct = (p) => Number.isFinite(p) ? `${Math.round(p)}%` : 'N/A';
-							const html = `
-								<div style="font: 13px/1.3 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;">
-									<div style="font-weight:600;margin-bottom:4px;">Demografía: White_vs_Total</div>
-									<div>% Población blanca: <strong>${fmtPct(pctClamped)}</strong></div>
-									<div>Población blanca: <strong>${fmtInt(whiteCount)}</strong></div>
-									<div>Población total: <strong>${fmtInt(totalPop)}</strong></div>
-								</div>`;
-							try { if (demoPopup) { demoPopup.remove(); } } catch { /* ignore */ }
-							demoPopup = new mapboxgl.Popup({ closeButton: true, closeOnMove: true })
-								.setLngLat(e.lngLat)
-								.setHTML(html)
-								.addTo(map);
-						});
-					} catch { /* ignore */ }
-				} else if (name === "% Drive-through sobre restaurantes" || entry.property === "has_drive_thru_vs_total_restaurants") {
-					// Drive-through choropleth with strong contrast for high values (0..100)
-					const prop = entry.property === "has_drive_thru_vs_total_restaurants" ? "has_drive_thru_vs_total_restaurants" : entry.property;
-					const valueExpr = ["to-number", ["get", prop]];
-					const clamped = ["max", 0, ["min", 100, valueExpr]];
-					const colorLow = "#f3f4f6"; // gray-100
-					// Adjust palette to make lower values more visually distinct
-					const colorHigh = "#b91c1c"; // red-700
-					addLayerOnce({
-						id: fillId,
-						type: "fill",
-						source: sourceId,
-						paint: {
-							"fill-color": [
-								"interpolate",
-								["exponential", 2.2], // Lower base for more rapid color change at low end
-								clamped,
-								0, colorLow,
-								5, "#fecaca",    // red-200, light red for low but nonzero
-								15, "#f87171",   // red-400
-								35, "#ef4444",   // red-500
-								60, "#dc2626",   // red-600
-								100, colorHigh
-							],
-							"fill-opacity": [
-								"interpolate",
-								["exponential", 2.2],
-								clamped,
-								0, 0.18,
-								5, 0.32,
-								15, 0.45,
-								35, 0.62,
-								60, 0.75,
-								100, 0.85
-							]
-						}
-					});
-					addLayerOnce({ id: lineId, type: "line", source: sourceId, paint: { "line-color": layerStyles?.[name]?.choropleth?.borderColor || "#7f1d1d", "line-width": layerStyles?.[name]?.choropleth?.borderWidth || 0.4, "line-opacity": 0.6 } });
-					// Legend emphasizing upper tail
-					const legend = makeLegendContainer(); legend.style.display = "none";
-					const stops = [0, 2, 5, 10, 20, 40, 60, 80, 100];
-					legend.innerHTML = `<div style="font-weight:600;margin-bottom:4px;">${name}</div>` + stops.map((s) => {
-						const opacity = (0.2 + 0.65 * Math.pow(s / 100, 3)).toFixed(2);
-						return `<div style="display:flex;align-items:center;margin:2px 0;">
-							<span style="display:inline-block;width:14px;height:14px;background:linear-gradient(90deg, ${colorLow}, ${colorHigh});opacity:${opacity};border:1px solid #9ca3af;margin-right:6px;"></span>
-							<span>${s}%</span>
-						</div>`;
-					}).join("");
-					container.appendChild(legend);
-					addOverlay(name, [sourceId], [fillId, lineId], legend);
-				} else {
-					// Default choropleth fallback
-					const fillOpacity = typeof layerStyles?.[name]?.choropleth?.fillOpacity === "number" ? layerStyles[name].choropleth.fillOpacity : 0.6;
-					addLayerOnce({ id: fillId, type: "fill", source: sourceId, paint: { "fill-color": "#60a5fa", "fill-opacity": fillOpacity } });
-					addLayerOnce({ id: lineId, type: "line", source: sourceId, paint: { "line-color": layerStyles?.[name]?.choropleth?.borderColor || "#1f3a8a", "line-width": layerStyles?.[name]?.choropleth?.borderWidth || 0.5 } });
-					const legend = makeLegendContainer(); legend.style.display = "none"; legend.innerHTML = `<div style="font-weight:600;margin-bottom:4px;">${name}</div>`;
-					container.appendChild(legend);
-					addOverlay(name, [sourceId], [fillId, lineId], legend);
-				}
+				const strategy = getChoroplethStrategy(name, entry.property);
+				const od = strategy({ geo, name, property: entry.property });
+				if (od) addOverlay(od.name, od.sources, od.layers, od.legendEl);
 			} catch (e) { derror("choropleth failed", e); }
 		}
 
@@ -432,18 +569,68 @@ export function consumerCentricityMapMapbox({
 			if (!data) continue;
 			try {
 				const geo = coerceGeoJSON(data); if (!geo) continue;
-				const sourceId = `pt-src-${name}`; const circleId = `pt-circle-${name}`;
-				addSourceOnce(sourceId, { type: "geojson", data: geo });
-				const cfg = layerStyles?.[name]?.point || {};
-				addLayerOnce({ id: circleId, type: "circle", source: sourceId, paint: {
-					"circle-radius": cfg.radiusBase ?? 3,
-					"circle-color": cfg.fillColor || cfg.color || "#38bdf8",
-					"circle-stroke-color": cfg.color || "#0ea5e9",
-					"circle-stroke-width": cfg.weight ?? 1,
-					"circle-opacity": typeof cfg.fillOpacity === "number" ? cfg.fillOpacity : 0.8
-				}});
-				addOverlay(name, [sourceId], [circleId], null);
+				const od = buildPointsOverlay(name, geo);
+				if (od) addOverlay(od.name, od.sources, od.layers, od.legendEl);
 			} catch (e) { derror("points layer failed", e); }
+		}
+
+		// Categorical points overlay (e.g., restaurants by category)
+		if (categoricalPoints && categoricalPoints.data) {
+			try {
+				const geo = coerceGeoJSON(categoricalPoints.data); if (geo) {
+					const name = categoricalPoints.name || "Puntos por categoría";
+					const property = categoricalPoints.property || "categoryName";
+					const od = buildCategoricalPointsOverlay({ name, geo, property });
+					if (od) addOverlay(od.name, od.sources, od.layers, od.legendEl);
+				}
+			} catch (e) { derror("categorical points overlay failed", e); }
+		}
+
+		// Heatmap points overlay
+		const hm = heatmapPoints;
+		if (hm && (hm.data || hm.geo || hm.source || hm.features)) {
+			try {
+				const data = hm.data || hm.geo || hm.source || hm;
+				const geo = coerceGeoJSON(data); if (geo) {
+					const name = hm.name || "Puntos (heatmap)";
+					const od = buildHeatmapOverlay({ name, geo });
+					if (od) addOverlay(od.name, od.sources, od.layers, od.legendEl);
+				}
+			} catch (e) { derror("heatmap overlay failed", e); }
+		}
+
+		// Always-on top points (not toggleable, added last to sit on top)
+		if (alwaysOnTopPoints && (alwaysOnTopPoints.data || alwaysOnTopPoints.geo || alwaysOnTopPoints.source || alwaysOnTopPoints.features)) {
+			try {
+				const data = alwaysOnTopPoints.data || alwaysOnTopPoints.geo || alwaysOnTopPoints.source || alwaysOnTopPoints;
+				const geo = coerceGeoJSON(data);
+				if (geo) {
+					const name = alwaysOnTopPoints.name || "Highlights";
+					const sourceId = `always-src-${name}`;
+					const layerId = `always-pts-${name}`;
+					addSourceOnce(sourceId, { type: "geojson", data: geo });
+					const cfg = layerStyles?.[name]?.point || {};
+					addLayerOnce({ id: layerId, type: "circle", source: sourceId, paint: {
+						"circle-radius": cfg.radiusBase ?? 6,
+						"circle-color": cfg.fillColor || cfg.color || "#111827",
+						"circle-stroke-color": cfg.strokeColor || "#f59e0b",
+						"circle-stroke-width": cfg.weight ?? 2,
+						"circle-opacity": typeof cfg.fillOpacity === "number" ? cfg.fillOpacity : 0.95
+					}});
+					try {
+						map.on("mouseenter", layerId, () => { container.style.cursor = "pointer"; });
+						map.on("mouseleave", layerId, () => { container.style.cursor = ""; });
+						map.on("click", layerId, (e) => {
+							const f = e?.features?.[0]; if (!f) return;
+							const coords = f.geometry?.coordinates;
+							new mapboxgl.Popup({ closeButton: true })
+								.setLngLat(coords)
+								.setHTML(`<div style=\"font-weight:600;margin-bottom:4px;\">${name}</div>`)
+								.addTo(map);
+						});
+					} catch { /* ignore */ }
+				}
+			} catch (e) { derror("always-on points failed", e); }
 		}
 
 		addToggleControl();
