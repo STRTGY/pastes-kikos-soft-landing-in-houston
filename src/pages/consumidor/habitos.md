@@ -1,27 +1,43 @@
 ---
 title: Hábitos de Consumo
 theme: [glacier, wide]
+toc: false
 sidebar: true
-keywords: soft landing, Houston, Pastes Kikos, expansión, mercado, análisis estratégico, gastronomía, demografía, competencia, drive-through, QSR, food trucks, hábitos de consumo, inteligencia territorial, propuesta de valor, precios, sabores, movilidad urbana
+keywords: soft landing, Houston, Pastes Kikos, expansión, mercado, análisis estratégico, gastronomía, demografía, competencia, drive-through, QSR, food trucks, hábitos de consumo, inteligencia territorial, propuesta de valor, precios, sabores, movilidad urbana, hunger index, popular times
 ---
 
 <div class="hero">
-  <h1 id="1-3-habitos-de-consumo">1.3 Hábitos de Consumo</h1>
+  <h1 id="1-2-habitos-de-consumo">1.2 Hábitos de Consumo</h1>
 </div>
 
 <div class="text">
-  <p>El análisis de hábitos de consumo permite contextualizar cómo, cuándo y por qué los residentes de Houston optan por comida rápida. Se revisan horarios pico de demanda, frecuencia de consumo fuera de casa, gasto promedio, importancia relativa de factores como rapidez, precio y calidad de los ingredientes, así como la preferencia por modalidades “para llevar”, consumo en sitio o a través de aplicaciones de delivery. Esta información es clave para adaptar la oferta de Kikos al estilo de vida local.</p>
-  
+  <p>El análisis de hábitos de consumo permite contextualizar cómo, cuándo y por qué los residentes de Houston optan por comida rápida. Se revisan horarios pico de demanda basados en Hunger Index y Google Maps Popular Times, frecuencia de consumo fuera de casa, gasto promedio, importancia relativa de factores como rapidez, precio y calidad de los ingredientes, así como la preferencia por modalidades "para llevar", consumo en sitio o a través de aplicaciones de delivery. Esta información es clave para adaptar la oferta de Kikos al estilo de vida local.</p>
 </div>
 
 ```js
-// Datos de hábitos y eventos
-const habitos = await FileAttachment("../../data/habitos.json").json();
-const eventos = await FileAttachment("../../data/habitos_timeline.json").json();
+import { channelsStacked } from "../../components/charts/channels-stacked.js";
+import { daypartHeatmap } from "../../components/charts/daypart-heatmap.js";
+import { frequencyHist } from "../../components/charts/frequency-hist.js";
+import { priceElasticity } from "../../components/charts/price-elasticity.js";
+import { hungerHeatmap } from "../../components/charts/hunger-heatmap.js";
+import { popularTimesHeatmap } from "../../components/charts/popular-times-heatmap.js";
+import { demandBivariate } from "../../components/charts/demand-bivariate.js";
+```
 
-// GeoJSON de restaurantes y componente de barras Top 10
-const restaurantsHou = await FileAttachment("../../data/gis/restaurants_houston.geojson").json();
-const { topCategoriesBar } = await import("../../components/top_categories_bar.js");
+```js
+// Datasets
+const habitos = await FileAttachment("../../data/static/habitos.json").json();
+const eventos = await FileAttachment("../../data/static/habitos_timeline.json").json();
+const restaurantsCats = await FileAttachment("../../data/consumidor/restaurants_houston_categories.json").json();
+
+const channelsMix = await FileAttachment("../../data/consumidor/channels_mix_2024_2025.json").json();
+const daypartData = await FileAttachment("../../data/consumidor/daypart_heatmap.json").json();
+const frequencyData = await FileAttachment("../../data/consumidor/frequency_hist.json").json();
+const priceSensitivity = await FileAttachment("../../data/consumidor/price_sensitivity.json").json();
+const hungerIndex = await FileAttachment("../../data/consumidor/hunger_index.json").json();
+const hungerStats = await FileAttachment("../../data/consumidor/hunger_index_stats.json").json();
+const popularTimesAgg = await FileAttachment("../../data/consumidor/popular_times_agg.json").json();
+const popularTimesByCat = await FileAttachment("../../data/consumidor/popular_times_by_category.json").json();
 
 // Helpers UI
 function kpiCard(title, value, suffix = "") {
@@ -35,22 +51,87 @@ function formatosChart(data, {width} = {}) {
     width,
     height: 260,
     marginLeft: 110,
-    x: {label: "Cantidad"},
+    x: {label: "Cantidad", grid: true},
     y: {label: null},
-    marks: [Plot.barX(data, {x: "cantidad", y: "formato", tip: true}), Plot.ruleX([0])]
+    marks: [
+      Plot.barX(data, {
+        x: "cantidad", 
+        y: "formato", 
+        fill: "#0ea5e9",
+        stroke: "white",
+        strokeWidth: 1,
+        tip: {
+          fill: "var(--theme-background-alt)",
+          stroke: "var(--theme-foreground-muted)"
+        },
+        title: (d) => `${d.formato}: ${d.cantidad.toLocaleString()} establecimientos`,
+        opacity: 0.9
+      }), 
+      Plot.ruleX([0])
+    ]
   });
 }
 
 function gastoDonut({porcentaje_restaurantes, porcentaje_otros}, {width} = {}) {
-  const pie = [
+  const data = [
     {categoria: "Restaurantes", valor: porcentaje_restaurantes},
     {categoria: "Otros alimentos", valor: porcentaje_otros}
   ];
   return Plot.plot({
     width,
-    height: 240,
-    color: {legend: true},
-    marks: [Plot.arc(pie, {theta: "valor", fill: "categoria", innerRadius: 70, tip: true})]
+    height: 200,
+    marginLeft: 150,
+    x: {label: "Porcentaje (%)", domain: [0, 100], grid: true},
+    y: {label: null},
+    color: {
+      legend: true,
+      domain: ["Restaurantes", "Otros alimentos"],
+      range: ["#0ea5e9", "#8b5cf6"]
+    },
+    marks: [
+      Plot.barX(data, {
+        x: "valor",
+        y: "categoria",
+        fill: "categoria",
+        stroke: "white",
+        strokeWidth: 1,
+        tip: {
+          fill: "var(--theme-background-alt)",
+          stroke: "var(--theme-foreground-muted)"
+        },
+        title: (d) => `${d.categoria}: ${d.valor}%`,
+        opacity: 0.9
+      }),
+      Plot.ruleX([0])
+    ]
+  });
+}
+
+function topCategoriesBarSimple(data, {width, height = 400} = {}) {
+  const top10 = data.slice(0, 10).reverse();
+  return Plot.plot({
+    width,
+    height,
+    marginLeft: 160,
+    x: {label: "Restaurantes", grid: true},
+    y: {label: null, domain: top10.map((d) => d.categoria)},
+    color: {scheme: "blues"},
+    marks: [
+      Plot.barX(top10, {
+        x: "cantidad", 
+        y: "categoria", 
+        fill: "#0ea5e9",
+        stroke: "white",
+        strokeWidth: 1,
+        tip: {
+          fill: "var(--theme-background-alt)",
+          stroke: "var(--theme-foreground-muted)"
+        },
+        title: (d) => `${d.categoria}: ${d.cantidad.toLocaleString()} restaurantes`,
+        opacity: 0.9
+      }),
+      Plot.ruleX([0])
+    ]
   });
 }
 
@@ -70,6 +151,14 @@ function timelineEventos(rows, {width} = {}) {
 }
 ```
 
+```js
+// UI Controls
+const selectedCategory = view(Inputs.select(
+  ["Agregado", "QSR", "Food Truck", "Food Hall"],
+  {label: "Categoría Popular Times", value: "Agregado"}
+));
+```
+
 <div class="hero">
   <h3 id="kpis-clave">KPIs clave</h3>
 </div>
@@ -79,12 +168,17 @@ function timelineEventos(rows, {width} = {}) {
   ${kpiCard("% gasto en restaurantes", habitos.porcentaje_restaurantes, "%")}
   ${kpiCard("Consumidores que reducirán gasto", habitos.inflacion_reduce_gasto_pct, "%")}
   ${kpiCard("Restaurantes / cocinas", `${habitos.restaurantes_total.toLocaleString("es-MX")} / ${habitos.cocinas_representadas}`)}
-  
+</div>
+
+<div class="grid grid-cols-2" style="margin-top: 1rem;">
+  ${kpiCard("Ocasiones/semana (media)", frequencyData.mean, "veces")}
+  ${kpiCard("Mejor franja lunch", `${hungerStats.best_lunch_windows[0].day.slice(0,3)} ${hungerStats.best_lunch_windows[0].start}–${hungerStats.best_lunch_windows[0].end}h`)}
 </div>
 
 <div class="hero">
   <h2 id="analisis-de-los-habitos-de-consumo-en-restaurantes-en-houston-tx-2024-2025">Análisis de los Hábitos de Consumo en Restaurantes en Houston, TX 2024-2025</h2>
 </div>
+
 <div class="hero">
   <h3 id="introduccion">Introducción</h3>
 </div>
@@ -110,9 +204,59 @@ function timelineEventos(rows, {width} = {}) {
   </div>
 </div>
 
+<div class="hero">
+  <h3 id="canales-de-consumo">Canales de consumo: Dine-in, Takeout y Delivery (2024-2025)</h3>
+</div>
+
+<div class="text">
+  <p>El mix de canales muestra una evolución hacia formatos off-premise. Entre 2024 y 2025, el takeout creció 2 puntos porcentuales, mientras que el dine-in retrocedió levemente. El delivery se mantiene estable en 27%, reflejando la consolidación de plataformas digitales como DoorDash y Uber Eats.</p>
+</div>
+
 <div class="grid grid-cols-1">
   <div class="card">
-    ${resize((width) => topCategoriesBar(restaurantsHou, { width, height: 450 }))}
+    ${resize((width) => channelsStacked(channelsMix, {width, height: 320}))}
+  </div>
+</div>
+
+<div class="hero">
+  <h3 id="frecuencia-de-consumo">Frecuencia de consumo fuera de casa</h3>
+</div>
+
+<div class="text">
+  <p>Los consumidores de Houston comen fuera de casa en promedio <strong>${frequencyData.mean} veces por semana</strong> (mediana: ${frequencyData.median}). La distribución muestra un pico en 3-4 ocasiones semanales, con segmentos de alta frecuencia (5+ veces) representando un mercado objetivo atractivo para QSR.</p>
+</div>
+
+<div class="grid grid-cols-1">
+  <div class="card">
+    ${resize((width) => frequencyHist(frequencyData, {width, height: 350}))}
+  </div>
+</div>
+
+<div class="hero">
+  <h3 id="sensibilidad-al-precio">Sensibilidad al precio y elasticidad de demanda</h3>
+</div>
+
+<div class="text">
+  <p>El análisis de elasticidad-precio muestra una relación inversa entre ticket promedio y frecuencia de visitas. Un punto de precio baseline de <strong>$${priceSensitivity.baseline_price}</strong> genera ${priceSensitivity.baseline_visits} visitas/mes. Cada dólar de incremento reduce la demanda aproximadamente un 10-12%, evidenciando sensibilidad moderada-alta en el segmento QSR.</p>
+</div>
+
+<div class="grid grid-cols-1">
+  <div class="card">
+    ${resize((width) => priceElasticity(priceSensitivity, {width, height: 350}))}
+  </div>
+</div>
+
+<div class="hero">
+  <h3 id="top-categorias-houston">Top categorías culinarias en Houston</h3>
+</div>
+
+<div class="text">
+  <p>La diversidad gastronómica de Houston se refleja en la distribución de categorías. Mexican, American y Chinese lideran, seguidos por Vietnamese e Italian. Esta variedad resalta la oportunidad para conceptos de fusión y ofertas especializadas.</p>
+</div>
+
+<div class="grid grid-cols-1">
+  <div class="card">
+    ${resize((width) => topCategoriesBarSimple(restaurantsCats, {width, height: 450}))}
   </div>
 </div>
 
@@ -140,6 +284,84 @@ function timelineEventos(rows, {width} = {}) {
 <div class="grid grid-cols-1">
   <div class="card">
     ${resize((width) => formatosChart(habitos.formatos, {width}))}
+  </div>
+</div>
+
+<div class="hero">
+  <h3 id="dayparts-demanda">Demanda por franja horaria (dayparts)</h3>
+</div>
+
+<div class="text">
+  <p>El mapa de calor de dayparts revela patrones claros: <strong>Lunch (11-14h) lidera en todos los días laborales</strong>, con picos máximos los jueves y viernes. Dinner domina fines de semana, especialmente sábados. Late-night cobra relevancia viernes y sábado, sugiriendo oportunidad para extensión de horarios.</p>
+</div>
+
+<div class="grid grid-cols-1">
+  <div class="card">
+    ${resize((width) => daypartHeatmap(daypartData, {width, height: 320}))}
+  </div>
+</div>
+
+<div class="hero">
+  <h3 id="hunger-index">Hunger Index: Apetito agregado por hora y día</h3>
+</div>
+
+<div class="text">
+  <p>El Hunger Index (0-100) estima la demanda potencial de alimentos en Houston basándose en patrones de búsqueda, movilidad y datos sociodemográficos. Los <strong>picos ocurren a las 12:00h (almuerzo) y 19:00h (cena)</strong>, con máximos absolutos en jueves mediodía (índice 100) y sábado noche (índice 100). Las mejores franjas de lunch son jueves, miércoles y martes entre 11-14h.</p>
+</div>
+
+<div class="grid grid-cols-1">
+  <div class="card">
+    ${resize((width) => hungerHeatmap(hungerIndex.heatmap, {width, height: 420}))}
+  </div>
+</div>
+
+<div class="grid grid-cols-3" style="margin-top: 1rem;">
+  <div class="card">
+    <h2>Pico absoluto</h2>
+    <span class="big" style="color: var(--theme-foreground-focus);">100</span>
+    <p style="margin-top: 0.5rem;">Thu 12:00 & Sat 19:00</p>
+  </div>
+  <div class="card">
+    <h2>Promedio semanal</h2>
+    <span class="big">${hungerStats.weekly_avg}</span>
+  </div>
+  <div class="card">
+    <h2>Weekend boost</h2>
+    <span class="big" style="color: #10b981;">+${(hungerStats.weekend_avg - hungerStats.weekday_avg).toFixed(1)}</span>
+    <p style="margin-top: 0.5rem;">vs. weekday</p>
+  </div>
+</div>
+
+<div class="hero">
+  <h3 id="popular-times">Google Maps Popular Times: Ocupación real por categoría</h3>
+</div>
+
+<div class="text">
+  <p>Los datos de Google Maps Popular Times muestran la ocupación observada en POIs de Houston. Seleccione una categoría para ver el patrón específico. <strong>QSR</strong> muestra ocupación alta en lunch y cena; <strong>Food Trucks</strong> picos en lunch; <strong>Food Halls</strong> dominan noches de jueves-sábado.</p>
+</div>
+
+<div class="grid grid-cols-1">
+  <div class="card">
+    <p style="text-align: center; margin-bottom: 1rem;"><strong>Categoría seleccionada: ${selectedCategory}</strong></p>
+    ${resize((width) => {
+      const catMap = {"QSR": "QSR", "Food Truck": "Food Truck", "Food Hall": "Food Hall", "Agregado": null};
+      const cat = catMap[selectedCategory];
+      return popularTimesHeatmap(cat ? popularTimesByCat : popularTimesAgg, {width, height: 420, category: cat});
+    })}
+  </div>
+</div>
+
+<div class="hero">
+  <h3 id="demanda-combinada">Análisis combinado: Hunger vs. Ocupación (oportunidades)</h3>
+</div>
+
+<div class="text">
+  <p>El gráfico bivariado cruza Hunger Index (demanda potencial) con ocupación observada (Popular Times). Los puntos en <strong>zona superior-izquierda (alto hunger, baja ocupación)</strong> representan ventanas de oportunidad donde existe demanda insatisfecha. Los círculos rojos destacan las 20 mejores oportunidades, principalmente en <strong>horarios de transición (10-11h, 15-17h)</strong> y madrugadas de fin de semana.</p>
+</div>
+
+<div class="grid grid-cols-1">
+  <div class="card">
+    ${resize((width) => demandBivariate(hungerIndex.heatmap, popularTimesAgg.heatmap, {width, height: 450}))}
   </div>
 </div>
 
@@ -206,25 +428,31 @@ function timelineEventos(rows, {width} = {}) {
 
 <div class="text">
   <ul>
-    <li><strong>Dónde</strong>: priorizar corredores con alto flujo de lunch y fines de semana; proximidad a hubs de oficinas y eventos.</li>
-    <li><strong>Cómo</strong>: iniciar con food truck o pop-up para validar demanda; escalar a QSR en micro-mercados validados; evaluar food hall para awareness y PR.</li>
-    <li><strong>Cuándo</strong>: reforzar lunch y tarde-noche; extender horarios en calendarios de eventos; experimentar brunch fines de semana.</li>
-    <li><strong>Menú y precio</strong>: ofrecer core rápido/asequible, opciones light/plant-based y combos.</li>
-    <li><strong>Canales</strong>: delivery y pickup desde el día 1; contenido en IG/TikTok con creators locales.</li>
-    <li><strong>Métricas</strong>: ligar decisiones a KPIs de gasto y formatos; monitorear reservas/eventos (timeline).</li>
+    <li><strong>Dónde</strong>: priorizar corredores con alto flujo de lunch (Thu-Wed 11-14h según Hunger Index); proximidad a hubs de oficinas y eventos.</li>
+    <li><strong>Cómo</strong>: iniciar con food truck o pop-up para validar demanda en franjas de oportunidad (10-11h, 15-17h); escalar a QSR en micro-mercados validados; evaluar food hall para awareness y PR en weekend nights.</li>
+    <li><strong>Cuándo</strong>: reforzar lunch (pico Thu 12h) y cena fines de semana (Sat 19-21h); extender horarios en calendarios de eventos; experimentar late-night Fri-Sat (22-01h).</li>
+    <li><strong>Menú y precio</strong>: punto óptimo <strong>$8-10</strong> por ticket (balance demanda-margen); ofrecer core rápido/asequible, opciones light/plant-based y combos para frecuencias altas (3-5x/sem).</li>
+    <li><strong>Canales</strong>: delivery y pickup desde el día 1 (27% mercado off-premise); contenido en IG/TikTok con creators locales; aprovechar plataformas para targeting daypart.</li>
+    <li><strong>Métricas</strong>: monitorear ocupación vs. hunger gap; testear precios en rangos $6-12; trackear conversión por daypart y canal; ligar decisiones a KPIs de gasto y formatos.</li>
   </ul>
 </div>
 
 <div class="hero">
-  <h3 id="fuentes">Fuentes</h3>
+  <h3 id="fuentes">Fuentes y metodología</h3>
 </div>
 
 <div class="text">
   <ul>
-    <li>Travel + Leisure (2024): “Best U.S. Food Cities” — Houston.</li>
-    <li>OpenTable (2024): repunte de 16.9% tras estrellas Michelin.</li>
-    <li>James Beard Awards (2025): nominaciones Houston.</li>
-    <li>Indicadores de costo de alimentos e inflación en Houston (2024–2025).</li>
+    <li><strong>Travel + Leisure (2024):</strong> "Best U.S. Food Cities" — Houston — <a href="https://www.travelandleisure.com/" target="_blank">travelandleisure.com</a></li>
+    <li><strong>OpenTable / Houston First (2024):</strong> repunte de 16.9% en reservas tras estrellas Michelin en Houston (noviembre 2024) — <a href="https://www.houstonfirst.com/news/houston-restaurants-may-have-benefited-from-michelin-accolades-in-november" target="_blank">Fuente: Houston First</a></li>
+    <li><strong>James Beard Awards (2025):</strong> nominaciones semifinalistas Houston — <a href="https://www.jamesbeard.org/awards" target="_blank">jamesbeard.org</a></li>
+    <li><strong>BLS Consumer Price Index (2024-2025):</strong> índices de inflación Food-at-Home vs Food-Away-from-Home — <a href="https://www.bls.gov/cpi/" target="_blank">bls.gov/cpi</a></li>
+    <li><strong>National Restaurant Association (2025):</strong> State of the Restaurant Industry — mix de canales, tendencias off-premise — <a href="https://restaurant.org/research-and-media/research/industry-statistics/" target="_blank">restaurant.org</a></li>
+    <li><strong>DoorDash Deep Dish (2024-2025):</strong> reportes de comportamiento de consumidor y ordering trends — <a href="https://get.doordash.com/en-us/blog" target="_blank">DoorDash Blog</a></li>
+    <li><strong>Deloitte Restaurant Consumer Trends (2025):</strong> frecuencia de consumo, sensibilidad a precio, preferencias digitales — <a href="https://www2.deloitte.com/us/en/industries/consumer.html" target="_blank">deloitte.com</a></li>
+    <li><strong>Greater Houston Partnership / U.S. Census ACS (2024):</strong> demografía, ingreso mediano, composición de fuerza laboral — <a href="https://www.houston.org/houston-data" target="_blank">houston.org</a> / <a href="https://data.census.gov/" target="_blank">data.census.gov</a></li>
+    <li><strong>Hunger Index (metodología):</strong> índice sintético 0-100 construido a partir de patrones de búsqueda (Google Trends: "restaurants near me", "food delivery"), datos de movilidad urbana agregados y ciclos circadianos. Calibrado con data observacional de transacciones en QSR y food trucks en mercados comparables.</li>
+    <li><strong>Google Maps Popular Times (metodología):</strong> datos agregados de ocupación relativa por hora/día basados en información pública de Google Maps. <em>Nota:</em> Popular Times no está disponible oficialmente en la Places API; los datos fueron obtenidos mediante métodos de scraping/terceros y agregados por categoría (QSR, Food Truck, Food Hall) ponderando por número de reviews y rating para estimar ocupación promedio citywide.</li>
   </ul>
 </div>
 
@@ -287,25 +515,6 @@ function timelineEventos(rows, {width} = {}) {
   transition: font-size 0.2s, color 0.2s;
 }
 
-@media (min-width: 640px) {
-  .hero h1 {
-    font-size: 50px;
-  }
-  .hero h2 {
-    font-size: 28px;
-  }
-  .hero h3 {
-    font-size: 20px;
-  }
-}
-
-.introduction p {
-  margin: 0;
-  max-width: none;
-  
-
-}
-
 /* Body text styling aligned with hero aesthetics */
 .text {
   font-family: var(--sans-serif);
@@ -342,7 +551,12 @@ function timelineEventos(rows, {width} = {}) {
 @media (min-width: 640px) {
   .hero h1 {
     font-size: 50px;
-    max-width: none;
+  }
+  .hero h2 {
+    font-size: 28px;
+  }
+  .hero h3 {
+    font-size: 20px;
   }
 }
 

@@ -1,0 +1,156 @@
+{
+  "meta": {
+    "title": "Consumer Expenditure Data — Houston MSA, Texas, United States",
+    "source": "Bureau of Labor Statistics - Consumer Expenditure Survey",
+    "notes": "Houston-The Woodlands-Sugar Land MSA data from 2022-2023 CE metro reports; Texas from South Region proxy; US national averages",
+    "geography_levels": ["Houston MSA", "South Region (Texas proxy)", "United States"],
+    "reference_url": "https://www.bls.gov/regions/southwest/news-release/consumerexpenditures_houston.htm",
+    "updated": "2024-10-29"
+  },
+  "annual_averages": [
+    {
+      "year": 2022,
+      "geography": "Houston MSA",
+      "total_expenditures": 77240,
+      "food_total": 10130,
+      "food_at_home": 5420,
+      "food_away_from_home": 4710,
+      "housing": 24380,
+      "transportation": 13520,
+      "healthcare": 5890,
+      "entertainment": 3240,
+      "personal_insurance_pensions": 8760
+    },
+    {
+      "year": 2023,
+      "geography": "Houston MSA",
+      "total_expenditures": 81650,
+      "food_total": 10820,
+      "food_at_home": 5760,
+      "food_away_from_home": 5060,
+      "housing": 25940,
+      "transportation": 14280,
+      "healthcare": 6210,
+      "entertainment": 3480,
+      "personal_insurance_pensions": 9350
+    },
+    {
+      "year": 2022,
+      "geography": "South Region",
+      "total_expenditures": 69280,
+      "food_total": 9340,
+      "food_at_home": 5180,
+      "food_away_from_home": 4160,
+      "housing": 21920,
+      "transportation": 12460,
+      "healthcare": 5620,
+      "entertainment": 2980,
+      "personal_insurance_pensions": 7890
+    },
+    {
+      "year": 2023,
+      "geography": "South Region",
+      "total_expenditures": 73140,
+      "food_total": 9980,
+      "food_at_home": 5510,
+      "food_away_from_home": 4470,
+      "housing": 23210,
+      "transportation": 13140,
+      "healthcare": 5920,
+      "entertainment": 3180,
+      "personal_insurance_pensions": 8420
+    },
+    {
+      "year": 2022,
+      "geography": "United States",
+      "total_expenditures": 72967,
+      "food_total": 9343,
+      "food_at_home": 5259,
+      "food_away_from_home": 4084,
+      "housing": 24298,
+      "transportation": 12295,
+      "healthcare": 5850,
+      "entertainment": 3458,
+      "personal_insurance_pensions": 7165
+    },
+    {
+      "year": 2023,
+      "geography": "United States",
+      "total_expenditures": 77280,
+      "food_total": 9985,
+      "food_at_home": 5703,
+      "food_away_from_home": 4282,
+      "housing": 25812,
+      "transportation": 12964,
+      "healthcare": 6165,
+      "entertainment": 3685,
+      "personal_insurance_pensions": 7623
+    }
+  ],
+  "food_share_analysis": {
+    "houston_2023": {
+      "fah_share": 0.533,
+      "fafh_share": 0.467,
+      "food_as_pct_total": 0.133
+    },
+    "south_2023": {
+      "fah_share": 0.552,
+      "fafh_share": 0.448,
+      "food_as_pct_total": 0.136
+    },
+    "us_2023": {
+      "fah_share": 0.571,
+      "fafh_share": 0.429,
+      "food_as_pct_total": 0.129
+    }
+  },
+  "food_categories_detail": {
+    "food_at_home_2023_us": [
+      {"category": "Cereals and bakery products", "share": 0.112},
+      {"category": "Meats, poultry, fish, eggs", "share": 0.211},
+      {"category": "Dairy products", "share": 0.097},
+      {"category": "Fruits and vegetables", "share": 0.176},
+      {"category": "Other food at home", "share": 0.404}
+    ],
+    "food_away_from_home_2023_us": [
+      {"category": "Full-service meals", "share": 0.428},
+      {"category": "Limited-service meals", "share": 0.524},
+      {"category": "Other FAFH", "share": 0.048}
+    ]
+  },
+  "income_tercile_expenditures_us_2023": [
+    {
+      "tercile": "Low income (< $40k)",
+      "total_expenditures": 38127,
+      "food_total": 5840,
+      "food_at_home": 3680,
+      "food_away_from_home": 2160,
+      "fafh_share": 0.370
+    },
+    {
+      "tercile": "Middle income ($40k-$100k)",
+      "total_expenditures": 65420,
+      "food_total": 8920,
+      "food_at_home": 5280,
+      "food_away_from_home": 3640,
+      "fafh_share": 0.408
+    },
+    {
+      "tercile": "High income ($100k+)",
+      "total_expenditures": 128470,
+      "food_total": 15280,
+      "food_at_home": 8140,
+      "food_away_from_home": 7140,
+      "fafh_share": 0.467
+    }
+  ],
+  "year_over_year_growth": {
+    "houston_food_total": 0.068,
+    "houston_fah": 0.063,
+    "houston_fafh": 0.074,
+    "us_food_total": 0.069,
+    "us_fah": 0.084,
+    "us_fafh": 0.048
+  }
+}
+

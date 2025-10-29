@@ -1,0 +1,23 @@
+[
+  {"categoria": "Mexican", "cantidad": 1245},
+  {"categoria": "American", "cantidad": 982},
+  {"categoria": "Chinese", "cantidad": 658},
+  {"categoria": "Vietnamese", "cantidad": 542},
+  {"categoria": "Italian", "cantidad": 487},
+  {"categoria": "BBQ", "cantidad": 425},
+  {"categoria": "Tex-Mex", "cantidad": 398},
+  {"categoria": "Indian", "cantidad": 352},
+  {"categoria": "Japanese", "cantidad": 318},
+  {"categoria": "Thai", "cantidad": 285},
+  {"categoria": "Mediterranean", "cantidad": 264},
+  {"categoria": "Seafood", "cantidad": 242},
+  {"categoria": "Burgers", "cantidad": 235},
+  {"categoria": "Pizza", "cantidad": 228},
+  {"categoria": "Korean", "cantidad": 195},
+  {"categoria": "Cajun/Creole", "cantidad": 178},
+  {"categoria": "Sandwiches", "cantidad": 165},
+  {"categoria": "Middle Eastern", "cantidad": 152},
+  {"categoria": "African", "cantidad": 138},
+  {"categoria": "Salvadoran", "cantidad": 124}
+]
+

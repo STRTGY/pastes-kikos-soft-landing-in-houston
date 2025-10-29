@@ -1,0 +1,831 @@
+[
+  {
+    "restaurant": "Abasolo",
+    "product": "Camarones Rancheros",
+    "product_norm": "camarones rancheros",
+    "category": "seafood",
+    "price_amount": 15.99,
+    "price_currency": "USD",
+    "price_raws": [
+      "$15.99"
+    ],
+    "currencies": [
+      "USD"
+    ],
+    "image_hashes": [
+      "cec1379dbe2c5a48f2ba8ecf1d84c9de17db4a46d86df67d1123cae3faf7415b"
+    ],
+    "menu_ids": [
+      "menu_1761713193089",
+      "menu_1761713244972",
+      "menu_1761713296647",
+      "menu_1761713367571",
+      "menu_1761713462527"
+    ],
+    "sources": [
+      "D:\\OneDrive\\LongTermMemory\\100_PROYECTOS\\110_STRTGY\\1161_PastesKikos_Softlanding_Houston\\pasteskikos_softlanding_houston\\data\\processed\\menu_images\\Abasolo\\cec1379dbe2c5a48f2ba8ecf1d84c9de17db4a46d86df67d1123cae3faf7415b.jpg"
+    ],
+    "flavour_notes": [
+      {
+        "taste": "umami",
+        "intensity": 0.65
+      },
+      {
+        "taste": "other",
+        "intensity": 0.5
+      }
+    ],
+    "specific_flavours": [],
+    "descriptions": [],
+    "sections": [],
+    "ingredients": [],
+    "occurrence_count": 5,
+    "conflict_flags": []
+  },
+  {
+    "restaurant": "Abasolo",
+    "product": "Camarones a la Diabla",
+    "product_norm": "camarones a la diabla",
+    "category": "seafood",
+    "price_amount": 15.99,
+    "price_currency": "USD",
+    "price_raws": [
+      "$15.99"
+    ],
+    "currencies": [
+      "USD"
+    ],
+    "image_hashes": [
+      "cec1379dbe2c5a48f2ba8ecf1d84c9de17db4a46d86df67d1123cae3faf7415b"
+    ],
+    "menu_ids": [
+      "menu_1761713193089",
+      "menu_1761713244972",
+      "menu_1761713296647",
+      "menu_1761713367571",
+      "menu_1761713462527"
+    ],
+    "sources": [
+      "D:\\OneDrive\\LongTermMemory\\100_PROYECTOS\\110_STRTGY\\1161_PastesKikos_Softlanding_Houston\\pasteskikos_softlanding_houston\\data\\processed\\menu_images\\Abasolo\\cec1379dbe2c5a48f2ba8ecf1d84c9de17db4a46d86df67d1123cae3faf7415b.jpg"
+    ],
+    "flavour_notes": [
+      {
+        "taste": "spicy",
+        "intensity": 0.7
+      }
+    ],
+    "specific_flavours": [],
+    "descriptions": [],
+    "sections": [],
+    "ingredients": [],
+    "occurrence_count": 5,
+    "conflict_flags": []
+  },
+  {
+    "restaurant": "Abasolo",
+    "product": "Camarones Alapincha",
+    "product_norm": "camarones alapincha",
+    "category": "seafood",
+    "price_amount": 15.99,
+    "price_currency": "USD",
+    "price_raws": [
+      "$15.99"
+    ],
+    "currencies": [
+      "USD"
+    ],
+    "image_hashes": [
+      "cec1379dbe2c5a48f2ba8ecf1d84c9de17db4a46d86df67d1123cae3faf7415b"
+    ],
+    "menu_ids": [
+      "menu_1761713193089",
+      "menu_1761713244972",
+      "menu_1761713296647",
+      "menu_1761713367571",
+      "menu_1761713462527"
+    ],
+    "sources": [
+      "D:\\OneDrive\\LongTermMemory\\100_PROYECTOS\\110_STRTGY\\1161_PastesKikos_Softlanding_Houston\\pasteskikos_softlanding_houston\\data\\processed\\menu_images\\Abasolo\\cec1379dbe2c5a48f2ba8ecf1d84c9de17db4a46d86df67d1123cae3faf7415b.jpg"
+    ],
+    "flavour_notes": [
+      {
+        "taste": "umami",
+        "intensity": 0.525
+      }
+    ],
+    "specific_flavours": [],
+    "descriptions": [],
+    "sections": [],
+    "ingredients": [],
+    "occurrence_count": 5,
+    "conflict_flags": []
+  },
+  {
+    "restaurant": "Abasolo",
+    "product": "Camarones Empanizados",
+    "product_norm": "camarones empanizados",
+    "category": "seafood",
+    "price_amount": 15.99,
+    "price_currency": "USD",
+    "price_raws": [
+      "$15.99"
+    ],
+    "currencies": [
+      "USD"
+    ],
+    "image_hashes": [
+      "cec1379dbe2c5a48f2ba8ecf1d84c9de17db4a46d86df67d1123cae3faf7415b"
+    ],
+    "menu_ids": [
+      "menu_1761713193089",
+      "menu_1761713244972",
+      "menu_1761713296647",
+      "menu_1761713367571",
+      "menu_1761713462527"
+    ],
+    "sources": [
+      "D:\\OneDrive\\LongTermMemory\\100_PROYECTOS\\110_STRTGY\\1161_PastesKikos_Softlanding_Houston\\pasteskikos_softlanding_houston\\data\\processed\\menu_images\\Abasolo\\cec1379dbe2c5a48f2ba8ecf1d84c9de17db4a46d86df67d1123cae3faf7415b.jpg"
+    ],
+    "flavour_notes": [
+      {
+        "taste": "umami",
+        "intensity": 0.5
+      },
+      {
+        "taste": "other",
+        "intensity": 0.55
+      }
+    ],
+    "specific_flavours": [
+      "crispy"
+    ],
+    "descriptions": [],
+    "sections": [],
+    "ingredients": [],
+    "occurrence_count": 5,
+    "conflict_flags": []
+  },
+  {
+    "restaurant": "Abasolo",
+    "product": "Mojarra Frita",
+    "product_norm": "mojarra frita",
+    "category": "seafood",
+    "price_amount": 15.99,
+    "price_currency": "USD",
+    "price_raws": [
+      "$15.99"
+    ],
+    "currencies": [
+      "USD"
+    ],
+    "image_hashes": [
+      "cec1379dbe2c5a48f2ba8ecf1d84c9de17db4a46d86df67d1123cae3faf7415b"
+    ],
+    "menu_ids": [
+      "menu_1761713193089",
+      "menu_1761713244972",
+      "menu_1761713296647",
+      "menu_1761713367571",
+      "menu_1761713462527"
+    ],
+    "sources": [
+      "D:\\OneDrive\\LongTermMemory\\100_PROYECTOS\\110_STRTGY\\1161_PastesKikos_Softlanding_Houston\\pasteskikos_softlanding_houston\\data\\processed\\menu_images\\Abasolo\\cec1379dbe2c5a48f2ba8ecf1d84c9de17db4a46d86df67d1123cae3faf7415b.jpg"
+    ],
+    "flavour_notes": [
+      {
+        "taste": "umami",
+        "intensity": 0.575
+      }
+    ],
+    "specific_flavours": [],
+    "descriptions": [],
+    "sections": [],
+    "ingredients": [],
+    "occurrence_count": 5,
+    "conflict_flags": []
+  },
+  {
+    "restaurant": "Abasolo",
+    "product": "Filete a la Planch",
+    "product_norm": "filete a la planch",
+    "category": "seafood",
+    "price_amount": 15.99,
+    "price_currency": "USD",
+    "price_raws": [
+      "$15.99"
+    ],
+    "currencies": [
+      "USD"
+    ],
+    "image_hashes": [
+      "cec1379dbe2c5a48f2ba8ecf1d84c9de17db4a46d86df67d1123cae3faf7415b"
+    ],
+    "menu_ids": [
+      "menu_1761713193089",
+      "menu_1761713244972",
+      "menu_1761713296647",
+      "menu_1761713367571",
+      "menu_1761713462527"
+    ],
+    "sources": [
+      "D:\\OneDrive\\LongTermMemory\\100_PROYECTOS\\110_STRTGY\\1161_PastesKikos_Softlanding_Houston\\pasteskikos_softlanding_houston\\data\\processed\\menu_images\\Abasolo\\cec1379dbe2c5a48f2ba8ecf1d84c9de17db4a46d86df67d1123cae3faf7415b.jpg"
+    ],
+    "flavour_notes": [
+      {
+        "taste": "umami",
+        "intensity": 0.525
+      }
+    ],
+    "specific_flavours": [],
+    "descriptions": [],
+    "sections": [],
+    "ingredients": [],
+    "occurrence_count": 5,
+    "conflict_flags": []
+  },
+  {
+    "restaurant": "Abasolo",
+    "product": "Filete Empanizado",
+    "product_norm": "filete empanizado",
+    "category": "seafood",
+    "price_amount": 15.99,
+    "price_currency": "USD",
+    "price_raws": [
+      "$15.99"
+    ],
+    "currencies": [
+      "USD"
+    ],
+    "image_hashes": [
+      "cec1379dbe2c5a48f2ba8ecf1d84c9de17db4a46d86df67d1123cae3faf7415b"
+    ],
+    "menu_ids": [
+      "menu_1761713193089",
+      "menu_1761713244972",
+      "menu_1761713296647",
+      "menu_1761713367571",
+      "menu_1761713462527"
+    ],
+    "sources": [
+      "D:\\OneDrive\\LongTermMemory\\100_PROYECTOS\\110_STRTGY\\1161_PastesKikos_Softlanding_Houston\\pasteskikos_softlanding_houston\\data\\processed\\menu_images\\Abasolo\\cec1379dbe2c5a48f2ba8ecf1d84c9de17db4a46d86df67d1123cae3faf7415b.jpg"
+    ],
+    "flavour_notes": [
+      {
+        "taste": "umami",
+        "intensity": 0.5
+      },
+      {
+        "taste": "other",
+        "intensity": 0.55
+      }
+    ],
+    "specific_flavours": [
+      "crispy"
+    ],
+    "descriptions": [],
+    "sections": [],
+    "ingredients": [],
+    "occurrence_count": 5,
+    "conflict_flags": []
+  },
+  {
+    "restaurant": "Abasolo",
+    "product": "Caldo de Mariscos",
+    "product_norm": "caldo de mariscos",
+    "category": "seafood",
+    "price_amount": 15.99,
+    "price_currency": "USD",
+    "price_raws": [
+      "$15.99"
+    ],
+    "currencies": [
+      "USD"
+    ],
+    "image_hashes": [
+      "cec1379dbe2c5a48f2ba8ecf1d84c9de17db4a46d86df67d1123cae3faf7415b"
+    ],
+    "menu_ids": [
+      "menu_1761713193089",
+      "menu_1761713244972",
+      "menu_1761713296647",
+      "menu_1761713367571",
+      "menu_1761713462527"
+    ],
+    "sources": [
+      "D:\\OneDrive\\LongTermMemory\\100_PROYECTOS\\110_STRTGY\\1161_PastesKikos_Softlanding_Houston\\pasteskikos_softlanding_houston\\data\\processed\\menu_images\\Abasolo\\cec1379dbe2c5a48f2ba8ecf1d84c9de17db4a46d86df67d1123cae3faf7415b.jpg"
+    ],
+    "flavour_notes": [
+      {
+        "taste": "umami",
+        "intensity": 0.55
+      }
+    ],
+    "specific_flavours": [],
+    "descriptions": [],
+    "sections": [],
+    "ingredients": [],
+    "occurrence_count": 5,
+    "conflict_flags": []
+  },
+  {
+    "restaurant": "Abasolo",
+    "product": "Caldo de Camaron Pescado",
+    "product_norm": "caldo de camaron pescado",
+    "category": "seafood",
+    "price_amount": 12.99,
+    "price_currency": "USD",
+    "price_raws": [
+      "$12.99"
+    ],
+    "currencies": [
+      "USD"
+    ],
+    "image_hashes": [
+      "cec1379dbe2c5a48f2ba8ecf1d84c9de17db4a46d86df67d1123cae3faf7415b"
+    ],
+    "menu_ids": [
+      "menu_1761713193089",
+      "menu_1761713244972",
+      "menu_1761713296647",
+      "menu_1761713367571",
+      "menu_1761713462527"
+    ],
+    "sources": [
+      "D:\\OneDrive\\LongTermMemory\\100_PROYECTOS\\110_STRTGY\\1161_PastesKikos_Softlanding_Houston\\pasteskikos_softlanding_houston\\data\\processed\\menu_images\\Abasolo\\cec1379dbe2c5a48f2ba8ecf1d84c9de17db4a46d86df67d1123cae3faf7415b.jpg"
+    ],
+    "flavour_notes": [
+      {
+        "taste": "umami",
+        "intensity": 0.533
+      },
+      {
+        "taste": "other",
+        "intensity": 0.5
+      }
+    ],
+    "specific_flavours": [],
+    "descriptions": [],
+    "sections": [],
+    "ingredients": [],
+    "occurrence_count": 5,
+    "conflict_flags": []
+  },
+  {
+    "restaurant": "Abasolo",
+    "product": "Coptel",
+    "product_norm": "coptel",
+    "category": "seafood",
+    "price_amount": 12.99,
+    "price_currency": "USD",
+    "price_raws": [
+      "$12.99"
+    ],
+    "currencies": [
+      "USD"
+    ],
+    "image_hashes": [
+      "cec1379dbe2c5a48f2ba8ecf1d84c9de17db4a46d86df67d1123cae3faf7415b"
+    ],
+    "menu_ids": [
+      "menu_1761713193089",
+      "menu_1761713244972",
+      "menu_1761713296647",
+      "menu_1761713367571",
+      "menu_1761713462527"
+    ],
+    "sources": [
+      "D:\\OneDrive\\LongTermMemory\\100_PROYECTOS\\110_STRTGY\\1161_PastesKikos_Softlanding_Houston\\pasteskikos_softlanding_houston\\data\\processed\\menu_images\\Abasolo\\cec1379dbe2c5a48f2ba8ecf1d84c9de17db4a46d86df67d1123cae3faf7415b.jpg"
+    ],
+    "flavour_notes": [
+      {
+        "taste": "umami",
+        "intensity": 0.5
+      },
+      {
+        "taste": "other",
+        "intensity": 0.5
+      }
+    ],
+    "specific_flavours": [],
+    "descriptions": [],
+    "sections": [],
+    "ingredients": [],
+    "occurrence_count": 5,
+    "conflict_flags": []
+  },
+  {
+    "restaurant": "Abasolo",
+    "product": "Tacos de Camaron",
+    "product_norm": "tacos de camaron",
+    "category": "tacos",
+    "price_amount": 3.99,
+    "price_currency": "USD",
+    "price_raws": [
+      "$15.99",
+      "$2.75",
+      "$3.99"
+    ],
+    "currencies": [
+      "USD"
+    ],
+    "image_hashes": [
+      "cec1379dbe2c5a48f2ba8ecf1d84c9de17db4a46d86df67d1123cae3faf7415b",
+      "d9d30ac02d1e8604f4487c51f27eaf1e10a28d9a99354b2e4cecf3e18fa3a7d1"
+    ],
+    "menu_ids": [
+      "menu_1761713193089",
+      "menu_1761713244972",
+      "menu_1761713296647",
+      "menu_1761713367571",
+      "menu_1761713426879",
+      "menu_1761713462527"
+    ],
+    "sources": [
+      "D:\\OneDrive\\LongTermMemory\\100_PROYECTOS\\110_STRTGY\\1161_PastesKikos_Softlanding_Houston\\pasteskikos_softlanding_houston\\data\\processed\\menu_images\\Abasolo\\cec1379dbe2c5a48f2ba8ecf1d84c9de17db4a46d86df67d1123cae3faf7415b.jpg",
+      "D:\\OneDrive\\LongTermMemory\\100_PROYECTOS\\110_STRTGY\\1161_PastesKikos_Softlanding_Houston\\pasteskikos_softlanding_houston\\data\\processed\\menu_images\\Abasolo\\d9d30ac02d1e8604f4487c51f27eaf1e10a28d9a99354b2e4cecf3e18fa3a7d1.jpg"
+    ],
+    "flavour_notes": [
+      {
+        "taste": "umami",
+        "intensity": 0.45
+      },
+      {
+        "taste": "other",
+        "intensity": 0.5
+      }
+    ],
+    "specific_flavours": [],
+    "descriptions": [],
+    "sections": [],
+    "ingredients": [],
+    "occurrence_count": 12,
+    "conflict_flags": []
+  },
+  {
+    "restaurant": "Abasolo",
+    "product": "Arroz con Camaron Chico",
+    "product_norm": "arroz con camaron chico",
+    "category": "seafood",
+    "price_amount": 10.99,
+    "price_currency": "USD",
+    "price_raws": [
+      "$10.99"
+    ],
+    "currencies": [
+      "USD"
+    ],
+    "image_hashes": [
+      "cec1379dbe2c5a48f2ba8ecf1d84c9de17db4a46d86df67d1123cae3faf7415b"
+    ],
+    "menu_ids": [
+      "menu_1761713193089",
+      "menu_1761713244972",
+      "menu_1761713296647",
+      "menu_1761713367571",
+      "menu_1761713462527"
+    ],
+    "sources": [
+      "D:\\OneDrive\\LongTermMemory\\100_PROYECTOS\\110_STRTGY\\1161_PastesKikos_Softlanding_Houston\\pasteskikos_softlanding_houston\\data\\processed\\menu_images\\Abasolo\\cec1379dbe2c5a48f2ba8ecf1d84c9de17db4a46d86df67d1123cae3faf7415b.jpg"
+    ],
+    "flavour_notes": [
+      {
+        "taste": "umami",
+        "intensity": 0.5
+      },
+      {
+        "taste": "other",
+        "intensity": 0.5
+      }
+    ],
+    "specific_flavours": [],
+    "descriptions": [],
+    "sections": [],
+    "ingredients": [],
+    "occurrence_count": 5,
+    "conflict_flags": []
+  },
+  {
+    "restaurant": "Abasolo",
+    "product": "Combo de Mariscos Grande",
+    "product_norm": "combo de mariscos grande",
+    "category": "seafood",
+    "price_amount": 15.99,
+    "price_currency": "USD",
+    "price_raws": [
+      "$15.99"
+    ],
+    "currencies": [
+      "USD"
+    ],
+    "image_hashes": [
+      "cec1379dbe2c5a48f2ba8ecf1d84c9de17db4a46d86df67d1123cae3faf7415b"
+    ],
+    "menu_ids": [
+      "menu_1761713193089",
+      "menu_1761713244972",
+      "menu_1761713296647",
+      "menu_1761713367571",
+      "menu_1761713462527"
+    ],
+    "sources": [
+      "D:\\OneDrive\\LongTermMemory\\100_PROYECTOS\\110_STRTGY\\1161_PastesKikos_Softlanding_Houston\\pasteskikos_softlanding_houston\\data\\processed\\menu_images\\Abasolo\\cec1379dbe2c5a48f2ba8ecf1d84c9de17db4a46d86df67d1123cae3faf7415b.jpg"
+    ],
+    "flavour_notes": [
+      {
+        "taste": "umami",
+        "intensity": 0.575
+      }
+    ],
+    "specific_flavours": [],
+    "descriptions": [],
+    "sections": [],
+    "ingredients": [],
+    "occurrence_count": 5,
+    "conflict_flags": []
+  },
+  {
+    "restaurant": "Abasolo",
+    "product": "Gorditas de Camaron o Pescado",
+    "product_norm": "gorditas de camaron o pescado",
+    "category": "tacos",
+    "price_amount": 5.99,
+    "price_currency": "USD",
+    "price_raws": [
+      "$4.99",
+      "$5.99"
+    ],
+    "currencies": [
+      "USD"
+    ],
+    "image_hashes": [
+      "cec1379dbe2c5a48f2ba8ecf1d84c9de17db4a46d86df67d1123cae3faf7415b",
+      "d9d30ac02d1e8604f4487c51f27eaf1e10a28d9a99354b2e4cecf3e18fa3a7d1"
+    ],
+    "menu_ids": [
+      "menu_1761713193089",
+      "menu_1761713244972",
+      "menu_1761713296647",
+      "menu_1761713367571",
+      "menu_1761713426879",
+      "menu_1761713462527"
+    ],
+    "sources": [
+      "D:\\OneDrive\\LongTermMemory\\100_PROYECTOS\\110_STRTGY\\1161_PastesKikos_Softlanding_Houston\\pasteskikos_softlanding_houston\\data\\processed\\menu_images\\Abasolo\\cec1379dbe2c5a48f2ba8ecf1d84c9de17db4a46d86df67d1123cae3faf7415b.jpg",
+      "D:\\OneDrive\\LongTermMemory\\100_PROYECTOS\\110_STRTGY\\1161_PastesKikos_Softlanding_Houston\\pasteskikos_softlanding_houston\\data\\processed\\menu_images\\Abasolo\\d9d30ac02d1e8604f4487c51f27eaf1e10a28d9a99354b2e4cecf3e18fa3a7d1.jpg"
+    ],
+    "flavour_notes": [
+      {
+        "taste": "umami",
+        "intensity": 0.45
+      },
+      {
+        "taste": "other",
+        "intensity": 0.5
+      }
+    ],
+    "specific_flavours": [],
+    "descriptions": [],
+    "sections": [],
+    "ingredients": [],
+    "occurrence_count": 6,
+    "conflict_flags": []
+  },
+  {
+    "restaurant": "Abasolo",
+    "product": "Quesadilla de Camaron Chica",
+    "product_norm": "quesadilla de camaron chica",
+    "category": "tacos",
+    "price_amount": 4.99,
+    "price_currency": "USD",
+    "price_raws": [
+      "$4.99"
+    ],
+    "currencies": [
+      "USD"
+    ],
+    "image_hashes": [
+      "cec1379dbe2c5a48f2ba8ecf1d84c9de17db4a46d86df67d1123cae3faf7415b"
+    ],
+    "menu_ids": [
+      "menu_1761713193089",
+      "menu_1761713244972",
+      "menu_1761713296647",
+      "menu_1761713367571",
+      "menu_1761713462527"
+    ],
+    "sources": [
+      "D:\\OneDrive\\LongTermMemory\\100_PROYECTOS\\110_STRTGY\\1161_PastesKikos_Softlanding_Houston\\pasteskikos_softlanding_houston\\data\\processed\\menu_images\\Abasolo\\cec1379dbe2c5a48f2ba8ecf1d84c9de17db4a46d86df67d1123cae3faf7415b.jpg"
+    ],
+    "flavour_notes": [
+      {
+        "taste": "umami",
+        "intensity": 0.4
+      },
+      {
+        "taste": "other",
+        "intensity": 0.5
+      }
+    ],
+    "specific_flavours": [],
+    "descriptions": [],
+    "sections": [],
+    "ingredients": [],
+    "occurrence_count": 5,
+    "conflict_flags": []
+  },
+  {
+    "restaurant": "Abasolo",
+    "product": "Quesadilla de Camaron Grande",
+    "product_norm": "quesadilla de camaron grande",
+    "category": "tacos",
+    "price_amount": 12.99,
+    "price_currency": "USD",
+    "price_raws": [
+      "$12.99"
+    ],
+    "currencies": [
+      "USD"
+    ],
+    "image_hashes": [
+      "cec1379dbe2c5a48f2ba8ecf1d84c9de17db4a46d86df67d1123cae3faf7415b"
+    ],
+    "menu_ids": [
+      "menu_1761713193089",
+      "menu_1761713244972",
+      "menu_1761713296647",
+      "menu_1761713367571",
+      "menu_1761713462527"
+    ],
+    "sources": [
+      "D:\\OneDrive\\LongTermMemory\\100_PROYECTOS\\110_STRTGY\\1161_PastesKikos_Softlanding_Houston\\pasteskikos_softlanding_houston\\data\\processed\\menu_images\\Abasolo\\cec1379dbe2c5a48f2ba8ecf1d84c9de17db4a46d86df67d1123cae3faf7415b.jpg"
+    ],
+    "flavour_notes": [
+      {
+        "taste": "umami",
+        "intensity": 0.5
+      }
+    ],
+    "specific_flavours": [],
+    "descriptions": [],
+    "sections": [],
+    "ingredients": [],
+    "occurrence_count": 5,
+    "conflict_flags": []
+  },
+  {
+    "restaurant": "Abasolo",
+    "product": "Tacos Salado de Pollo",
+    "product_norm": "tacos salado de pollo",
+    "category": "tacos",
+    "price_amount": 12.99,
+    "price_currency": "USD",
+    "price_raws": [
+      "$12.99"
+    ],
+    "currencies": [
+      "USD"
+    ],
+    "image_hashes": [
+      "cec1379dbe2c5a48f2ba8ecf1d84c9de17db4a46d86df67d1123cae3faf7415b"
+    ],
+    "menu_ids": [
+      "menu_1761713193089",
+      "menu_1761713244972",
+      "menu_1761713296647",
+      "menu_1761713367571",
+      "menu_1761713462527"
+    ],
+    "sources": [
+      "D:\\OneDrive\\LongTermMemory\\100_PROYECTOS\\110_STRTGY\\1161_PastesKikos_Softlanding_Houston\\pasteskikos_softlanding_houston\\data\\processed\\menu_images\\Abasolo\\cec1379dbe2c5a48f2ba8ecf1d84c9de17db4a46d86df67d1123cae3faf7415b.jpg"
+    ],
+    "flavour_notes": [
+      {
+        "taste": "umami",
+        "intensity": 0.45
+      },
+      {
+        "taste": "salty",
+        "intensity": 0.5
+      }
+    ],
+    "specific_flavours": [],
+    "descriptions": [],
+    "sections": [],
+    "ingredients": [],
+    "occurrence_count": 5,
+    "conflict_flags": []
+  },
+  {
+    "restaurant": "Abasolo",
+    "product": "Tostada de Camaron",
+    "product_norm": "tostada de camaron",
+    "category": "seafood",
+    "price_amount": 3.99,
+    "price_currency": "USD",
+    "price_raws": [
+      "$3.99"
+    ],
+    "currencies": [
+      "USD"
+    ],
+    "image_hashes": [
+      "cec1379dbe2c5a48f2ba8ecf1d84c9de17db4a46d86df67d1123cae3faf7415b"
+    ],
+    "menu_ids": [
+      "menu_1761713296647",
+      "menu_1761713367571",
+      "menu_1761713462527"
+    ],
+    "sources": [
+      "D:\\OneDrive\\LongTermMemory\\100_PROYECTOS\\110_STRTGY\\1161_PastesKikos_Softlanding_Houston\\pasteskikos_softlanding_houston\\data\\processed\\menu_images\\Abasolo\\cec1379dbe2c5a48f2ba8ecf1d84c9de17db4a46d86df67d1123cae3faf7415b.jpg"
+    ],
+    "flavour_notes": [
+      {
+        "taste": "umami",
+        "intensity": 0.433
+      }
+    ],
+    "specific_flavours": [],
+    "descriptions": [],
+    "sections": [],
+    "ingredients": [],
+    "occurrence_count": 3,
+    "conflict_flags": []
+  },
+  {
+    "restaurant": "Abasolo",
+    "product": "Tostada de Ceviche",
+    "product_norm": "tostada de ceviche",
+    "category": "seafood",
+    "price_amount": 3.99,
+    "price_currency": "USD",
+    "price_raws": [
+      "$3.99"
+    ],
+    "currencies": [
+      "USD"
+    ],
+    "image_hashes": [
+      "cec1379dbe2c5a48f2ba8ecf1d84c9de17db4a46d86df67d1123cae3faf7415b"
+    ],
+    "menu_ids": [
+      "menu_1761713296647",
+      "menu_1761713367571",
+      "menu_1761713462527"
+    ],
+    "sources": [
+      "D:\\OneDrive\\LongTermMemory\\100_PROYECTOS\\110_STRTGY\\1161_PastesKikos_Softlanding_Houston\\pasteskikos_softlanding_houston\\data\\processed\\menu_images\\Abasolo\\cec1379dbe2c5a48f2ba8ecf1d84c9de17db4a46d86df67d1123cae3faf7415b.jpg"
+    ],
+    "flavour_notes": [
+      {
+        "taste": "sour",
+        "intensity": 0.55
+      },
+      {
+        "taste": "umami",
+        "intensity": 0.4
+      }
+    ],
+    "specific_flavours": [],
+    "descriptions": [],
+    "sections": [],
+    "ingredients": [],
+    "occurrence_count": 3,
+    "conflict_flags": []
+  },
+  {
+    "restaurant": "Abasolo",
+    "product": "MINI TACOS",
+    "product_norm": "mini tacos",
+    "category": "tacos",
+    "price_amount": 7.99,
+    "price_currency": "USD",
+    "price_raws": [
+      "$7.99"
+    ],
+    "currencies": [
+      "USD"
+    ],
+    "image_hashes": [
+      "d9d30ac02d1e8604f4487c51f27eaf1e10a28d9a99354b2e4cecf3e18fa3a7d1"
+    ],
+    "menu_ids": [
+      "menu_1761713426879"
+    ],
+    "sources": [
+      "D:\\OneDrive\\LongTermMemory\\100_PROYECTOS\\110_STRTGY\\1161_PastesKikos_Softlanding_Houston\\pasteskikos_softlanding_houston\\data\\processed\\menu_images\\Abasolo\\d9d30ac02d1e8604f4487c51f27eaf1e10a28d9a99354b2e4cecf3e18fa3a7d1.jpg"
+    ],
+    "flavour_notes": [
+      {
+        "taste": "other",
+        "intensity": 0.5
+      }
+    ],
+    "specific_flavours": [],
+    "descriptions": [],
+    "sections": [],
+    "ingredients": [],
+    "occurrence_count": 1,
+    "conflict_flags": []
+  }
+]

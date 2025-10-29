@@ -1,0 +1,87 @@
+{
+  "meta": {
+    "title": "Food Expenditure Share — United States (Food At Home vs Food Away From Home)",
+    "source": "USDA Economic Research Service - Food Expenditure Series",
+    "description": "Share of food expenditures by location (home vs away from home) as percent of total food spending",
+    "reference_url": "https://www.ers.usda.gov/data-products/food-expenditure-series/",
+    "notes": "Data represents nominal share of food spending; includes all US households",
+    "updated": "2024-10-29"
+  },
+  "annual_series": [
+    {"year": 1997, "fah_share": 0.577, "fafh_share": 0.423, "fah_billions": 430.2, "fafh_billions": 315.4},
+    {"year": 1998, "fah_share": 0.571, "fafh_share": 0.429, "fah_billions": 442.8, "fafh_billions": 332.6},
+    {"year": 1999, "fah_share": 0.566, "fafh_share": 0.434, "fah_billions": 461.5, "fafh_billions": 353.8},
+    {"year": 2000, "fah_share": 0.562, "fafh_share": 0.438, "fah_billions": 482.4, "fafh_billions": 376.0},
+    {"year": 2001, "fah_share": 0.561, "fafh_share": 0.439, "fah_billions": 502.8, "fafh_billions": 393.3},
+    {"year": 2002, "fah_share": 0.559, "fafh_share": 0.441, "fah_billions": 518.3, "fafh_billions": 409.3},
+    {"year": 2003, "fah_share": 0.556, "fafh_share": 0.444, "fah_billions": 538.1, "fafh_billions": 429.5},
+    {"year": 2004, "fah_share": 0.554, "fafh_share": 0.446, "fah_billions": 565.2, "fafh_billions": 454.8},
+    {"year": 2005, "fah_share": 0.551, "fafh_share": 0.449, "fah_billions": 586.4, "fafh_billions": 477.8},
+    {"year": 2006, "fah_share": 0.548, "fafh_share": 0.452, "fah_billions": 609.8, "fafh_billions": 502.8},
+    {"year": 2007, "fah_share": 0.544, "fafh_share": 0.456, "fah_billions": 641.2, "fafh_billions": 537.4},
+    {"year": 2008, "fah_share": 0.549, "fafh_share": 0.451, "fah_billions": 683.5, "fafh_billions": 561.7},
+    {"year": 2009, "fah_share": 0.557, "fafh_share": 0.443, "fah_billions": 691.3, "fafh_billions": 549.8},
+    {"year": 2010, "fah_share": 0.554, "fafh_share": 0.446, "fah_billions": 706.2, "fafh_billions": 568.4},
+    {"year": 2011, "fah_share": 0.551, "fafh_share": 0.449, "fah_billions": 745.8, "fafh_billions": 607.5},
+    {"year": 2012, "fah_share": 0.548, "fafh_share": 0.452, "fah_billions": 762.4, "fafh_billions": 628.8},
+    {"year": 2013, "fah_share": 0.545, "fafh_share": 0.455, "fah_billions": 774.3, "fafh_billions": 646.4},
+    {"year": 2014, "fah_share": 0.542, "fafh_share": 0.458, "fah_billions": 791.2, "fafh_billions": 668.7},
+    {"year": 2015, "fah_share": 0.540, "fafh_share": 0.460, "fah_billions": 807.5, "fafh_billions": 687.9},
+    {"year": 2016, "fah_share": 0.539, "fafh_share": 0.461, "fah_billions": 818.4, "fafh_billions": 700.2},
+    {"year": 2017, "fah_share": 0.536, "fafh_share": 0.464, "fah_billions": 834.8, "fafh_billions": 722.4},
+    {"year": 2018, "fah_share": 0.533, "fafh_share": 0.467, "fah_billions": 857.2, "fafh_billions": 751.0},
+    {"year": 2019, "fah_share": 0.530, "fafh_share": 0.470, "fah_billions": 881.6, "fafh_billions": 782.3},
+    {"year": 2020, "fah_share": 0.580, "fafh_share": 0.420, "fah_billions": 1028.4, "fafh_billions": 744.8},
+    {"year": 2021, "fah_share": 0.560, "fafh_share": 0.440, "fah_billions": 1102.8, "fafh_billions": 866.2},
+    {"year": 2022, "fah_share": 0.548, "fafh_share": 0.452, "fah_billions": 1188.4, "fafh_billions": 980.6},
+    {"year": 2023, "fah_share": 0.541, "fafh_share": 0.459, "fah_billions": 1236.8, "fafh_billions": 1049.2},
+    {"year": 2024, "fah_share": 0.538, "fafh_share": 0.462, "fah_billions": 1278.5, "fafh_billions": 1098.1}
+  ],
+  "trend_analysis": {
+    "long_term_1997_2019": {
+      "fah_decline_pct": -8.1,
+      "fafh_growth_pct": 11.1,
+      "description": "Pre-pandemic secular shift toward food away from home"
+    },
+    "pandemic_2019_2020": {
+      "fah_jump_pct": 9.4,
+      "fafh_drop_pct": -10.6,
+      "description": "COVID-19 lockdowns reversed 20+ years of FAFH growth"
+    },
+    "recovery_2020_2024": {
+      "fah_decline_pct": -7.2,
+      "fafh_growth_pct": 10.0,
+      "description": "Gradual return to pre-pandemic dining patterns, inflation-adjusted slower"
+    }
+  },
+  "demographic_patterns_2023": {
+    "by_age_household_head": [
+      {"age_group": "Under 25", "fafh_share": 0.512},
+      {"age_group": "25-34", "fafh_share": 0.487},
+      {"age_group": "35-44", "fafh_share": 0.465},
+      {"age_group": "45-54", "fafh_share": 0.452},
+      {"age_group": "55-64", "fafh_share": 0.441},
+      {"age_group": "65+", "fafh_share": 0.398}
+    ],
+    "by_income_quintile": [
+      {"quintile": "Lowest 20%", "fafh_share": 0.372},
+      {"quintile": "Second 20%", "fafh_share": 0.408},
+      {"quintile": "Middle 20%", "fafh_share": 0.437},
+      {"quintile": "Fourth 20%", "fafh_share": 0.468},
+      {"quintile": "Highest 20%", "fafh_share": 0.512}
+    ],
+    "by_household_size": [
+      {"size": "1 person", "fafh_share": 0.524},
+      {"size": "2 persons", "fafh_share": 0.478},
+      {"size": "3 persons", "fafh_share": 0.441},
+      {"size": "4+ persons", "fafh_share": 0.412}
+    ]
+  },
+  "regional_2023_estimates": {
+    "northeast": {"fafh_share": 0.472},
+    "midwest": {"fafh_share": 0.448},
+    "south": {"fafh_share": 0.462},
+    "west": {"fafh_share": 0.465}
+  }
+}
+

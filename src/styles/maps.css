@@ -1,0 +1,71 @@
+/* Map styles for Pastes Kikos Observable site */
+
+/* Leaflet overrides */
+.leaflet-container {
+  font-family: inherit;
+}
+
+.leaflet-popup-content-wrapper {
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.leaflet-popup-content {
+  margin: 15px;
+  line-height: 1.5;
+}
+
+.leaflet-popup-content h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.leaflet-popup-content table {
+  margin: 10px 0;
+  font-size: 13px;
+}
+
+.leaflet-popup-content table td {
+  padding: 4px 8px;
+}
+
+.leaflet-tooltip {
+  background-color: rgba(0,0,0,0.8);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 10px;
+  font-size: 12px;
+}
+
+/* Map legend */
+.map-legend {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  max-width: 300px;
+}
+
+.map-legend h4 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.map-legend-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 12px;
+}
+
+.map-legend-color {
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+  border-radius: 3px;
+  border: 1px solid #ddd;
+}
+

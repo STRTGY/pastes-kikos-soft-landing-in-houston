@@ -3,8 +3,8 @@ toc: false
 ---
 
 ```js
-// Mapbox version (swap back to hunger_index.js to use Leaflet)
-const { default: hungerIndexMap } = await import("./components/hunger_index_mapbox.js");
+// Mapbox version (Leaflet version deprecated)
+const { default: hungerIndexMap } = await import("./components/maps/hunger-index-map.js");
 ```
 
 ```js

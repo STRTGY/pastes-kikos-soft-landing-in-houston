@@ -1,0 +1,251 @@
+category,price_mean,price_median,count
+Restaurant,1.763696162881754,1.0,1277
+Mexican restaurant,1.3771910112359549,1.0,1068
+Fast food restaurant,1.0828865979381443,1.0,485
+Pizza restaurant,1.72576,1.0,250
+American restaurant,2.4310822510822514,2.0,231
+Chicken restaurant,1.3178604651162789,1.0,215
+Sandwich shop,1.169811320754717,1.0,212
+Chinese restaurant,1.8595073891625618,1.0,203
+Seafood restaurant,2.6642364532019704,3.4,203
+Taco restaurant,1.2817032967032966,1.0,182
+Vietnamese restaurant,1.5691620111731843,1.0,179
+Hamburger restaurant,1.8718181818181816,1.0,132
+Salvadoran restaurant,1.4025242718446602,1.0,103
+Barbecue restaurant,2.4394117647058824,2.0,102
+Italian restaurant,1.8079862700228833,1.3456521739130434,95
+Honduran restaurant,1.4493478260869566,1.0,92
+Pizza delivery,1.0293478260869566,1.0,92
+Chicken wings restaurant,2.917426900584795,3.4,90
+Coffee shop,2.657078651685393,3.4,89
+Health food restaurant,2.129826989619377,2.0,85
+Tex-Mex restaurant,2.7735897435897434,3.4,78
+New American restaurant,2.023970588235294,1.9499999999999997,68
+Japanese restaurant,2.3066258741258743,2.344034090909091,65
+Thai restaurant,2.5846875,3.4,64
+Mediterranean restaurant,2.444262295081967,2.0,61
+Donut shop,1.0,1.0,59
+Indian restaurant,2.1967272727272724,1.84,55
+Breakfast restaurant,1.7369811320754718,1.0,53
+Cajun restaurant,2.4658823529411764,2.0,51
+West African restaurant,2.7464962121212118,3.4,48
+Sushi restaurant,1.8006250000000001,2.0,48
+Korean restaurant,2.6168888888888886,3.4,45
+Bar & grill,2.4504761904761905,2.7,42
+Butcher shop,2.0428571428571427,2.0,42
+Juice shop,3.0275,3.4,40
+Middle Eastern restaurant,2.0483333333333333,1.42,36
+Soul food restaurant,2.2226666666666666,2.0,30
+Southern restaurant (US),2.3962962962962964,2.0,27
+Steak house,2.7115384615384617,3.0,26
+Bakery,1.9756521739130435,1.0,23
+Buffet restaurant,1.9004475703324812,1.0,23
+Pho restaurant,1.6818181818181819,1.0,22
+Latin American restaurant,2.27,2.0,22
+Halal restaurant,1.5853146853146856,1.0,22
+Asian restaurant,1.6514285714285715,1.0,21
+Ramen restaurant,2.4099999999999997,2.7,20
+Brunch restaurant,2.231578947368421,2.0,19
+Convenience store,1.0,1.0,19
+Colombian restaurant,2.077263157894737,1.9240000000000002,19
+Cafe,2.3305263157894736,2.0,19
+Vegan restaurant,2.3294117647058825,2.0,17
+Creole restaurant,1.9251918158567776,2.0,17
+Guatemalan restaurant,2.3125,2.0,16
+Asian fusion restaurant,2.554666666666667,3.4,15
+Family restaurant,1.8133333333333332,2.0,15
+Fine dining restaurant,3.933333333333333,4.0,15
+Caterer,2.1285714285714286,2.0,14
+French restaurant,2.9562874251497004,3.0,14
+Cuban restaurant,1.3642857142857143,1.0,14
+African restaurant,1.6999999999999997,2.0,13
+Ice cream shop,1.5538461538461539,1.0,13
+Pakistani restaurant,1.9876923076923076,1.0,13
+Jamaican restaurant,2.223333333333333,1.84,12
+Korean barbecue restaurant,1.9341886608015642,1.515542521994135,12
+Persian restaurant,2.6401041666666667,3.4,12
+Filipino restaurant,2.4233333333333333,2.7,12
+Sichuan restaurant,2.9233333333333333,3.4,12
+Bar,2.0254545454545454,1.84,11
+Takeout Restaurant,1.0,1.0,11
+Turkish restaurant,2.0272727272727273,1.5,11
+Central American restaurant,1.2662499999999999,1.0,10
+Hot pot restaurant,2.4690624999999997,2.4484375,10
+Hawaiian restaurant,1.605217391304348,1.0,10
+Caribbean restaurant,1.8699999999999999,1.0,10
+Hunan restaurant,2.2,2.2,10
+Brazilian restaurant,2.165454545454545,2.0,10
+Hot dog restaurant,1.78,1.5,10
+Peruvian restaurant,2.7418803418803415,3.4,9
+Vegetarian restaurant,1.5333333333333334,1.0,9
+Restaurant supply store,1.0,1.0,9
+Venezuelan restaurant,2.2718954248366012,2.0,9
+Delivery Restaurant,2.225,2.0,8
+Dumpling restaurant,1.7193181818181817,1.0,8
+Dim sum restaurant,1.975,1.0,8
+Grocery store,1.0,1.0,8
+Mexican torta restaurant,1.5303571428571427,1.0,7
+Bagel shop,1.0,1.0,7
+Salad shop,1.2999999999999996,1.2999999999999998,7
+Poke bar,2.2372670807453416,1.7304347826086954,7
+Lebanese restaurant,2.242857142857143,3.0999999999999996,7
+Bubble tea store,1.0,1.0,7
+Greek restaurant,1.7028571428571428,1.8399999999999999,7
+Ethiopian restaurant,2.533333333333333,2.7,6
+Kosher restaurant,2.8666666666666667,3.4,6
+Modern Indian restaurant,2.15,1.2999999999999998,6
+Afghan restaurant,1.4166666666666667,1.2999999999999998,6
+Argentinian restaurant,2.1,2.05,6
+Authentic Japanese restaurant,2.533333333333333,2.7,6
+Creperie,2.6,3.4,6
+Cantonese restaurant,1.9400000000000002,1.42,6
+Gyro restaurant,2.128,1.84,5
+Deli,1.42,1.0,5
+Fusion restaurant,2.3600000000000003,2.0,5
+Chinese noodle restaurant,1.9600000000000002,1.0,5
+Bistro,2.4799999999999995,2.0,5
+Po’ boys restaurant,1.6480000000000001,1.0,5
+Spanish restaurant,2.127272727272727,1.9681818181818178,5
+Teppanyaki restaurant,2.6506666666666665,3.253333333333333,5
+Supermarket,1.0,1.0,5
+Brewery,2.3600000000000003,2.0,5
+Diner,1.9661764705882352,1.4323529411764704,4
+Dessert restaurant,1.0,1.0,4
+Haitian restaurant,1.6749999999999998,1.0,4
+Gas station,1.0,1.0,4
+Shawarma restaurant,1.81,1.42,4
+Sports bar,2.45,2.7,4
+Malaysian restaurant,2.45,2.7,4
+Association / Organization,1.0,1.0,3
+Catering food and drink supplier,1.0,1.0,3
+Grill,1.0,1.0,3
+Health food store,1.2999999999999998,1.2999999999999998,3
+Hot dog stand,1.0,1.0,3
+Yakiniku restaurant,3.1,4.0,3
+Yemeni restaurant,2.2152173913043476,1.5999999999999999,3
+Snack bar,1.0,1.0,3
+Shabu-shabu restaurant,2.4681818181818183,2.5545454545454542,3
+Shanghainese restaurant,1.8,1.0,3
+Taiwanese restaurant,1.7,1.0,3
+Pan-Asian restaurant,1.5,1.5,3
+South Indian restaurant,1.5,1.5,3
+Oyster bar restaurant,2.0,2.0,3
+Modern European restaurant,2.1569999999999996,1.5999999999999999,3
+Mexican grocery store,1.0,1.0,3
+Lounge,2.0,2.0,3
+Modern French restaurant,3.0,3.0,3
+Mobile caterer,1.0,1.0,3
+Irish pub,2.08,1.8399999999999999,3
+Izakaya restaurant,2.7999999999999994,3.4,3
+South American restaurant,2.0,1.2999999999999998,3
+African goods store,2.0,2.0,3
+Cake shop,2.9,3.6999999999999997,3
+Burrito restaurant,1.0,1.0,3
+Oaxacan restaurant,3.0,3.0,2
+Southern Italian restaurant,2.5,2.5,2
+Truck stop,1.0,1.0,2
+Uruguayan restaurant,2.0,2.0,2
+Small plates restaurant,1.0,1.0,2
+Portuguese restaurant,3.0,3.0,2
+Nepalese restaurant,1.5,1.5,2
+Moroccan restaurant,1.0,1.0,2
+Pretzel store,1.0,1.0,2
+Steamed bun shop,1.0,1.0,2
+Shared-use commercial kitchen,1.0,1.0,2
+Self service restaurant,1.0,1.0,2
+Distillery,1.0,1.0,2
+North Indian restaurant,2.0,2.0,2
+Churreria,1.0,1.0,2
+Corporate office,2.0,2.0,2
+Conveyor belt sushi restaurant,2.0,2.0,2
+Eclectic restaurant,3.0,3.0,2
+Egyptian restaurant,2.0,2.0,2
+Dominican restaurant,1.5,1.5,2
+European restaurant,2.5,2.5,2
+Frozen yogurt shop,1.0,1.0,2
+Hong Kong style fast food restaurant,1.0,1.0,2
+Food court,1.0,1.0,2
+Californian restaurant,2.0,2.0,2
+Cheesesteak restaurant,1.0,1.0,2
+Comedy club,2.0,2.0,2
+Biryani restaurant,1.0,1.0,2
+Modern izakaya restaurant,1.0,1.0,2
+Pub,1.5,1.5,2
+Organic restaurant,1.0,1.0,2
+Bowling alley,1.0,1.0,1
+Belgian restaurant,2.0,2.0,1
+Banquet hall,1.0,1.0,1
+Asian grocery store,1.0,1.0,1
+Basque restaurant,1.0,1.0,1
+Car inspection station,1.0,1.0,1
+Cambodian restaurant,1.0,1.0,1
+Brewpub,1.0,1.0,1
+Business center,1.0,1.0,1
+Chocolate shop,1.0,1.0,1
+Cocktail bar,1.0,1.0,1
+Church,1.0,1.0,1
+Cleaning products supplier,1.0,1.0,1
+Hookah bar,3.0,3.0,1
+Hawker stall,1.0,1.0,1
+Fondue restaurant,3.0,3.0,1
+Fresh food market,1.0,1.0,1
+Gourmet grocery store,1.0,1.0,1
+Goan restaurant,3.0,3.0,1
+German restaurant,1.0,1.0,1
+Gastropub,3.0,3.0,1
+Fried chicken takeaway,1.0,1.0,1
+Eritrean restaurant,1.0,1.0,1
+East African restaurant,1.0,1.0,1
+Ecuadorian restaurant,1.0,1.0,1
+Fashion designer,1.0,1.0,1
+Falafel restaurant,1.0,1.0,1
+Event venue,1.0,1.0,1
+Fish & chips restaurant,1.0,1.0,1
+Dessert shop,1.0,1.0,1
+Dance restaurant,1.0,1.0,1
+Country food restaurant,1.0,1.0,1
+Beer garden,2.0,2.0,1
+Barbecue area,1.0,1.0,1
+Israeli restaurant,2.0,2.0,1
+Indian takeaway,2.0,2.0,1
+Icelandic restaurant,1.0,1.0,1
+Indian sizzler restaurant,2.0,2.0,1
+Indian grocery store,1.0,1.0,1
+Laotian restaurant,1.0,1.0,1
+Liquor store,1.0,1.0,1
+Lunch restaurant,1.0,1.0,1
+Live music bar,1.0,1.0,1
+Mexican goods store,1.0,1.0,1
+Mandarin restaurant,2.0,2.0,1
+Puerto Rican restaurant,1.0,1.0,1
+Pickleball court,1.0,1.0,1
+Pastry shop,2.0,2.0,1
+New England restaurant,2.0,2.0,1
+Northern Italian restaurant,1.0,1.0,1
+Non-profit organization,1.0,1.0,1
+Nicaraguan restaurant,1.0,1.0,1
+Pacific Northwest restaurant (US),3.0,3.0,1
+Kitchen supply store,1.0,1.0,1
+Seafood donburi restaurant,1.0,1.0,1
+South African restaurant,2.0,2.0,1
+South Asian restaurant,1.0,1.0,1
+Soft drinks shop,1.0,1.0,1
+Rice restaurant,1.0,1.0,1
+Raw food restaurant,1.0,1.0,1
+Seafood farm,2.0,2.0,1
+Sri Lankan restaurant,1.0,1.0,1
+Southwestern restaurant (US),1.0,1.0,1
+Tourist attraction,1.0,1.0,1
+Traditional American restaurant,2.0,2.0,1
+Tapas restaurant,2.0,2.0,1
+Swedish restaurant,1.0,1.0,1
+Tortilla shop,1.0,1.0,1
+Tea house,1.0,1.0,1
+Video arcade,1.0,1.0,1
+Vegetarian cafe and deli,1.0,1.0,1
+Udon noodle restaurant,2.0,2.0,1
+Uzbeki restaurant,2.0,2.0,1
+Window tinting service,1.0,1.0,1
+Wholesale market,1.0,1.0,1
+Wok restaurant,1.0,1.0,1
+Wine bar,1.0,1.0,1

@@ -30,17 +30,34 @@ export default {
       path: "/pages/cliente/evaluacion",
     },
     {
-      name: "4. Numeralia y anexos",
+      name: "4. Percepción de Valor (Houston)",
+      pages: [
+        { name: "4.1 Overview", path: "/pages/customer-value/overview" },
+        { name: "4.2 Market Map", path: "/pages/customer-value/value-map" },
+        { name: "4.3 Restaurant Detail", path: "/pages/customer-value/detail" }
+      ]
+    },
+    {
+      name: "5. Selección de Ubicaciones",
+      path: "/pages/seleccion-ubicacion/map"
+    },
+    {
+      name: "6. Numeralia y anexos",
       open: false,
       pages: [
-        { name: "4.1 Conclusiones", path: "/pages/finales/conclusiones" },
-        { name: "4.2 Anexos y Datos", path: "/pages/finales/anexos" }
+        { name: "5.1 Conclusiones", path: "/pages/finales/conclusiones" },
+        { name: "5.2 Anexos y Datos", path: "/pages/finales/anexos" }
       ]
     }
   ],
 
   // Content to add to the head of the page, e.g. for a favicon:
-  head: '<link rel="icon" href="observable.png" type="image/png" sizes="32x32">',
+  head: `
+    <link rel="icon" href="observable.png" type="image/png" sizes="32x32">
+    <link rel="stylesheet" href="/styles/typography.css">
+    <link rel="stylesheet" href="/styles/layout.css">
+    <link rel="stylesheet" href="/styles/maps.css">
+  `,
 
   // The path to the source root.
   root: "src",

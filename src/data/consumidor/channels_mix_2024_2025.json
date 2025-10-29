@@ -1,0 +1,15 @@
+[
+  {
+    "year": "2024",
+    "dine_in": 42,
+    "takeout": 31,
+    "delivery": 27
+  },
+  {
+    "year": "2025",
+    "dine_in": 40,
+    "takeout": 33,
+    "delivery": 27
+  }
+]
+

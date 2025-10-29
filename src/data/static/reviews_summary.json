@@ -1,0 +1,281 @@
+{
+  "metadata": {
+    "total_reviews": 10,
+    "reviews_with_sentiment": 10,
+    "unique_aspects_mentioned": 6
+  },
+  "sentiment": {
+    "count": 10,
+    "mean": 0.27,
+    "median": 0.65,
+    "stdev": 0.7572611467944492,
+    "min": -1.0,
+    "max": 1.0,
+    "distribution": {
+      "very_negative": 2,
+      "negative": 1,
+      "neutral": 1,
+      "positive": 1,
+      "very_positive": 5
+    }
+  },
+  "aspects": {
+    "counts": {
+      "food": 7,
+      "service": 7,
+      "staff": 2,
+      "cleanliness": 1,
+      "location": 1,
+      "ambience": 1
+    },
+    "stats": {
+      "food": {
+        "count": 7,
+        "mean_score": 3.0,
+        "median_score": 4.0,
+        "stdev": 2.23606797749979,
+        "sample_descriptions": [
+          "Pizza is always fresh and tasty.",
+          "Food was good, but not the reviewer's favorite pizza.",
+          "Pizzas were incorrect and missing garlic crust.",
+          "The pizza was cold, indicating poor food quality.",
+          "Food is always ready when expected.",
+          "Received the wrong pizza with incorrect toppings and crust.",
+          "Food is described as delicious."
+        ]
+      },
+      "staff": {
+        "count": 2,
+        "mean_score": 4.75,
+        "median_score": 4.75,
+        "stdev": 0.3535533905932738,
+        "sample_descriptions": [
+          "Staff is amazing and friendly.",
+          "Super nice people contribute to a welcoming atmosphere."
+        ]
+      },
+      "cleanliness": {
+        "count": 1,
+        "mean_score": 5.0,
+        "median_score": 5.0,
+        "stdev": 0,
+        "sample_descriptions": [
+          "The store is always clean."
+        ]
+      },
+      "service": {
+        "count": 7,
+        "mean_score": 3.142857142857143,
+        "median_score": 4.0,
+        "stdev": 1.864454471471609,
+        "sample_descriptions": [
+          "Service was good and timely.",
+          "Manager's response was unhelpful and unprofessional.",
+          "Friendly and timely service enhances the dining experience.",
+          "Drive-up service is fast and friendly.",
+          "La atención es buena, lo que sugiere un servicio de calidad.",
+          "Poor customer service with unhelpful staff and rude responses.",
+          "Good at times, but lacks consistency."
+        ]
+      },
+      "location": {
+        "count": 1,
+        "mean_score": 3.0,
+        "median_score": 3.0,
+        "stdev": 0,
+        "sample_descriptions": [
+          "Delivery was to a non-existent address, but resolved with a nearby address."
+        ]
+      },
+      "ambience": {
+        "count": 1,
+        "mean_score": 5.0,
+        "median_score": 5.0,
+        "stdev": 0,
+        "sample_descriptions": [
+          "El sitio es excelente, lo que implica un ambiente agradable."
+        ]
+      }
+    }
+  },
+  "top_aspects": [
+    {
+      "aspect": "food",
+      "count": 7,
+      "mean_score": 3.0
+    },
+    {
+      "aspect": "service",
+      "count": 7,
+      "mean_score": 3.142857142857143
+    },
+    {
+      "aspect": "staff",
+      "count": 2,
+      "mean_score": 4.75
+    },
+    {
+      "aspect": "cleanliness",
+      "count": 1,
+      "mean_score": 5.0
+    },
+    {
+      "aspect": "location",
+      "count": 1,
+      "mean_score": 3.0
+    },
+    {
+      "aspect": "ambience",
+      "count": 1,
+      "mean_score": 5.0
+    }
+  ],
+  "sample_reviews": [
+    {
+      "sentiment_score": 1.0,
+      "summary": "The pizza is fresh and tasty, and the staff is friendly. The store maintains high cleanliness standards.",
+      "aspects": {
+        "food": {
+          "score": 5.0,
+          "description": "Pizza is always fresh and tasty."
+        },
+        "staff": {
+          "score": 5.0,
+          "description": "Staff is amazing and friendly."
+        },
+        "cleanliness": {
+          "score": 5.0,
+          "description": "The store is always clean."
+        }
+      },
+      "custom_id": "request_0"
+    },
+    {
+      "sentiment_score": 0.5,
+      "summary": "The food and service were good, but the pizza was not the reviewer's favorite. Delivery was timely despite an address issue.",
+      "aspects": {
+        "food": {
+          "score": 4.0,
+          "description": "Food was good, but not the reviewer's favorite pizza."
+        },
+        "service": {
+          "score": 4.0,
+          "description": "Service was good and timely."
+        },
+        "location": {
+          "score": 3.0,
+          "description": "Delivery was to a non-existent address, but resolved with a nearby address."
+        }
+      },
+      "custom_id": "request_2"
+    },
+    {
+      "sentiment_score": -0.7,
+      "summary": "The review expresses frustration over incorrect pizza orders and poor service. The reviewer felt their money was wasted due to the issues encountered.",
+      "aspects": {
+        "food": {
+          "score": 1.0,
+          "description": "Pizzas were incorrect and missing garlic crust."
+        },
+        "service": {
+          "score": 1.5,
+          "description": "Manager's response was unhelpful and unprofessional."
+        }
+      },
+      "custom_id": "request_4"
+    },
+    {
+      "sentiment_score": -0.5,
+      "summary": "The pizza was served cold, which negatively impacted the experience.",
+      "aspects": {
+        "food": {
+          "score": 1.0,
+          "description": "The pizza was cold, indicating poor food quality."
+        }
+      },
+      "custom_id": "request_6"
+    },
+    {
+      "sentiment_score": 0.8,
+      "summary": "The staff is friendly and efficient in processing orders. Overall, a positive experience.",
+      "aspects": {
+        "service": {
+          "score": 4.5,
+          "description": "Friendly and timely service enhances the dining experience."
+        },
+        "staff": {
+          "score": 4.5,
+          "description": "Super nice people contribute to a welcoming atmosphere."
+        }
+      },
+      "custom_id": "request_7"
+    },
+    {
+      "sentiment_score": 0.9,
+      "summary": "The food is consistently ready on time, and the drive-up service is efficient and friendly.",
+      "aspects": {
+        "food": {
+          "score": 5,
+          "description": "Food is always ready when expected."
+        },
+        "service": {
+          "score": 5,
+          "description": "Drive-up service is fast and friendly."
+        }
+      },
+      "custom_id": "request_9"
+    },
+    {
+      "sentiment_score": 0.8,
+      "summary": "El lugar es excelente y la atención es buena.",
+      "aspects": {
+        "service": {
+          "score": 4.5,
+          "description": "La atención es buena, lo que sugiere un servicio de calidad."
+        },
+        "ambience": {
+          "score": 5.0,
+          "description": "El sitio es excelente, lo que implica un ambiente agradable."
+        }
+      },
+      "custom_id": "request_10"
+    },
+    {
+      "sentiment_score": -1.0,
+      "summary": "The review expresses extreme dissatisfaction with the incorrect pizza order and poor customer service. The reviewer vows never to return and warns others.",
+      "aspects": {
+        "food": {
+          "score": 0.0,
+          "description": "Received the wrong pizza with incorrect toppings and crust."
+        },
+        "service": {
+          "score": 0.0,
+          "description": "Poor customer service with unhelpful staff and rude responses."
+        }
+      },
+      "custom_id": "request_11"
+    },
+    {
+      "sentiment_score": 0.0,
+      "summary": "The service is described as good but inconsistent.",
+      "aspects": {
+        "service": {
+          "score": 2.5,
+          "description": "Good at times, but lacks consistency."
+        }
+      },
+      "custom_id": "request_12"
+    },
+    {
+      "sentiment_score": 0.9,
+      "summary": "The food is quick, easy to obtain, and delicious.",
+      "aspects": {
+        "food": {
+          "score": 5,
+          "description": "Food is described as delicious."
+        }
+      },
+      "custom_id": "request_13"
+    }
+  ]
+}

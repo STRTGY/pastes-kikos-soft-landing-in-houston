@@ -1,0 +1,105 @@
+{
+  "analysis_date": "2025-10-29",
+  "methodology": {
+    "weights": {
+      "anglo": 0.4,
+      "drive_through": 0.3,
+      "occasion": 0.2,
+      "value_opportunity": 0.1
+    },
+    "cell_count": 1024,
+    "cell_type": "H3 R8 hexagons"
+  },
+  "zones": [
+    {
+      "zone_id": 1,
+      "centroid": [
+        -95.419094,
+        29.74778
+      ],
+      "score": 73.46,
+      "cells": 59,
+      "kpis": {
+        "anglo_pct": 93.9,
+        "drive_pct": 58.7,
+        "occasion_pct": 74.9,
+        "value_pct": 33.1,
+        "dist_arterial_m": 25.0,
+        "competition_2km": 43,
+        "dt_competition_2km": 9
+      }
+    },
+    {
+      "zone_id": 2,
+      "centroid": [
+        -95.418357,
+        29.807559
+      ],
+      "score": 70.81,
+      "cells": 10,
+      "kpis": {
+        "anglo_pct": 99.5,
+        "drive_pct": 53.9,
+        "occasion_pct": 44.9,
+        "value_pct": 58.5,
+        "dist_arterial_m": 425.0,
+        "competition_2km": 67,
+        "dt_competition_2km": 25
+      }
+    },
+    {
+      "zone_id": 3,
+      "centroid": [
+        -95.137943,
+        29.567577
+      ],
+      "score": 64.45,
+      "cells": 3,
+      "kpis": {
+        "anglo_pct": 96.8,
+        "drive_pct": 62.7,
+        "occasion_pct": 11.0,
+        "value_pct": 47.0,
+        "dist_arterial_m": 323.0,
+        "competition_2km": 18,
+        "dt_competition_2km": 6
+      }
+    },
+    {
+      "zone_id": 4,
+      "centroid": [
+        -95.439992,
+        29.684895
+      ],
+      "score": 80.85,
+      "cells": 1,
+      "kpis": {
+        "anglo_pct": 100.0,
+        "drive_pct": 90.7,
+        "occasion_pct": 37.0,
+        "value_pct": 62.4,
+        "dist_arterial_m": 5.0,
+        "competition_2km": 32,
+        "dt_competition_2km": 13
+      }
+    },
+    {
+      "zone_id": 5,
+      "centroid": [
+        -95.23966,
+        30.049517
+      ],
+      "score": 78.01,
+      "cells": 1,
+      "kpis": {
+        "anglo_pct": 100.0,
+        "drive_pct": 100.0,
+        "occasion_pct": 15.8,
+        "value_pct": 48.4,
+        "dist_arterial_m": 7.0,
+        "competition_2km": 10,
+        "dt_competition_2km": 3
+      }
+    }
+  ]
+}

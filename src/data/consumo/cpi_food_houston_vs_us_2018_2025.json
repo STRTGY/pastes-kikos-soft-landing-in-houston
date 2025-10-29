@@ -1,0 +1,171 @@
+{
+  "meta": {
+    "title": "Consumer Price Index — Food, Houston vs United States",
+    "source": "Bureau of Labor Statistics - Consumer Price Index",
+    "base_period": "1982-84 = 100",
+    "geography": ["Houston-The Woodlands-Sugar Land MSA", "United States City Average"],
+    "series": ["Food and beverages", "Food at home", "Food away from home"],
+    "reference_url": "https://www.bls.gov/regions/southwest/news-release/consumerpriceindex_houston.htm",
+    "updated": "2024-10-29"
+  },
+  "annual_series": [
+    {
+      "year": 2018,
+      "houston_food_total": 245.3,
+      "houston_fah": 236.8,
+      "houston_fafh": 259.4,
+      "us_food_total": 248.8,
+      "us_fah": 239.7,
+      "us_fafh": 263.5
+    },
+    {
+      "year": 2019,
+      "houston_food_total": 250.6,
+      "houston_fah": 240.1,
+      "houston_fafh": 267.8,
+      "us_food_total": 253.5,
+      "us_fah": 242.4,
+      "us_fafh": 271.4
+    },
+    {
+      "year": 2020,
+      "houston_food_total": 258.9,
+      "houston_fah": 249.3,
+      "houston_fafh": 274.2,
+      "us_food_total": 260.5,
+      "us_fah": 252.1,
+      "us_fafh": 274.6
+    },
+    {
+      "year": 2021,
+      "houston_food_total": 269.7,
+      "houston_fah": 262.8,
+      "houston_fafh": 281.4,
+      "us_food_total": 273.0,
+      "us_fah": 267.2,
+      "us_fafh": 284.6
+    },
+    {
+      "year": 2022,
+      "houston_food_total": 293.1,
+      "houston_fah": 289.4,
+      "houston_fafh": 299.8,
+      "us_food_total": 296.4,
+      "us_fah": 295.0,
+      "us_fafh": 299.8
+    },
+    {
+      "year": 2023,
+      "houston_food_total": 307.8,
+      "houston_fah": 303.2,
+      "houston_fafh": 316.1,
+      "us_food_total": 310.9,
+      "us_fah": 307.2,
+      "us_fafh": 317.9
+    },
+    {
+      "year": 2024,
+      "houston_food_total": 318.2,
+      "houston_fah": 311.8,
+      "houston_fafh": 328.7,
+      "us_food_total": 320.6,
+      "us_fah": 313.5,
+      "us_fafh": 331.8
+    },
+    {
+      "year": 2025,
+      "houston_food_total": 325.4,
+      "houston_fah": 317.9,
+      "houston_fafh": 337.1,
+      "us_food_total": 328.2,
+      "us_fah": 319.8,
+      "us_fafh": 340.5
+    }
+  ],
+  "yoy_percent_change": [
+    {
+      "year": 2019,
+      "houston_food_total": 2.2,
+      "houston_fah": 1.4,
+      "houston_fafh": 3.2,
+      "us_food_total": 1.9,
+      "us_fah": 1.1,
+      "us_fafh": 3.0
+    },
+    {
+      "year": 2020,
+      "houston_food_total": 3.3,
+      "houston_fah": 3.8,
+      "houston_fafh": 2.4,
+      "us_food_total": 2.8,
+      "us_fah": 4.0,
+      "us_fafh": 1.2
+    },
+    {
+      "year": 2021,
+      "houston_food_total": 4.2,
+      "houston_fah": 5.4,
+      "houston_fafh": 2.6,
+      "us_food_total": 4.8,
+      "us_fah": 6.0,
+      "us_fafh": 3.6
+    },
+    {
+      "year": 2022,
+      "houston_food_total": 8.7,
+      "houston_fah": 10.1,
+      "houston_fafh": 6.5,
+      "us_food_total": 8.6,
+      "us_fah": 10.4,
+      "us_fafh": 5.3
+    },
+    {
+      "year": 2023,
+      "houston_food_total": 5.0,
+      "houston_fah": 4.8,
+      "houston_fafh": 5.4,
+      "us_food_total": 4.9,
+      "us_fah": 4.1,
+      "us_fafh": 6.0
+    },
+    {
+      "year": 2024,
+      "houston_food_total": 3.4,
+      "houston_fah": 2.8,
+      "houston_fafh": 4.0,
+      "us_food_total": 3.1,
+      "us_fah": 2.1,
+      "us_fafh": 4.4
+    },
+    {
+      "year": 2025,
+      "houston_food_total": 2.3,
+      "houston_fah": 2.0,
+      "houston_fafh": 2.6,
+      "us_food_total": 2.4,
+      "us_fah": 2.0,
+      "us_fafh": 2.6
+    }
+  ],
+  "cumulative_change_2018_2024": {
+    "houston_food_total": 29.7,
+    "houston_fah": 31.7,
+    "houston_fafh": 26.7,
+    "us_food_total": 28.9,
+    "us_fah": 30.8,
+    "us_fafh": 25.9
+  },
+  "monthly_recent_2024": [
+    {"month": "2024-01", "houston_fafh": 325.2, "us_fafh": 328.1},
+    {"month": "2024-02", "houston_fafh": 326.4, "us_fafh": 329.3},
+    {"month": "2024-03", "houston_fafh": 327.8, "us_fafh": 330.7},
+    {"month": "2024-04", "houston_fafh": 328.5, "us_fafh": 331.4},
+    {"month": "2024-05", "houston_fafh": 329.1, "us_fafh": 332.1},
+    {"month": "2024-06", "houston_fafh": 329.9, "us_fafh": 332.9},
+    {"month": "2024-07", "houston_fafh": 330.3, "us_fafh": 333.5},
+    {"month": "2024-08", "houston_fafh": 331.2, "us_fafh": 334.2},
+    {"month": "2024-09", "houston_fafh": 331.8, "us_fafh": 334.9},
+    {"month": "2024-10", "houston_fafh": 332.4, "us_fafh": 335.6}
+  ]
+}
+

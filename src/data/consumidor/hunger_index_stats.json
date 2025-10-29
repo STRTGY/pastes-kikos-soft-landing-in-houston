@@ -1,0 +1,28 @@
+{
+  "peak_periods": [
+    {"day": "Thursday", "hour": 12, "index": 100, "label": "Almuerzo Thu"},
+    {"day": "Saturday", "hour": 19, "index": 100, "label": "Cena Sáb"},
+    {"day": "Wednesday", "hour": 12, "index": 98, "label": "Almuerzo Wed"},
+    {"day": "Friday", "hour": 19, "index": 98, "label": "Cena Vie"},
+    {"day": "Sunday", "hour": 12, "index": 98, "label": "Brunch Dom"}
+  ],
+  "valley_periods": [
+    {"day": "Monday", "hour": 3, "index": 4, "label": "Madrugada Lun"},
+    {"day": "Tuesday", "hour": 3, "index": 5, "label": "Madrugada Mar"},
+    {"day": "Wednesday", "hour": 3, "index": 6, "label": "Madrugada Mié"}
+  ],
+  "weekly_avg": 58.2,
+  "weekday_avg": 56.8,
+  "weekend_avg": 64.5,
+  "best_lunch_windows": [
+    {"day": "Thursday", "start": 11, "end": 14, "avg_index": 92.3},
+    {"day": "Wednesday", "start": 11, "end": 14, "avg_index": 90.7},
+    {"day": "Tuesday", "start": 11, "end": 14, "avg_index": 87.7}
+  ],
+  "best_dinner_windows": [
+    {"day": "Saturday", "start": 18, "end": 21, "avg_index": 95.0},
+    {"day": "Friday", "start": 18, "end": 21, "avg_index": 92.5},
+    {"day": "Thursday", "start": 18, "end": 21, "avg_index": 87.3}
+  ]
+}
+

@@ -1,0 +1,171 @@
+{
+  "meta": {
+    "title": "Anglo Community Profile — Houston MSA",
+    "geography": "Houston–The Woodlands–Sugar Land MSA (CBSA 26420)",
+    "race_group": "White alone, non-Hispanic",
+    "source": "US Census Bureau - American Community Survey 2022 5-year estimates",
+    "tables": ["DP05", "S1901", "S2301", "S0101", "S0801"],
+    "updated": "2024-10-29"
+  },
+  "population": {
+    "houston_msa": {
+      "total_population": 7122240,
+      "anglo_population": 2044103,
+      "anglo_share": 0.287,
+      "median_age_anglo": 42.1,
+      "median_age_total": 34.6
+    },
+    "texas": {
+      "total_population": 30029572,
+      "anglo_population": 11891142,
+      "anglo_share": 0.396,
+      "median_age_anglo": 44.3,
+      "median_age_total": 35.5
+    },
+    "us": {
+      "total_population": 333287557,
+      "anglo_population": 191697052,
+      "anglo_share": 0.575,
+      "median_age_anglo": 43.7,
+      "median_age_total": 38.9
+    }
+  },
+  "age_distribution_anglo": {
+    "houston": [
+      {"age_group": "0-17", "share": 0.183},
+      {"age_group": "18-24", "share": 0.072},
+      {"age_group": "25-34", "share": 0.141},
+      {"age_group": "35-44", "share": 0.142},
+      {"age_group": "45-54", "share": 0.127},
+      {"age_group": "55-64", "share": 0.147},
+      {"age_group": "65+", "share": 0.188}
+    ],
+    "texas": [
+      {"age_group": "0-17", "share": 0.179},
+      {"age_group": "18-24", "share": 0.068},
+      {"age_group": "25-34", "share": 0.125},
+      {"age_group": "35-44", "share": 0.131},
+      {"age_group": "45-54", "share": 0.123},
+      {"age_group": "55-64", "share": 0.151},
+      {"age_group": "65+", "share": 0.223}
+    ],
+    "us": [
+      {"age_group": "0-17", "share": 0.186},
+      {"age_group": "18-24", "share": 0.069},
+      {"age_group": "25-34", "share": 0.119},
+      {"age_group": "35-44", "share": 0.126},
+      {"age_group": "45-54", "share": 0.121},
+      {"age_group": "55-64", "share": 0.148},
+      {"age_group": "65+", "share": 0.231}
+    ]
+  },
+  "income": {
+    "houston_anglo": {
+      "median_household_income": 89250,
+      "median_family_income": 109800,
+      "per_capita_income": 48120,
+      "share_100k_plus": 0.387,
+      "share_below_poverty": 0.071
+    },
+    "houston_total": {
+      "median_household_income": 74598,
+      "median_family_income": 87430,
+      "per_capita_income": 35820,
+      "share_100k_plus": 0.276,
+      "share_below_poverty": 0.122
+    },
+    "texas_anglo": {
+      "median_household_income": 84720,
+      "median_family_income": 104300,
+      "per_capita_income": 45890,
+      "share_100k_plus": 0.362,
+      "share_below_poverty": 0.084
+    },
+    "us_anglo": {
+      "median_household_income": 81350,
+      "median_family_income": 101200,
+      "per_capita_income": 44100,
+      "share_100k_plus": 0.348,
+      "share_below_poverty": 0.092
+    }
+  },
+  "education_25_plus": {
+    "houston_anglo": {
+      "total": 1542000,
+      "less_than_hs": 0.047,
+      "hs_graduate": 0.189,
+      "some_college": 0.217,
+      "associate": 0.082,
+      "bachelor": 0.281,
+      "graduate": 0.184,
+      "bachelor_or_higher": 0.465
+    },
+    "houston_total": {
+      "total": 4782300,
+      "less_than_hs": 0.164,
+      "hs_graduate": 0.229,
+      "some_college": 0.212,
+      "associate": 0.073,
+      "bachelor": 0.212,
+      "graduate": 0.110,
+      "bachelor_or_higher": 0.322
+    },
+    "texas_anglo": {
+      "bachelor_or_higher": 0.441
+    },
+    "us_anglo": {
+      "bachelor_or_higher": 0.428
+    }
+  },
+  "employment": {
+    "houston_anglo": {
+      "labor_force_participation": 0.638,
+      "unemployment_rate": 0.034,
+      "employment_rate": 0.616,
+      "work_from_home_share": 0.142,
+      "mean_commute_minutes": 28.4
+    },
+    "houston_total": {
+      "labor_force_participation": 0.656,
+      "unemployment_rate": 0.042,
+      "employment_rate": 0.628,
+      "work_from_home_share": 0.098,
+      "mean_commute_minutes": 30.2
+    }
+  },
+  "occupation_anglo_houston": [
+    {"category": "Management, business, science, arts", "share": 0.512},
+    {"category": "Service", "share": 0.121},
+    {"category": "Sales and office", "share": 0.218},
+    {"category": "Natural resources, construction, maintenance", "share": 0.087},
+    {"category": "Production, transportation, material moving", "share": 0.062}
+  ],
+  "vehicles_available": {
+    "houston_anglo": [
+      {"vehicles": "None", "share": 0.024},
+      {"vehicles": "1 vehicle", "share": 0.272},
+      {"vehicles": "2 vehicles", "share": 0.413},
+      {"vehicles": "3+ vehicles", "share": 0.291}
+    ],
+    "houston_total": [
+      {"vehicles": "None", "share": 0.064},
+      {"vehicles": "1 vehicle", "share": 0.338},
+      {"vehicles": "2 vehicles", "share": 0.368},
+      {"vehicles": "3+ vehicles", "share": 0.230}
+    ],
+    "us_anglo": [
+      {"vehicles": "None", "share": 0.038},
+      {"vehicles": "1 vehicle", "share": 0.312},
+      {"vehicles": "2 vehicles", "share": 0.398},
+      {"vehicles": "3+ vehicles", "share": 0.252}
+    ]
+  },
+  "commute_time_anglo_houston": [
+    {"range": "< 15 min", "share": 0.194},
+    {"range": "15-29 min", "share": 0.339},
+    {"range": "30-44 min", "share": 0.261},
+    {"range": "45-59 min", "share": 0.123},
+    {"range": "60+ min", "share": 0.083}
+  ]
+}
+

@@ -1,0 +1,83 @@
+/* Map Component Styles */
+
+.map-card {
+  padding: 0;
+  overflow: hidden;
+}
+
+.map-container {
+  width: 100%;
+  height: clamp(360px, 60vh, 720px);
+  position: relative;
+}
+
+.map-legend {
+  padding: 1rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--theme-foreground-muted);
+  background: var(--theme-background-alt);
+  border-top: 1px solid var(--theme-foreground-faintest);
+}
+
+.map-legend h4 {
+  margin: 0 0 0.5rem 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--theme-foreground);
+}
+
+.map-legend ul {
+  margin: 0;
+  padding-left: 1.5rem;
+}
+
+.map-legend li {
+  margin: 0.25rem 0;
+}
+
+/* Map controls */
+.map-controls {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.map-controls button,
+.map-controls select {
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  padding: 0.5rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.map-controls button:hover,
+.map-controls select:hover {
+  background: #f9f9f9;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .map-container {
+    height: clamp(300px, 55vh, 600px);
+  }
+  
+  .map-controls {
+    top: 5px;
+    right: 5px;
+  }
+  
+  .map-controls button,
+  .map-controls select {
+    font-size: 0.75rem;
+    padding: 0.4rem;
+  }
+}
+

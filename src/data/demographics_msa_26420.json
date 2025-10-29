@@ -1,0 +1,325 @@
+{
+  "meta": {
+    "msa": "26420",
+    "name": "Houston–The Woodlands–Sugar Land, TX",
+    "updated": "2024-10-29",
+    "sources": [
+      "US Census Bureau - American Community Survey (ACS) 2022 5-year estimates",
+      "Bureau of Labor Statistics (BLS) - Local Area Unemployment Statistics 2024"
+    ]
+  },
+  "kpis": {
+    "population": 7122240,
+    "pop_growth_10y": 0.188,
+    "median_age": 34.6,
+    "median_hh_income": 74598,
+    "foreign_born_share": 0.283,
+    "unemployment_rate": 0.042
+  },
+  "population": {
+    "series": [
+      {"year": 1990, "value": 3731000, "houston": 3731000, "tx": 16986510, "us": 248709873, "type": "historical"},
+      {"year": 1991, "value": 3812000, "houston": 3812000, "tx": 17349632, "us": 252153092, "type": "historical"},
+      {"year": 1992, "value": 3896000, "houston": 3896000, "tx": 17711858, "us": 255029699, "type": "historical"},
+      {"year": 1993, "value": 3983000, "houston": 3983000, "tx": 18088419, "us": 257782608, "type": "historical"},
+      {"year": 1994, "value": 4071000, "houston": 4071000, "tx": 18464926, "us": 260327021, "type": "historical"},
+      {"year": 1995, "value": 4158000, "houston": 4158000, "tx": 18849281, "us": 262803276, "type": "historical"},
+      {"year": 1996, "value": 4246000, "houston": 4246000, "tx": 19245213, "us": 265228572, "type": "historical"},
+      {"year": 1997, "value": 4338000, "houston": 4338000, "tx": 19654983, "us": 267783607, "type": "historical"},
+      {"year": 1998, "value": 4431000, "houston": 4431000, "tx": 20071390, "us": 270248003, "type": "historical"},
+      {"year": 1999, "value": 4526000, "houston": 4526000, "tx": 20493171, "us": 272690813, "type": "historical"},
+      {"year": 2000, "value": 4669571, "houston": 4669571, "tx": 20851820, "us": 281421906, "type": "census"},
+      {"year": 2001, "value": 4753000, "houston": 4753000, "tx": 21317791, "us": 284968955, "type": "historical"},
+      {"year": 2002, "value": 4844000, "houston": 4844000, "tx": 21771959, "us": 287625193, "type": "historical"},
+      {"year": 2003, "value": 4935000, "houston": 4935000, "tx": 22215427, "us": 290107933, "type": "historical"},
+      {"year": 2004, "value": 5030000, "houston": 5030000, "tx": 22641302, "us": 292805298, "type": "historical"},
+      {"year": 2005, "value": 5135000, "houston": 5135000, "tx": 23059899, "us": 295516599, "type": "historical"},
+      {"year": 2006, "value": 5252000, "houston": 5252000, "tx": 23495539, "us": 298379912, "type": "historical"},
+      {"year": 2007, "value": 5375000, "houston": 5375000, "tx": 23940220, "us": 301231207, "type": "historical"},
+      {"year": 2008, "value": 5502000, "houston": 5502000, "tx": 24385099, "us": 304093966, "type": "historical"},
+      {"year": 2009, "value": 5762000, "houston": 5762000, "tx": 24782302, "us": 306771529, "type": "historical"},
+      {"year": 2010, "value": 5920416, "houston": 5920416, "tx": 25145561, "us": 308745538, "type": "census"},
+      {"year": 2011, "value": 6118300, "houston": 6118300, "tx": 25639373, "us": 311591917, "type": "historical"},
+      {"year": 2012, "value": 6236000, "houston": 6236000, "tx": 26059203, "us": 313914040, "type": "historical"},
+      {"year": 2013, "value": 6359100, "houston": 6359100, "tx": 26448193, "us": 316128839, "type": "historical"},
+      {"year": 2014, "value": 6490300, "houston": 6490300, "tx": 26956958, "us": 318857056, "type": "historical"},
+      {"year": 2015, "value": 6656200, "houston": 6656200, "tx": 27469114, "us": 321418820, "type": "historical"},
+      {"year": 2016, "value": 6772470, "houston": 6772470, "tx": 27862596, "us": 323127513, "type": "historical"},
+      {"year": 2017, "value": 6878740, "houston": 6878740, "tx": 28304596, "us": 325719178, "type": "historical"},
+      {"year": 2018, "value": 6968780, "houston": 6968780, "tx": 28701845, "us": 327167434, "type": "historical"},
+      {"year": 2019, "value": 7066140, "houston": 7066140, "tx": 29087070, "us": 328239523, "type": "historical"},
+      {"year": 2020, "value": 7122240, "houston": 7122240, "tx": 29145505, "us": 331449281, "type": "census"},
+      {"year": 2021, "value": 7115520, "houston": 7115520, "tx": 29527941, "us": 331893745, "type": "historical"},
+      {"year": 2022, "value": 7122240, "houston": 7122240, "tx": 30029572, "us": 333287557, "type": "historical"},
+      {"year": 2023, "value": 7201000, "houston": 7201000, "tx": 30503301, "us": 334914895, "type": "estimate"},
+      {"year": 2024, "value": 7285000, "houston": 7285000, "tx": 30976000, "us": 336673595, "type": "projection"},
+      {"year": 2025, "value": 7371000, "houston": 7371000, "tx": 31453000, "us": 338289857, "type": "projection"},
+      {"year": 2026, "value": 7458000, "houston": 7458000, "tx": 31935000, "us": 339996563, "type": "projection"},
+      {"year": 2027, "value": 7547000, "houston": 7547000, "tx": 32422000, "us": 341737596, "type": "projection"},
+      {"year": 2028, "value": 7638000, "houston": 7638000, "tx": 32914000, "us": 343504347, "type": "projection"},
+      {"year": 2029, "value": 7731000, "houston": 7731000, "tx": 33411000, "us": 345290670, "type": "projection"},
+      {"year": 2030, "value": 7826000, "houston": 7826000, "tx": 33913000, "us": 347096818, "type": "projection"}
+    ],
+    "natural_increase": 58000,
+    "net_migration": 64000,
+    "international_migration": 42000,
+    "domestic_migration": 22000,
+    "counties": [
+      {
+        "name": "Harris County",
+        "fips": "48201",
+        "population_2022": 4731145,
+        "share": 0.664,
+        "median_age": 34.2,
+        "median_income": 67025,
+        "foreign_born": 0.297
+      },
+      {
+        "name": "Fort Bend County",
+        "fips": "48157",
+        "population_2022": 861351,
+        "share": 0.121,
+        "median_age": 36.8,
+        "median_income": 107046,
+        "foreign_born": 0.352
+      },
+      {
+        "name": "Montgomery County",
+        "fips": "48339",
+        "population_2022": 656680,
+        "share": 0.092,
+        "median_age": 38.5,
+        "median_income": 89930,
+        "foreign_born": 0.121
+      },
+      {
+        "name": "Brazoria County",
+        "fips": "48039",
+        "population_2022": 381180,
+        "share": 0.054,
+        "median_age": 36.9,
+        "median_income": 82642,
+        "foreign_born": 0.142
+      },
+      {
+        "name": "Galveston County",
+        "fips": "48167",
+        "population_2022": 351974,
+        "share": 0.049,
+        "median_age": 38.7,
+        "median_income": 71546,
+        "foreign_born": 0.119
+      },
+      {
+        "name": "Liberty County",
+        "fips": "48291",
+        "population_2022": 90881,
+        "share": 0.013,
+        "median_age": 35.1,
+        "median_income": 64789,
+        "foreign_born": 0.063
+      },
+      {
+        "name": "Waller County",
+        "fips": "48473",
+        "population_2022": 61423,
+        "share": 0.009,
+        "median_age": 33.8,
+        "median_income": 78236,
+        "foreign_born": 0.098
+      },
+      {
+        "name": "Chambers County",
+        "fips": "48071",
+        "population_2022": 46637,
+        "share": 0.007,
+        "median_age": 40.2,
+        "median_income": 92438,
+        "foreign_born": 0.075
+      },
+      {
+        "name": "Austin County",
+        "fips": "48015",
+        "population_2022": 30970,
+        "share": 0.004,
+        "median_age": 39.4,
+        "median_income": 73851,
+        "foreign_born": 0.082
+      }
+    ]
+  },
+  "age": {
+    "median": 34.6,
+    "pyramid": [
+      {"age": "0-4", "male": 251200, "female": 240800},
+      {"age": "5-9", "male": 264500, "female": 253100},
+      {"age": "10-14", "male": 261800, "female": 250200},
+      {"age": "15-19", "male": 258900, "female": 247600},
+      {"age": "20-24", "male": 278400, "female": 268100},
+      {"age": "25-29", "male": 303500, "female": 295200},
+      {"age": "30-34", "male": 298700, "female": 292400},
+      {"age": "35-39", "male": 281600, "female": 277800},
+      {"age": "40-44", "male": 259300, "female": 256700},
+      {"age": "45-49", "male": 237800, "female": 236400},
+      {"age": "50-54", "male": 226500, "female": 227300},
+      {"age": "55-59", "male": 215400, "female": 219600},
+      {"age": "60-64", "male": 186900, "female": 195800},
+      {"age": "65-69", "male": 145800, "female": 158200},
+      {"age": "70-74", "male": 106400, "female": 120600},
+      {"age": "75-79", "male": 68300, "female": 83600},
+      {"age": "80-84", "male": 40800, "female": 54900},
+      {"age": "85+", "male": 32400, "female": 56700}
+    ],
+    "groups": {
+      "youth": 0.242,
+      "working_age": 0.649,
+      "senior": 0.109
+    }
+  },
+  "households": {
+    "total": 2589400,
+    "avg_size": 2.74,
+    "types": {
+      "family": 0.682,
+      "nonfamily": 0.318,
+      "married_couple": 0.487,
+      "single_parent": 0.143,
+      "living_alone": 0.248
+    },
+    "with_children": 0.356
+  },
+  "income": {
+    "median_household": 74598,
+    "median_family": 87430,
+    "per_capita": 35820,
+    "gini": 0.476,
+    "percentiles": [
+      {"p": 10, "value": 15800},
+      {"p": 20, "value": 26400},
+      {"p": 25, "value": 32900},
+      {"p": 30, "value": 39200},
+      {"p": 40, "value": 51800},
+      {"p": 50, "value": 74598},
+      {"p": 60, "value": 91200},
+      {"p": 70, "value": 112400},
+      {"p": 75, "value": 126800},
+      {"p": 80, "value": 145600},
+      {"p": 90, "value": 201500},
+      {"p": 95, "value": 276900}
+    ],
+    "brackets": [
+      {"range": "< $15,000", "share": 0.064},
+      {"range": "$15,000 - $24,999", "share": 0.065},
+      {"range": "$25,000 - $34,999", "share": 0.074},
+      {"range": "$35,000 - $49,999", "share": 0.109},
+      {"range": "$50,000 - $74,999", "share": 0.167},
+      {"range": "$75,000 - $99,999", "share": 0.142},
+      {"range": "$100,000 - $149,999", "share": 0.183},
+      {"range": "$150,000 - $199,999", "share": 0.093},
+      {"range": "$200,000+", "share": 0.103}
+    ]
+  },
+  "education": {
+    "total_25_plus": 4782300,
+    "less_than_hs": 0.164,
+    "hs_graduate": 0.229,
+    "some_college": 0.212,
+    "associate": 0.073,
+    "bachelor": 0.212,
+    "graduate": 0.110,
+    "hs_or_higher": 0.836,
+    "bachelor_or_higher": 0.322
+  },
+  "diversity": {
+    "race_ethnicity": [
+      {"category": "Blanco (no hispano)", "share": 0.287},
+      {"category": "Hispano o Latino", "share": 0.378},
+      {"category": "Afroamericano", "share": 0.168},
+      {"category": "Asiático", "share": 0.077},
+      {"category": "Dos o más razas", "share": 0.032},
+      {"category": "Otro", "share": 0.058}
+    ],
+    "foreign_born": 0.283,
+    "native_born": 0.717,
+    "languages": [
+      {"language": "Inglés únicamente", "share": 0.553},
+      {"language": "Español", "share": 0.329},
+      {"language": "Otras lenguas indoeuropeas", "share": 0.024},
+      {"language": "Lenguas asiáticas/islas del Pacífico", "share": 0.074},
+      {"language": "Otras lenguas", "share": 0.020}
+    ],
+    "foreign_born_by_region": [
+      {"region": "América Latina", "share": 0.584},
+      {"region": "Asia", "share": 0.289},
+      {"region": "Europa", "share": 0.055},
+      {"region": "África", "share": 0.048},
+      {"region": "Oceanía", "share": 0.007},
+      {"region": "América del Norte", "share": 0.017}
+    ]
+  },
+  "housing": {
+    "total_units": 2761500,
+    "occupied": 2589400,
+    "vacancy_rate": 0.062,
+    "tenure": {
+      "owner": 0.589,
+      "renter": 0.411
+    },
+    "median_value_owner": 221700,
+    "median_rent": 1189,
+    "cost_burden": {
+      "owner_30_plus": 0.187,
+      "renter_30_plus": 0.484
+    }
+  },
+  "labor": {
+    "labor_force": 3721500,
+    "employed": 3565300,
+    "unemployed": 156200,
+    "unemployment_rate": 0.042,
+    "participation_rate": 0.656,
+    "employment_rate": 0.628,
+    "sectors": [
+      {"sector": "Servicios profesionales y empresariales", "share": 0.158},
+      {"sector": "Salud y educación", "share": 0.189},
+      {"sector": "Comercio minorista", "share": 0.111},
+      {"sector": "Manufactura", "share": 0.087},
+      {"sector": "Construcción", "share": 0.081},
+      {"sector": "Servicios de alojamiento y alimentación", "share": 0.091},
+      {"sector": "Transporte y almacenamiento", "share": 0.063},
+      {"sector": "Finanzas y seguros", "share": 0.053},
+      {"sector": "Gobierno", "share": 0.044},
+      {"sector": "Otros servicios", "share": 0.123}
+    ],
+    "work_from_home": 0.098,
+    "mean_commute_minutes": 30.2
+  },
+  "mobility": {
+    "same_house_1yr_ago": 0.858,
+    "moved_within_county": 0.081,
+    "moved_from_different_county_same_state": 0.024,
+    "moved_from_different_state": 0.022,
+    "moved_from_abroad": 0.015,
+    "net_domestic_migration_rate": 0.0031,
+    "net_international_migration_rate": 0.0059
+  },
+  "benchmarks": {
+    "tx": {
+      "population": 30029572,
+      "median_age": 35.5,
+      "median_hh_income": 67321,
+      "foreign_born_share": 0.172,
+      "unemployment_rate": 0.039,
+      "bachelor_or_higher": 0.304
+    },
+    "us": {
+      "population": 333287557,
+      "median_age": 38.9,
+      "median_hh_income": 74755,
+      "foreign_born_share": 0.138,
+      "unemployment_rate": 0.036,
+      "bachelor_or_higher": 0.348
+    }
+  }
+}
+

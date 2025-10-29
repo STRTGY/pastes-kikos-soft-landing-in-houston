@@ -7,16 +7,16 @@ keywords: soft landing, Houston, Pastes Kikos, expansión, mercado, análisis es
 ---
 
 ```js
-// Renderizar el componente de mapa (versión Mapbox)
-import consumerCentricityMap from "../../components/consumer_centricity_map_mapbox.js";
+import { consumerCentricityMapMapbox } from "../../components/core/mapbox-base.js";
+import { MAP_DEFAULTS } from "../../config/maps.js";
 ```
 
-## Consumer Centricity Houston
-
-Título del mapa: Consumer Centricity Houston
+<div class="hero">
+  <h1>1.4 Mapas y Hunger Index</h1>
+  <h2>Consumer Centricity Houston</h2>
+</div>
 
 ```js
-// Cargar datos GeoJSON locales
 const roads = await FileAttachment("../../data/gis/houstonMetropolitan_functional_classification_2_3.geojson").json();
 const demog = await FileAttachment("../../data/gis/whitePOBvsPOBTOT_houston.geojson").json();
 const driveThru = await FileAttachment("../../data/gis/houstonCensusTracts_percentageDriveThru_RestTOT_4326.geojson").json();
@@ -96,10 +96,11 @@ const layerDescriptions = {
 ```
 
 ```js
-// Instanciar el mapa y exponer el elemento para escuchar eventos de visibilidad de capas
-const mapEl = consumerCentricityMap({
-  center: [29.7604, -95.3698],
-  zoom:10,
+const mapEl = consumerCentricityMapMapbox({
+  center: MAP_DEFAULTS.center,
+  zoom: MAP_DEFAULTS.zoom,
+  mapboxToken: MAP_DEFAULTS.mapboxToken,
+  mapboxStyle: MAP_DEFAULTS.mapboxStyle,
   roads: roads,
   demographics: demog,
   demographicProperty: "White_vs_Total",
@@ -108,10 +109,7 @@ const mapEl = consumerCentricityMap({
     { data: driveThru, property: driveThruProp, name: "% Drive-through sobre restaurantes" }
   ],
   pointsLayers,
-  layerStyles,
-  size: {height: 720},
-  mapboxStyle: "mapbox://styles/feipower/cmcxpeo3v017i01s0dl5cf8re",
-  mapboxToken: "pk.eyJ1IjoiZmVpcG93ZXIiLCJhIjoiY21jeHVyaHJyMGdnbjJrb2tzZWlwaXh1dyJ9.gp0JyqMwW4czxwqqZQUOtw"
+  layerStyles
 });
 ```
 
@@ -153,7 +151,16 @@ const layersList = (() => {
   </div>
 </div>
 
-### ¿Qué puedes hacer aquí?
-- Activar/desactivar capas: jerarquía vial, demografía por tracto censal y puntos de interés.
-- Explorar zonas y abrir tooltips con detalles por elemento.
-- Cambiar fácilmente la métrica demográfica editando `demographicProperty`.
+<div class="hero">
+  <h3>¿Qué puedes hacer aquí?</h3>
+</div>
+
+<div class="text">
+  <ul>
+    <li>Activar/desactivar capas: jerarquía vial, demografía por tracto censal y puntos de interés.</li>
+    <li>Explorar zonas y abrir tooltips con detalles por elemento.</li>
+    <li>Cambiar fácilmente la métrica demográfica editando <code>demographicProperty</code>.</li>
+  </ul>
+</div>
+
+---

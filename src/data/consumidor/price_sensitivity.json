@@ -1,0 +1,17 @@
+{
+  "scenarios": [
+    {"price": 6, "visits_per_month": 18.5, "elasticity": -0.85},
+    {"price": 7, "visits_per_month": 16.2, "elasticity": -0.85},
+    {"price": 8, "visits_per_month": 14.5, "elasticity": -0.85},
+    {"price": 9, "visits_per_month": 12.8, "elasticity": -0.85},
+    {"price": 10, "visits_per_month": 11.5, "elasticity": -0.85},
+    {"price": 11, "visits_per_month": 10.2, "elasticity": -0.85},
+    {"price": 12, "visits_per_month": 9.0, "elasticity": -0.85},
+    {"price": 13, "visits_per_month": 8.0, "elasticity": -0.85},
+    {"price": 14, "visits_per_month": 7.2, "elasticity": -0.85},
+    {"price": 15, "visits_per_month": 6.5, "elasticity": -0.85}
+  ],
+  "baseline_price": 10,
+  "baseline_visits": 11.5
+}
+
