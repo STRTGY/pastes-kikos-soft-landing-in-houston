@@ -229,13 +229,204 @@ export function DemografiaTabs({data, angloData, ceData, ersData, cpiData, ghpDa
   const contentArea = html`<div id="demografia-content" style="min-height: 400px;"></div>`;
   container.appendChild(contentArea);
   
-  // Estilo para tabs activos
+  // Botón para mostrar/ocultar panel de fuentes
+  const sourcesToggleBtn = html`
+    <button
+      id="sources-toggle-btn"
+      style="
+        display: block;
+        margin: 2rem auto 1rem auto;
+        padding: 0.75rem 1.5rem;
+        background: var(--theme-background-alt);
+        border: 2px solid var(--theme-foreground-faintest);
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: var(--theme-foreground);
+        transition: all 0.2s;
+      "
+      onmouseover="this.style.borderColor = '#0ea5e9'; this.style.background = '#f0f9ff';"
+      onmouseout="this.style.borderColor = 'var(--theme-foreground-faintest)'; this.style.background = 'var(--theme-background-alt)';"
+    >
+      <span style="margin-right: 0.4rem;">📚</span> Ver fuentes de datos
+    </button>
+  `;
+  
+  sourcesToggleBtn.addEventListener("click", toggleSourcesPanel);
+  container.appendChild(sourcesToggleBtn);
+  
+  // Panel de fuentes (inicialmente oculto)
+  const sourcesPanel = html`
+    <div id="sources-panel" style="
+      display: none;
+      margin: 1.5rem 0 2rem 0;
+      padding: 1.5rem;
+      background: var(--theme-background-alt);
+      border: 2px solid #0ea5e9;
+      border-radius: 8px;
+      animation: slideDown 0.3s ease-out;
+    ">
+      <h4 style="
+        font-size: 1.1rem;
+        font-weight: 700;
+        margin: 0 0 1rem 0;
+        color: var(--theme-foreground);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      ">
+        <span style="font-size: 1.3rem;">✓</span>
+        Fuentes de Datos Verificadas
+      </h4>
+      
+      <div style="font-size: 0.875rem; line-height: 1.7; color: var(--theme-foreground);">
+        <p style="margin: 0 0 1rem 0;">
+          Todos los datos presentados en esta sección provienen de <strong>fuentes oficiales del gobierno federal de los Estados Unidos</strong> 
+          y organizaciones institucionales reconocidas. Los datos son verificables y cuentan con metodología transparente.
+        </p>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-top: 1.5rem;">
+          <div style="
+            background: white;
+            padding: 1rem;
+            border-radius: 6px;
+            border-left: 4px solid #1f77b4;
+          ">
+            <h5 style="font-weight: 700; margin: 0 0 0.5rem 0; color: #1f77b4;">
+              US Census Bureau
+            </h5>
+            <p style="margin: 0 0 0.5rem 0; font-size: 0.8rem;">
+              <strong>American Community Survey (ACS)</strong><br/>
+              2022 5-year estimates (2018-2022)
+            </p>
+            <p style="margin: 0; font-size: 0.75rem; color: var(--theme-foreground-muted);">
+              Tablas: DP05, S1901, S2301, S0101, S0801, B01003, DP02, DP03, S1501, S0601, B16001, S2502, S2503, S0701
+            </p>
+            <a href="https://data.census.gov/profile?g=310M200US26420" target="_blank" 
+               style="font-size: 0.75rem; color: #0ea5e9; text-decoration: none; display: inline-block; margin-top: 0.5rem;">
+              → data.census.gov
+            </a>
+          </div>
+          
+          <div style="
+            background: white;
+            padding: 1rem;
+            border-radius: 6px;
+            border-left: 4px solid #ff7f0e;
+          ">
+            <h5 style="font-weight: 700; margin: 0 0 0.5rem 0; color: #ff7f0e;">
+              Bureau of Labor Statistics
+            </h5>
+            <p style="margin: 0 0 0.5rem 0; font-size: 0.8rem;">
+              <strong>Consumer Expenditure Survey (CE)</strong><br/>
+              2022-2023 annual averages
+            </p>
+            <p style="margin: 0 0 0.5rem 0; font-size: 0.8rem;">
+              <strong>Consumer Price Index (CPI)</strong><br/>
+              2018-2025, base 1982-84 = 100
+            </p>
+            <a href="https://www.bls.gov/regions/southwest/" target="_blank" 
+               style="font-size: 0.75rem; color: #0ea5e9; text-decoration: none; display: inline-block; margin-top: 0.5rem;">
+              → bls.gov
+            </a>
+          </div>
+          
+          <div style="
+            background: white;
+            padding: 1rem;
+            border-radius: 6px;
+            border-left: 4px solid #2ca02c;
+          ">
+            <h5 style="font-weight: 700; margin: 0 0 0.5rem 0; color: #2ca02c;">
+              USDA Economic Research Service
+            </h5>
+            <p style="margin: 0 0 0.5rem 0; font-size: 0.8rem;">
+              <strong>Food Expenditure Series (FES)</strong><br/>
+              Tendencias históricas 1997-2024
+            </p>
+            <p style="margin: 0; font-size: 0.75rem; color: var(--theme-foreground-muted);">
+              Share de gasto FAH vs FAFH por demografía
+            </p>
+            <a href="https://www.ers.usda.gov/data-products/food-expenditure-series/" target="_blank" 
+               style="font-size: 0.75rem; color: #0ea5e9; text-decoration: none; display: inline-block; margin-top: 0.5rem;">
+              → ers.usda.gov
+            </a>
+          </div>
+          
+          <div style="
+            background: white;
+            padding: 1rem;
+            border-radius: 6px;
+            border-left: 4px solid #9467bd;
+          ">
+            <h5 style="font-weight: 700; margin: 0 0 0.5rem 0; color: #9467bd;">
+              Greater Houston Partnership
+            </h5>
+            <p style="margin: 0 0 0.5rem 0; font-size: 0.8rem;">
+              <strong>Houston Facts</strong><br/>
+              Contexto económico y demográfico
+            </p>
+            <p style="margin: 0; font-size: 0.75rem; color: var(--theme-foreground-muted);">
+              Organización comercial oficial del MSA
+            </p>
+            <a href="https://www.houston.org/houston-data" target="_blank" 
+               style="font-size: 0.75rem; color: #0ea5e9; text-decoration: none; display: inline-block; margin-top: 0.5rem;">
+              → houston.org
+            </a>
+          </div>
+        </div>
+        
+        <div style="
+          margin-top: 1.5rem;
+          padding: 1rem;
+          background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+          border-radius: 6px;
+          border-left: 4px solid #0ea5e9;
+        ">
+          <p style="margin: 0; font-size: 0.8rem; font-weight: 600; color: #075985;">
+            <span style="margin-right: 0.5rem;">ℹ️</span>
+            Nota sobre "Perfil Anglo"
+          </p>
+          <p style="margin: 0.5rem 0 0 0; font-size: 0.8rem; color: #0c4a6e;">
+            La categoría "Anglo" o "Anglosajón" se refiere al grupo demográfico del Census Bureau clasificado como 
+            <strong>"White alone, non-Hispanic"</strong>. Esta es una clasificación estándar de la 
+            Office of Management and Budget (OMB) utilizada en todos los datos censales de EE.UU.
+          </p>
+        </div>
+        
+        <p style="margin: 1.5rem 0 0 0; font-size: 0.75rem; color: var(--theme-foreground-muted); text-align: center;">
+          <strong>Última actualización:</strong> 29 de octubre de 2024
+        </p>
+      </div>
+    </div>
+  `;
+  
+  container.appendChild(sourcesPanel);
+  
+  // Estilo para tabs activos y animaciones
   const style = html`
     <style>
       .tab-button.active {
         color: var(--theme-foreground) !important;
         border-bottom-color: #1f77b4 !important;
         background: var(--theme-background-alt) !important;
+      }
+      
+      @keyframes slideDown {
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      
+      #sources-panel a:hover {
+        color: #0284c7 !important;
+        text-decoration: underline;
       }
     </style>
   `;

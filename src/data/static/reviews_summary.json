@@ -1,99 +1,977 @@
 {
   "metadata": {
-    "total_reviews": 10,
-    "reviews_with_sentiment": 10,
-    "unique_aspects_mentioned": 6
+    "total_reviews": 194951,
+    "reviews_with_sentiment": 194646,
+    "unique_aspects_mentioned": 67
   },
   "sentiment": {
-    "count": 10,
-    "mean": 0.27,
-    "median": 0.65,
-    "stdev": 0.7572611467944492,
+    "count": 194646,
+    "mean": 0.4548236028482476,
+    "median": 0.8,
+    "stdev": 0.6905710820237217,
     "min": -1.0,
-    "max": 1.0,
+    "max": 4.5,
     "distribution": {
-      "very_negative": 2,
-      "negative": 1,
-      "neutral": 1,
-      "positive": 1,
-      "very_positive": 5
+      "very_negative": 24995,
+      "negative": 20904,
+      "neutral": 7811,
+      "positive": 15308,
+      "very_positive": 125628
     }
   },
   "aspects": {
     "counts": {
-      "food": 7,
-      "service": 7,
-      "staff": 2,
-      "cleanliness": 1,
-      "location": 1,
-      "ambience": 1
+      "food": 131936,
+      "staff": 29095,
+      "cleanliness": 10442,
+      "service": 84647,
+      "location": 6358,
+      "ambience": 18254,
+      "wait_time": 11424,
+      "value": 6136,
+      "price": 16325,
+      "cuisine_origin": 14422,
+      "drink": 15286,
+      "dietary": 662,
+      "portion_size": 4682,
+      "music_noise": 2228,
+      "accessibility": 482,
+      "menu": 3518,
+      "parking": 1899,
+      "coffee": 22,
+      "seating": 12,
+      "reservations": 328,
+      "app": 3,
+      "wifi": 8,
+      "delivery": 5,
+      "presentation": 12,
+      "packaging": 18,
+      "spice": 11,
+      "management": 24,
+      "desserts": 5,
+      "dessert": 39,
+      "outdoor_seating": 2,
+      "comfort": 3,
+      "entertainment": 7,
+      "art": 1,
+      "sauce": 2,
+      "decor": 3,
+      "pet_friendly": 4,
+      "vegetable": 1,
+      "order_accuracy": 1,
+      "hours": 2,
+      "amenities": 1,
+      "leadership": 1,
+      "safety": 1,
+      "salsa": 3,
+      "security": 7,
+      "bar": 1,
+      "organisation": 3,
+      "size": 3,
+      "stock": 2,
+      "payment": 17,
+      "manager": 1,
+      "family_friendly": 1,
+      "dog_friendly": 1,
+      "capacity": 2,
+      "temperature": 2,
+      "family": 1,
+      "salad": 1,
+      "community": 1,
+      "furniture": 1,
+      "takeout": 1,
+      "convenience": 1,
+      "availability": 1,
+      "fries": 2,
+      "punctuality": 1,
+      "kid_friendly": 2,
+      "accuracy": 1,
+      "game_functionality": 1,
+      "accommodation": 1
     },
     "stats": {
       "food": {
-        "count": 7,
-        "mean_score": 3.0,
-        "median_score": 4.0,
-        "stdev": 2.23606797749979,
+        "count": 131936,
+        "mean": 4.080872923235509,
+        "median": 4.5,
+        "stdev": 1.420775796433994,
+        "min": 0.0,
+        "max": 9.0,
         "sample_descriptions": [
           "Pizza is always fresh and tasty.",
           "Food was good, but not the reviewer's favorite pizza.",
           "Pizzas were incorrect and missing garlic crust.",
           "The pizza was cold, indicating poor food quality.",
-          "Food is always ready when expected.",
-          "Received the wrong pizza with incorrect toppings and crust.",
-          "Food is described as delicious."
+          "Food is always ready when expected."
         ]
       },
       "staff": {
-        "count": 2,
-        "mean_score": 4.75,
-        "median_score": 4.75,
-        "stdev": 0.3535533905932738,
+        "count": 29095,
+        "mean": 3.9233717133528097,
+        "median": 5.0,
+        "stdev": 1.69954865206103,
+        "min": 0.0,
+        "max": 5.0,
         "sample_descriptions": [
           "Staff is amazing and friendly.",
-          "Super nice people contribute to a welcoming atmosphere."
+          "Super nice people contribute to a welcoming atmosphere.",
+          "Staff is amazing and friendly.",
+          "Super nice people contribute positively to the atmosphere.",
+          "Employees are fantastic, always nice, smiling, and helpful."
         ]
       },
       "cleanliness": {
-        "count": 1,
-        "mean_score": 5.0,
-        "median_score": 5.0,
-        "stdev": 0,
+        "count": 10442,
+        "mean": 3.2129381344570005,
+        "median": 4.5,
+        "stdev": 2.000844536735271,
+        "min": 0.0,
+        "max": 5.0,
         "sample_descriptions": [
-          "The store is always clean."
+          "The store is always clean.",
+          "The store is always clean.",
+          "Impeccable cleanliness with meticulous attention to detail.",
+          "The store is very clean.",
+          "Implied need for better operational management."
         ]
       },
       "service": {
-        "count": 7,
-        "mean_score": 3.142857142857143,
-        "median_score": 4.0,
-        "stdev": 1.864454471471609,
+        "count": 84647,
+        "mean": 3.4771285456070506,
+        "median": 4.5,
+        "stdev": 1.8771445050812086,
+        "min": 0.0,
+        "max": 5.0,
         "sample_descriptions": [
           "Service was good and timely.",
           "Manager's response was unhelpful and unprofessional.",
           "Friendly and timely service enhances the dining experience.",
           "Drive-up service is fast and friendly.",
-          "La atención es buena, lo que sugiere un servicio de calidad.",
-          "Poor customer service with unhelpful staff and rude responses.",
-          "Good at times, but lacks consistency."
+          "La atención es buena, lo que sugiere un servicio de calidad."
         ]
       },
       "location": {
-        "count": 1,
-        "mean_score": 3.0,
-        "median_score": 3.0,
-        "stdev": 0,
+        "count": 6358,
+        "mean": 3.714690154136521,
+        "median": 4.0,
+        "stdev": 1.3791890028905351,
+        "min": 0.0,
+        "max": 5.0,
         "sample_descriptions": [
-          "Delivery was to a non-existent address, but resolved with a nearby address."
+          "Delivery was to a non-existent address, but resolved with a nearby address.",
+          "Delivery faced an address issue but arrived on time.",
+          "Delivery refusal affects a significant local population.",
+          "Conveniently located across the street.",
+          "The review mentions a specific location, but the experience was negative."
         ]
       },
       "ambience": {
-        "count": 1,
-        "mean_score": 5.0,
-        "median_score": 5.0,
-        "stdev": 0,
+        "count": 18254,
+        "mean": 4.209326722910047,
+        "median": 4.5,
+        "stdev": 1.005918298894532,
+        "min": 0.0,
+        "max": 5.0,
         "sample_descriptions": [
-          "El sitio es excelente, lo que implica un ambiente agradable."
+          "El sitio es excelente, lo que implica un ambiente agradable.",
+          "El sitio es excelente, lo que sugiere un buen ambiente.",
+          "Open late, contributing to a welcoming atmosphere.",
+          "Nice layout and inviting atmosphere.",
+          "The environment is friendly and inviting."
+        ]
+      },
+      "wait_time": {
+        "count": 11424,
+        "mean": 1.8437062324929971,
+        "median": 1.0,
+        "stdev": 1.53717039116025,
+        "min": 0.0,
+        "max": 5.0,
+        "sample_descriptions": [
+          "Pizza was ready quickly.",
+          "Order took too long to prepare and deliver.",
+          "Significant delays beyond the expected wait time.",
+          "Delivery and pick up are always quick.",
+          "Orders are fulfilled quickly and efficiently."
+        ]
+      },
+      "value": {
+        "count": 6136,
+        "mean": 3.0792861799217732,
+        "median": 4.0,
+        "stdev": 1.7480981131724451,
+        "min": 0.0,
+        "max": 5.0,
+        "sample_descriptions": [
+          "Customer feels they no longer receive good value for their money.",
+          "Good online and in-store coupons and deals.",
+          "Excellent value for money compared to overpriced alternatives.",
+          "Coupons are available, but limited to one per order.",
+          "The inability to tip diminishes perceived value of service."
+        ]
+      },
+      "price": {
+        "count": 16325,
+        "mean": 3.083215926493109,
+        "median": 3.5,
+        "stdev": 1.5839006489613032,
+        "min": 0.0,
+        "max": 5.0,
+        "sample_descriptions": [
+          "Great value under $10.",
+          "Significant overcharge caused frustration and dissatisfaction.",
+          "Very reasonable price.",
+          "Great prices that enhance the overall value.",
+          "Prices are considered reasonable."
+        ]
+      },
+      "cuisine_origin": {
+        "count": 14422,
+        "mean": 4.509672722229927,
+        "median": 5.0,
+        "stdev": 0.9689536699353967,
+        "min": 0.0,
+        "max": 5.0,
+        "sample_descriptions": [
+          "American: Represents a popular American pizza chain with notable improvements.",
+          "Mexican: A reliable choice for authentic Mexican cuisine.",
+          "Mexican: Lacks authenticity when compared to Texas standards.",
+          "Mexican: Clearly stated as the best in the area.",
+          "Mexican: The food is specifically identified as Mexican and was well-received."
+        ]
+      },
+      "drink": {
+        "count": 15286,
+        "mean": 4.079778882637708,
+        "median": 4.5,
+        "stdev": 1.3068039134397933,
+        "min": 0.0,
+        "max": 9.0,
+        "sample_descriptions": [
+          "Excellent drinks that complement the meals.",
+          "Salsa with chips was not preferred, affecting the drink experience.",
+          "Great horchatas that are highly enjoyable.",
+          "Drinks are also considered good.",
+          "Watermelon margarita was delicious."
+        ]
+      },
+      "dietary": {
+        "count": 662,
+        "mean": 4.015861027190332,
+        "median": 4.5,
+        "stdev": 1.3908328805188923,
+        "min": 0.0,
+        "max": 5.0,
+        "sample_descriptions": [
+          "Accommodates allergies effectively.",
+          "Guacamole not favored, but overall food was enjoyable.",
+          "Offers vegetarian options.",
+          "Successfully accommodated dairy and gluten restrictions.",
+          "No sugar-free options available, which is disappointing."
+        ]
+      },
+      "portion_size": {
+        "count": 4682,
+        "mean": 3.570952584365656,
+        "median": 4.5,
+        "stdev": 1.5935561150234687,
+        "min": 0.0,
+        "max": 5.0,
+        "sample_descriptions": [
+          "Portion sizes were described as great.",
+          "Good portion sizes for the tacos and chimichangas.",
+          "Smaller plates available, catering to different appetites.",
+          "The shrimp portion was substantial enough to take home.",
+          "Portion sizes are satisfying and well-received."
+        ]
+      },
+      "music_noise": {
+        "count": 2228,
+        "mean": 3.1532764811490126,
+        "median": 4.0,
+        "stdev": 1.557458178961307,
+        "min": 0.0,
+        "max": 5.0,
+        "sample_descriptions": [
+          "Mariachi music adds to the ambiance.",
+          "Mariachi night is highly enjoyable and loved.",
+          "Music was nostalgic and enjoyable.",
+          "Loud environment hinders conversation.",
+          "The noise from power washing is disruptive and impacts the peace of the neighborhood."
+        ]
+      },
+      "accessibility": {
+        "count": 482,
+        "mean": 2.6068464730290457,
+        "median": 2.0,
+        "stdev": 1.6836086802008734,
+        "min": 0.0,
+        "max": 5.0,
+        "sample_descriptions": [
+          "Seating arrangements were inadequate for wheelchair access.",
+          "Excellent accessibility for handicapped individuals.",
+          "Easily accessible within the food court.",
+          "Entrance was hard to pull, causing some confusion.",
+          "Restroom door is difficult to pass through, posing a safety risk."
+        ]
+      },
+      "menu": {
+        "count": 3518,
+        "mean": 3.6215179079022173,
+        "median": 4.0,
+        "stdev": 1.3821222172082623,
+        "min": 0.0,
+        "max": 5.0,
+        "sample_descriptions": [
+          "Most of the menu items are good.",
+          "Great variety of items, all seemed to be of good quality.",
+          "Exciting menu options encouraged a return visit.",
+          "Large menu with traditional and flavorful seafood options.",
+          "The menu is highly praised."
+        ]
+      },
+      "parking": {
+        "count": 1899,
+        "mean": 2.656924697209057,
+        "median": 2.0,
+        "stdev": 1.5303213153417865,
+        "min": 0.0,
+        "max": 5.0,
+        "sample_descriptions": [
+          "Convenient parking garage nearby enhances accessibility.",
+          "Convenient location near a parking garage.",
+          "Good parking area available.",
+          "Plenty of parking available in the garage.",
+          "Parking was a little tough to find."
+        ]
+      },
+      "coffee": {
+        "count": 22,
+        "mean": 4.818181818181818,
+        "median": 5.0,
+        "stdev": 0.3550113489048479,
+        "min": 4.0,
+        "max": 5.0,
+        "sample_descriptions": [
+          "Great coffee that meets high standards.",
+          "Awesome coffee that enhances the overall experience.",
+          "Great coffee, consistently high quality.",
+          "Great coffee that impressed the reviewer.",
+          "Exceptional quality of coffee."
+        ]
+      },
+      "seating": {
+        "count": 12,
+        "mean": 3.125,
+        "median": 2.25,
+        "stdev": 1.3559283412727483,
+        "min": 2.0,
+        "max": 5.0,
+        "sample_descriptions": [
+          "Lots of seating available for customers.",
+          "Not very much seating available.",
+          "Limited seating available during peak hours.",
+          "Wish seating was a bit more, suggesting some limitations.",
+          "Limited seating inside and outside."
+        ]
+      },
+      "reservations": {
+        "count": 328,
+        "mean": 2.9359756097560976,
+        "median": 4.0,
+        "stdev": 1.8147057543896399,
+        "min": 0.0,
+        "max": 5.0,
+        "sample_descriptions": [
+          "Frustration with the reservation system allowing others to bypass the wait.",
+          "Difficulty in making a reservation due to poor service.",
+          "Reservations accepted, adding convenience.",
+          "Smooth online ordering process.",
+          "Booking ahead is necessary, indicating a popular venue."
+        ]
+      },
+      "app": {
+        "count": 3,
+        "mean": 5.0,
+        "median": 5.0,
+        "stdev": 0.0,
+        "min": 5.0,
+        "max": 5.0,
+        "sample_descriptions": [
+          "The app is described as user-friendly, enhancing the overall experience.",
+          "Innovative app enhances ordering and pickup experience.",
+          "The app is easy to use, enhancing the customer experience."
+        ]
+      },
+      "wifi": {
+        "count": 8,
+        "mean": 3.75,
+        "median": 5.0,
+        "stdev": 1.920286436967152,
+        "min": 0.0,
+        "max": 5.0,
+        "sample_descriptions": [
+          "Guest wifi was generously fast.",
+          "Fast WiFi suitable for getting work done.",
+          "Unable to connect to the internet, causing significant inconvenience.",
+          "Wifi was not solid, indicating a negative experience.",
+          "Wifi is always nice to have."
+        ]
+      },
+      "delivery": {
+        "count": 5,
+        "mean": 2.8,
+        "median": 4.0,
+        "stdev": 2.3151673805580453,
+        "min": 0.0,
+        "max": 5.0,
+        "sample_descriptions": [
+          "Delivery was prompt, with confirmation and a pleasant surprise note.",
+          "Uber Eats delivery was very poor.",
+          "Reliable delivery service.",
+          "Prompt delivery with friendly service.",
+          "Delivery person left the order on the floor despite specific instructions."
+        ]
+      },
+      "presentation": {
+        "count": 12,
+        "mean": 4.375,
+        "median": 5.0,
+        "stdev": 1.371206889325361,
+        "min": 0.0,
+        "max": 5.0,
+        "sample_descriptions": [
+          "Fantastic presentation that impressed the reviewer.",
+          "Presentation of dishes was bad.",
+          "Beautifully presented dishes that impressed the reviewer.",
+          "All dishes were beautifully presented.",
+          "Impressive presentation."
+        ]
+      },
+      "packaging": {
+        "count": 18,
+        "mean": 2.0,
+        "median": 1.0,
+        "stdev": 1.4043582955293932,
+        "min": 1.0,
+        "max": 5.0,
+        "sample_descriptions": [
+          "Good packaging for the salad.",
+          "Thoughtful design prevented egg rolls from becoming soggy.",
+          "Items are not packaged appropriately for the quantity ordered.",
+          "Very poor packaging led to leaking beans and salsa.",
+          "Flimsy to-go boxes that leaked during transport."
+        ]
+      },
+      "spice": {
+        "count": 11,
+        "mean": 3.5,
+        "median": 3.5,
+        "stdev": 0.7071067811865476,
+        "min": 2.0,
+        "max": 4.5,
+        "sample_descriptions": [
+          "Spark spice level was milder than expected.",
+          "Medium spicy is notably spicy, which may surprise some diners.",
+          "The green sauce has a good kick, suitable for spice lovers.",
+          "The red salsa is very spicy, adding excitement to the meal.",
+          "Light green sauce is pretty spicy, adding flavor."
+        ]
+      },
+      "management": {
+        "count": 24,
+        "mean": 1.375,
+        "median": 1.0,
+        "stdev": 1.4947825928876748,
+        "min": 0.0,
+        "max": 5.0,
+        "sample_descriptions": [
+          "Current management improves pizza but lacks in service.",
+          "Management was criticized for poor oversight and lack of engagement.",
+          "Poor management response to service issues.",
+          "Management displayed bad attitudes and dismissed customer concerns.",
+          "Very poor management led to a cancelled order without communication."
+        ]
+      },
+      "desserts": {
+        "count": 5,
+        "mean": 4.2,
+        "median": 5.0,
+        "stdev": 1.16619037896906,
+        "min": 2.0,
+        "max": 5.0,
+        "sample_descriptions": [
+          "Desserts like tres leches and churros are enjoyable.",
+          "Desserts were excellent, highly praised.",
+          "No se probaron postres, lo que es negativo.",
+          "Desserts are amazing and highly recommended.",
+          "Plentiful desserts with butter cake being a crowd favorite."
+        ]
+      },
+      "dessert": {
+        "count": 39,
+        "mean": 4.102564102564102,
+        "median": 4.5,
+        "stdev": 1.271882751306247,
+        "min": 1.0,
+        "max": 5.0,
+        "sample_descriptions": [
+          "Kunafe for dessert was a highlight.",
+          "Desserts are store-bought and can be stale.",
+          "Baklava and ice cream complemented each other well, not overly sweet.",
+          "Dessert selection needs more variety.",
+          "Desserts are interesting and amazing."
+        ]
+      },
+      "outdoor_seating": {
+        "count": 2,
+        "mean": 2.75,
+        "median": 2.75,
+        "stdev": 0.75,
+        "min": 2.0,
+        "max": 3.5,
+        "sample_descriptions": [
+          "Current outdoor seating is acceptable, but more comfort is desired.",
+          "Lack of outside seating is a downside."
+        ]
+      },
+      "comfort": {
+        "count": 3,
+        "mean": 3.5,
+        "median": 4.0,
+        "stdev": 0.7071067811865476,
+        "min": 2.5,
+        "max": 4.0,
+        "sample_descriptions": [
+          "Chairs by the fireplace are very comfortable.",
+          "Benches are not the comfiest for long stays.",
+          "Chairs had padding, which is appreciated for comfort."
+        ]
+      },
+      "entertainment": {
+        "count": 7,
+        "mean": 4.571428571428571,
+        "median": 4.5,
+        "stdev": 0.41649656391752143,
+        "min": 4.0,
+        "max": 5.0,
+        "sample_descriptions": [
+          "Offers enjoyable entertainment options.",
+          "The drag shows were super entertaining.",
+          "Top of the line entertainment with amazing impersonations.",
+          "Entertainment is awesome and adds to the experience.",
+          "Consistently excellent entertainment."
+        ]
+      },
+      "art": {
+        "count": 1,
+        "mean": 5.0,
+        "median": 5.0,
+        "stdev": 0.0,
+        "min": 5.0,
+        "max": 5.0,
+        "sample_descriptions": [
+          "The art is described as amazing."
+        ]
+      },
+      "sauce": {
+        "count": 2,
+        "mean": 2.5,
+        "median": 2.5,
+        "stdev": 1.5,
+        "min": 1.0,
+        "max": 4.0,
+        "sample_descriptions": [
+          "Limited sauce options; none of the requested sauces available.",
+          "Variety of sauces available, though quantity has decreased."
+        ]
+      },
+      "decor": {
+        "count": 3,
+        "mean": 3.6666666666666665,
+        "median": 5.0,
+        "stdev": 1.8856180831641267,
+        "min": 1.0,
+        "max": 5.0,
+        "sample_descriptions": [
+          "Beautiful art and decor, especially the blossom tree.",
+          "Decoration was poorly executed and did not match expectations.",
+          "Decor is absolutely amazing."
+        ]
+      },
+      "pet_friendly": {
+        "count": 4,
+        "mean": 4.5,
+        "median": 5.0,
+        "stdev": 0.8660254037844386,
+        "min": 3.0,
+        "max": 5.0,
+        "sample_descriptions": [
+          "The restaurant is dog friendly.",
+          "Pet-friendly but limited dog amenities.",
+          "The restaurant is pet friendly, appealing to pet owners.",
+          "The restaurant is very welcoming to dogs, providing treats and water."
+        ]
+      },
+      "vegetable": {
+        "count": 1,
+        "mean": 5.0,
+        "median": 5.0,
+        "stdev": 0.0,
+        "min": 5.0,
+        "max": 5.0,
+        "sample_descriptions": [
+          "Fresh vegetable sides were flavorful and well-prepared."
+        ]
+      },
+      "order_accuracy": {
+        "count": 1,
+        "mean": 0.0,
+        "median": 0.0,
+        "stdev": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "sample_descriptions": [
+          "Order accuracy is described as horrible."
+        ]
+      },
+      "hours": {
+        "count": 2,
+        "mean": 1.5,
+        "median": 1.5,
+        "stdev": 1.5,
+        "min": 0.0,
+        "max": 3.0,
+        "sample_descriptions": [
+          "Closing time is earlier than expected.",
+          "Open Monday to Friday only, limiting accessibility."
+        ]
+      },
+      "amenities": {
+        "count": 1,
+        "mean": 1.0,
+        "median": 1.0,
+        "stdev": 0.0,
+        "min": 1.0,
+        "max": 1.0,
+        "sample_descriptions": [
+          "Amenities for truck drivers are lacking."
+        ]
+      },
+      "leadership": {
+        "count": 1,
+        "mean": 1.0,
+        "median": 1.0,
+        "stdev": 0.0,
+        "min": 1.0,
+        "max": 1.0,
+        "sample_descriptions": [
+          "Bad leadership from management affects overall service quality."
+        ]
+      },
+      "safety": {
+        "count": 1,
+        "mean": 0.0,
+        "median": 0.0,
+        "stdev": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "sample_descriptions": [
+          "Very dangerous environment, not safe to eat."
+        ]
+      },
+      "salsa": {
+        "count": 3,
+        "mean": 4.166666666666667,
+        "median": 4.0,
+        "stdev": 0.6236095644623235,
+        "min": 3.5,
+        "max": 5.0,
+        "sample_descriptions": [
+          "Good salsa with nice spice, served heated.",
+          "Good but suggested to avoid watering down for better flavor.",
+          "Both green and red salsas were on point."
+        ]
+      },
+      "security": {
+        "count": 7,
+        "mean": 1.0,
+        "median": 0.0,
+        "stdev": 1.4142135623730951,
+        "min": 0.0,
+        "max": 4.0,
+        "sample_descriptions": [
+          "No security cameras and lack of action against theft are major issues.",
+          "Fuel theft indicates poor security while parked overnight.",
+          "No security presence despite the restaurant's size.",
+          "Strict security with pat-downs may be off-putting.",
+          "Good security ensuring a safe environment."
+        ]
+      },
+      "bar": {
+        "count": 1,
+        "mean": 4.0,
+        "median": 4.0,
+        "stdev": 0.0,
+        "min": 4.0,
+        "max": 4.0,
+        "sample_descriptions": [
+          "Well-stocked bar was a redeeming factor."
+        ]
+      },
+      "organisation": {
+        "count": 3,
+        "mean": 4.5,
+        "median": 4.5,
+        "stdev": 0.408248290463863,
+        "min": 4.0,
+        "max": 5.0,
+        "sample_descriptions": [
+          "The store is very well organized with clear signs.",
+          "The layout is organized, enhancing the dining experience.",
+          "The layout is well organized, enhancing the dining experience."
+        ]
+      },
+      "size": {
+        "count": 3,
+        "mean": 2.5,
+        "median": 2.5,
+        "stdev": 0.408248290463863,
+        "min": 2.0,
+        "max": 3.0,
+        "sample_descriptions": [
+          "Smaller size means some items may not be available.",
+          "The restaurant is small.",
+          "Restaurant was little small, which may affect comfort."
+        ]
+      },
+      "stock": {
+        "count": 2,
+        "mean": 3.5,
+        "median": 3.5,
+        "stdev": 1.5,
+        "min": 2.0,
+        "max": 5.0,
+        "sample_descriptions": [
+          "Mostly stocked, but missing key items like meat and dairy.",
+          "Always have what I need in stock."
+        ]
+      },
+      "payment": {
+        "count": 17,
+        "mean": 2.9705882352941178,
+        "median": 2.5,
+        "stdev": 1.4086976488032994,
+        "min": 1.0,
+        "max": 5.0,
+        "sample_descriptions": [
+          "Flexible payment options including cash, Zelle, and CashApp.",
+          "Only accepts cards and contactless payments.",
+          "Solo se acepta tarjeta, lo que puede ser inconveniente para algunos.",
+          "Accepts debit and credit cards.",
+          "Only accepts Zelle or cash, limiting convenience."
+        ]
+      },
+      "manager": {
+        "count": 1,
+        "mean": 2.0,
+        "median": 2.0,
+        "stdev": 0.0,
+        "min": 2.0,
+        "max": 2.0,
+        "sample_descriptions": [
+          "Manager failed to address service issues effectively."
+        ]
+      },
+      "family_friendly": {
+        "count": 1,
+        "mean": 5.0,
+        "median": 5.0,
+        "stdev": 0.0,
+        "min": 5.0,
+        "max": 5.0,
+        "sample_descriptions": [
+          "Playground available for children makes it ideal for families."
+        ]
+      },
+      "dog_friendly": {
+        "count": 1,
+        "mean": 5.0,
+        "median": 5.0,
+        "stdev": 0.0,
+        "min": 5.0,
+        "max": 5.0,
+        "sample_descriptions": [
+          "Dog friendly atmosphere."
+        ]
+      },
+      "capacity": {
+        "count": 2,
+        "mean": 3.0,
+        "median": 3.0,
+        "stdev": 1.0,
+        "min": 2.0,
+        "max": 4.0,
+        "sample_descriptions": [
+          "Limited to three people inside, which may affect comfort.",
+          "Small capacity of 36 creates an intimate dining experience."
+        ]
+      },
+      "temperature": {
+        "count": 2,
+        "mean": 1.0,
+        "median": 1.0,
+        "stdev": 1.0,
+        "min": 0.0,
+        "max": 2.0,
+        "sample_descriptions": [
+          "Food was served slightly above room temperature.",
+          "All tacos were served freezing cold, which is unacceptable."
+        ]
+      },
+      "family": {
+        "count": 1,
+        "mean": 4.5,
+        "median": 4.5,
+        "stdev": 0.0,
+        "min": 4.5,
+        "max": 4.5,
+        "sample_descriptions": [
+          "Great options for kids, making it family-friendly."
+        ]
+      },
+      "salad": {
+        "count": 1,
+        "mean": 5.0,
+        "median": 5.0,
+        "stdev": 0.0,
+        "min": 5.0,
+        "max": 5.0,
+        "sample_descriptions": [
+          "Best salads found, tailored to personal preferences."
+        ]
+      },
+      "community": {
+        "count": 1,
+        "mean": 5.0,
+        "median": 5.0,
+        "stdev": 0.0,
+        "min": 5.0,
+        "max": 5.0,
+        "sample_descriptions": [
+          "The restaurant is praised for its community-oriented efforts."
+        ]
+      },
+      "furniture": {
+        "count": 1,
+        "mean": 2.5,
+        "median": 2.5,
+        "stdev": 0.0,
+        "min": 2.5,
+        "max": 2.5,
+        "sample_descriptions": [
+          "Seating could be improved with more comfortable chairs."
+        ]
+      },
+      "takeout": {
+        "count": 1,
+        "mean": 3.0,
+        "median": 3.0,
+        "stdev": 0.0,
+        "min": 3.0,
+        "max": 3.0,
+        "sample_descriptions": [
+          "Only available for takeout, limiting dining options."
+        ]
+      },
+      "convenience": {
+        "count": 1,
+        "mean": 4.0,
+        "median": 4.0,
+        "stdev": 0.0,
+        "min": 4.0,
+        "max": 4.0,
+        "sample_descriptions": [
+          "Convenience was positively noted."
+        ]
+      },
+      "availability": {
+        "count": 1,
+        "mean": 5.0,
+        "median": 5.0,
+        "stdev": 0.0,
+        "min": 5.0,
+        "max": 5.0,
+        "sample_descriptions": [
+          "Open 24/7, even on holidays, providing convenience."
+        ]
+      },
+      "fries": {
+        "count": 2,
+        "mean": 3.0,
+        "median": 3.0,
+        "stdev": 0.0,
+        "min": 3.0,
+        "max": 3.0,
+        "sample_descriptions": [
+          "Fries were acceptable but not outstanding.",
+          "Fries were okay; expected truffle fries but received regular ones."
+        ]
+      },
+      "punctuality": {
+        "count": 1,
+        "mean": 5.0,
+        "median": 5.0,
+        "stdev": 0.0,
+        "min": 5.0,
+        "max": 5.0,
+        "sample_descriptions": [
+          "Always punctual with zero problems reported."
+        ]
+      },
+      "kid_friendly": {
+        "count": 2,
+        "mean": 5.0,
+        "median": 5.0,
+        "stdev": 0.0,
+        "min": 5.0,
+        "max": 5.0,
+        "sample_descriptions": [
+          "The restaurant is suitable for children.",
+          "The restaurant is suitable for families with children."
+        ]
+      },
+      "accuracy": {
+        "count": 1,
+        "mean": 5.0,
+        "median": 5.0,
+        "stdev": 0.0,
+        "min": 5.0,
+        "max": 5.0,
+        "sample_descriptions": [
+          "Orders are always accurate at this location."
+        ]
+      },
+      "game_functionality": {
+        "count": 1,
+        "mean": 1.0,
+        "median": 1.0,
+        "stdev": 0.0,
+        "min": 1.0,
+        "max": 1.0,
+        "sample_descriptions": [
+          "Many games were out of order, reducing entertainment options."
+        ]
+      },
+      "accommodation": {
+        "count": 1,
+        "mean": 2.5,
+        "median": 2.5,
+        "stdev": 0.0,
+        "min": 2.5,
+        "max": 2.5,
+        "sample_descriptions": [
+          "Accommodation is only satisfactory."
         ]
       }
     }
@@ -101,39 +979,111 @@
   "top_aspects": [
     {
       "aspect": "food",
-      "count": 7,
-      "mean_score": 3.0
+      "count": 131936,
+      "mean_score": 4.080872923235509
     },
     {
       "aspect": "service",
-      "count": 7,
-      "mean_score": 3.142857142857143
+      "count": 84647,
+      "mean_score": 3.4771285456070506
     },
     {
       "aspect": "staff",
-      "count": 2,
-      "mean_score": 4.75
-    },
-    {
-      "aspect": "cleanliness",
-      "count": 1,
-      "mean_score": 5.0
-    },
-    {
-      "aspect": "location",
-      "count": 1,
-      "mean_score": 3.0
+      "count": 29095,
+      "mean_score": 3.9233717133528097
     },
     {
       "aspect": "ambience",
-      "count": 1,
-      "mean_score": 5.0
+      "count": 18254,
+      "mean_score": 4.209326722910047
+    },
+    {
+      "aspect": "price",
+      "count": 16325,
+      "mean_score": 3.083215926493109
+    },
+    {
+      "aspect": "drink",
+      "count": 15286,
+      "mean_score": 4.079778882637708
+    },
+    {
+      "aspect": "cuisine_origin",
+      "count": 14422,
+      "mean_score": 4.509672722229927
+    },
+    {
+      "aspect": "wait_time",
+      "count": 11424,
+      "mean_score": 1.8437062324929971
+    },
+    {
+      "aspect": "cleanliness",
+      "count": 10442,
+      "mean_score": 3.2129381344570005
+    },
+    {
+      "aspect": "location",
+      "count": 6358,
+      "mean_score": 3.714690154136521
+    },
+    {
+      "aspect": "value",
+      "count": 6136,
+      "mean_score": 3.0792861799217732
+    },
+    {
+      "aspect": "portion_size",
+      "count": 4682,
+      "mean_score": 3.570952584365656
+    },
+    {
+      "aspect": "menu",
+      "count": 3518,
+      "mean_score": 3.6215179079022173
+    },
+    {
+      "aspect": "music_noise",
+      "count": 2228,
+      "mean_score": 3.1532764811490126
+    },
+    {
+      "aspect": "parking",
+      "count": 1899,
+      "mean_score": 2.656924697209057
+    },
+    {
+      "aspect": "dietary",
+      "count": 662,
+      "mean_score": 4.015861027190332
+    },
+    {
+      "aspect": "accessibility",
+      "count": 482,
+      "mean_score": 2.6068464730290457
+    },
+    {
+      "aspect": "reservations",
+      "count": 328,
+      "mean_score": 2.9359756097560976
+    },
+    {
+      "aspect": "dessert",
+      "count": 39,
+      "mean_score": 4.102564102564102
+    },
+    {
+      "aspect": "management",
+      "count": 24,
+      "mean_score": 1.375
     }
   ],
   "sample_reviews": [
     {
+      "custom_id": "request_0",
+      "placeId": "ChIJ79lqEQKrQIYRu0IWX8jIh9A",
       "sentiment_score": 1.0,
-      "summary": "The pizza is fresh and tasty, and the staff is friendly. The store maintains high cleanliness standards.",
+      "perceived_value_score": 5.0,
       "aspects": {
         "food": {
           "score": 5.0,
@@ -148,11 +1098,13 @@
           "description": "The store is always clean."
         }
       },
-      "custom_id": "request_0"
+      "summary": "The pizza is fresh and tasty, and the staff is friendly. The store maintains high cleanliness standards."
     },
     {
+      "custom_id": "request_2",
+      "placeId": "ChIJ79lqEQKrQIYRu0IWX8jIh9A",
       "sentiment_score": 0.5,
-      "summary": "The food and service were good, but the pizza was not the reviewer's favorite. Delivery was timely despite an address issue.",
+      "perceived_value_score": 3.75,
       "aspects": {
         "food": {
           "score": 4.0,
@@ -167,11 +1119,13 @@
           "description": "Delivery was to a non-existent address, but resolved with a nearby address."
         }
       },
-      "custom_id": "request_2"
+      "summary": "The food and service were good, but the pizza was not the reviewer's favorite. Delivery was timely despite an address issue."
     },
     {
+      "custom_id": "request_4",
+      "placeId": "ChIJ79lqEQKrQIYRu0IWX8jIh9A",
       "sentiment_score": -0.7,
-      "summary": "The review expresses frustration over incorrect pizza orders and poor service. The reviewer felt their money was wasted due to the issues encountered.",
+      "perceived_value_score": 0.7500000000000001,
       "aspects": {
         "food": {
           "score": 1.0,
@@ -182,22 +1136,26 @@
           "description": "Manager's response was unhelpful and unprofessional."
         }
       },
-      "custom_id": "request_4"
+      "summary": "The review expresses frustration over incorrect pizza orders and poor service. The reviewer felt their money was wasted due to the issues encountered."
     },
     {
+      "custom_id": "request_6",
+      "placeId": "ChIJ79lqEQKrQIYRu0IWX8jIh9A",
       "sentiment_score": -0.5,
-      "summary": "The pizza was served cold, which negatively impacted the experience.",
+      "perceived_value_score": 1.25,
       "aspects": {
         "food": {
           "score": 1.0,
           "description": "The pizza was cold, indicating poor food quality."
         }
       },
-      "custom_id": "request_6"
+      "summary": "The pizza was served cold, which negatively impacted the experience."
     },
     {
+      "custom_id": "request_7",
+      "placeId": "ChIJ79lqEQKrQIYRu0IWX8jIh9A",
       "sentiment_score": 0.8,
-      "summary": "The staff is friendly and efficient in processing orders. Overall, a positive experience.",
+      "perceived_value_score": 4.5,
       "aspects": {
         "service": {
           "score": 4.5,
@@ -208,11 +1166,13 @@
           "description": "Super nice people contribute to a welcoming atmosphere."
         }
       },
-      "custom_id": "request_7"
+      "summary": "The staff is friendly and efficient in processing orders. Overall, a positive experience."
     },
     {
+      "custom_id": "request_9",
+      "placeId": "ChIJ79lqEQKrQIYRu0IWX8jIh9A",
       "sentiment_score": 0.9,
-      "summary": "The food is consistently ready on time, and the drive-up service is efficient and friendly.",
+      "perceived_value_score": 4.75,
       "aspects": {
         "food": {
           "score": 5,
@@ -223,11 +1183,13 @@
           "description": "Drive-up service is fast and friendly."
         }
       },
-      "custom_id": "request_9"
+      "summary": "The food is consistently ready on time, and the drive-up service is efficient and friendly."
     },
     {
+      "custom_id": "request_10",
+      "placeId": "ChIJ79lqEQKrQIYRu0IWX8jIh9A",
       "sentiment_score": 0.8,
-      "summary": "El lugar es excelente y la atención es buena.",
+      "perceived_value_score": 4.5,
       "aspects": {
         "service": {
           "score": 4.5,
@@ -238,11 +1200,13 @@
           "description": "El sitio es excelente, lo que implica un ambiente agradable."
         }
       },
-      "custom_id": "request_10"
+      "summary": "El lugar es excelente y la atención es buena."
     },
     {
+      "custom_id": "request_11",
+      "placeId": "ChIJ79lqEQKrQIYRu0IWX8jIh9A",
       "sentiment_score": -1.0,
-      "summary": "The review expresses extreme dissatisfaction with the incorrect pizza order and poor customer service. The reviewer vows never to return and warns others.",
+      "perceived_value_score": 0.0,
       "aspects": {
         "food": {
           "score": 0.0,
@@ -253,29 +1217,33 @@
           "description": "Poor customer service with unhelpful staff and rude responses."
         }
       },
-      "custom_id": "request_11"
+      "summary": "The review expresses extreme dissatisfaction with the incorrect pizza order and poor customer service. The reviewer vows never to return and warns others."
     },
     {
+      "custom_id": "request_12",
+      "placeId": "ChIJ79lqEQKrQIYRu0IWX8jIh9A",
       "sentiment_score": 0.0,
-      "summary": "The service is described as good but inconsistent.",
+      "perceived_value_score": 2.5,
       "aspects": {
         "service": {
           "score": 2.5,
           "description": "Good at times, but lacks consistency."
         }
       },
-      "custom_id": "request_12"
+      "summary": "The service is described as good but inconsistent."
     },
     {
+      "custom_id": "request_13",
+      "placeId": "ChIJ79lqEQKrQIYRu0IWX8jIh9A",
       "sentiment_score": 0.9,
-      "summary": "The food is quick, easy to obtain, and delicious.",
+      "perceived_value_score": 4.75,
       "aspects": {
         "food": {
           "score": 5,
           "description": "Food is described as delicious."
         }
       },
-      "custom_id": "request_13"
+      "summary": "The food is quick, easy to obtain, and delicious."
     }
   ]
 }

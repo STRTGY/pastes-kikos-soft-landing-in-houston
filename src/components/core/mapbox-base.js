@@ -29,7 +29,9 @@ export function consumerCentricityMapMapbox({
 	mapboxToken,
 	mapboxStyle = DEFAULT_STYLE,
 	// Always-on points layer that sits on top of all others and is not toggleable
-	alwaysOnTopPoints = null // { data, name }
+	alwaysOnTopPoints = null, // { data, name }
+	// Initial visible layers (auto-activate on load)
+	initialVisibleLayers = [] // string[] of layer names to show by default
 } = {}) {
 	ensureMapboxAccessToken(mapboxToken);
 	const container = document.createElement("div");
@@ -342,7 +344,7 @@ export function consumerCentricityMapMapbox({
 			const fillId = `ch-fill-${name}`;
 			const lineId = `ch-line-${name}`;
 			addSourceOnce(sourceId, { type: "geojson", data: geo });
-			const prop = property === "has_drive_thru_vs_total_restaurants" ? "has_drive_thru_vs_total_restaurants" : property;
+			const prop = property || "has_drive_thru_vs_total_restaurants";
 			const valueExpr = ["to-number", ["get", prop]];
 			const clamped = ["max", 0, ["min", 100, valueExpr]];
 			const colorLow = COLOR_SCHEMES.redGradient.low;
@@ -365,7 +367,8 @@ export function consumerCentricityMapMapbox({
 				map.on("click", fillId, (e) => {
 					const feat = (e?.features && e.features[0]) || null;
 					const props = feat?.properties || {};
-					const pct = Number(props.has_drive_thru_vs_total_restaurants);
+					// Use the dynamic property passed in
+					const pct = Number(props[prop]);
 					const pctClamped = clampPercent(pct);
 					const totalRest = Number(props.total_restaurants);
 					const knownDriveThru = Number(props.count_has_drive_through);
@@ -538,7 +541,10 @@ export function consumerCentricityMapMapbox({
 
 	const buildLineOverlay = ({ data, name, property, styleMap = {}, line = {} }) => {
 		try {
-			const geo = coerceGeoJSON(data);
+			let geo = coerceGeoJSON(data);
+			if (!geo) return null;
+			// Reproject from EPSG:3857 to EPSG:4326 if needed
+			geo = maybeReproject3857To4326(geo);
 			if (!geo) return null;
 			const sourceId = `line-ovl-src-${name}`;
 			const layerId = `line-ovl-lyr-${name}`;
@@ -605,18 +611,9 @@ export function consumerCentricityMapMapbox({
 	};
 
 	map.on("load", () => {
-		// Roads — style by F_SYSTEM with overrides and legend
-		if (roads) {
-			try {
-				const roadsGeo = maybeReproject3857To4326(coerceGeoJSON(roads));
-				if (roadsGeo) {
-					const od = buildRoadsOverlay(roadsGeo);
-					if (od) addOverlay(od.name, od.sources, od.layers, od.legendEl);
-				}
-			} catch (e) { derror("roads layer failed", e); }
-		}
-
-		// Choropleths
+		// Layer rendering order (bottom to top): choropleths → roads/lines → points
+		
+		// Choropleths (bottom)
 		for (const entry of choropleths) {
 			if (!entry || !entry.data || !entry.property) continue;
 			try {
@@ -628,6 +625,17 @@ export function consumerCentricityMapMapbox({
 			} catch (e) { derror("choropleth failed", e); }
 		}
 
+		// Roads — style by F_SYSTEM with overrides and legend
+		if (roads) {
+			try {
+				const roadsGeo = maybeReproject3857To4326(coerceGeoJSON(roads));
+				if (roadsGeo) {
+					const od = buildRoadsOverlay(roadsGeo);
+					if (od) addOverlay(od.name, od.sources, od.layers, od.legendEl);
+				}
+			} catch (e) { derror("roads layer failed", e); }
+		}
+
 		// Line overlays (e.g., congestion, road classification)
 		for (const lo of lineOverlays) {
 			if (!lo || !lo.data || !lo.name || !lo.property) continue;
@@ -637,7 +645,7 @@ export function consumerCentricityMapMapbox({
 			} catch (e) { derror("line overlay failed", e); }
 		}
 
-		// Points layers
+		// Points layers (top)
 		for (const [name, data] of Object.entries(pointsLayers || {})) {
 			if (!data) continue;
 			try {
@@ -706,8 +714,15 @@ export function consumerCentricityMapMapbox({
 			} catch (e) { derror("always-on points failed", e); }
 		}
 
-		// Activate first layer if it's the only one
-		activateFirstLayer();
+		// Activate initial layers if specified
+		if (Array.isArray(initialVisibleLayers) && initialVisibleLayers.length > 0) {
+			for (const name of initialVisibleLayers) {
+				toggleOverlay(name, true);
+			}
+		} else {
+			// Activate first layer if it's the only one
+			activateFirstLayer();
+		}
 		
 		addToggleControl();
 		notifyOverlayVisibility();

@@ -12,6 +12,7 @@ keywords: ubicación, planta, tienda, drive-through, Houston, logística, expans
 </div>
 
 ```js
+import * as Plot from "npm:@observablehq/plot";
 import { MAP_DEFAULTS } from "../../config/maps.js";
 const { mapboxToken: MAPBOX_TOKEN, mapboxStyle: MAPBOX_STYLE } = MAP_DEFAULTS;
 ```
@@ -43,32 +44,38 @@ const avgTrafficAADT = 35000; // Promedio estimado de AADT en zonas objetivo
 ```
 
 ```js
-// Función para crear KPI cards
+// Función para crear KPI cards con diseño mejorado
 function kpiCard(title, value, suffix = "", icon = "") {
   const formatted = typeof value === "number" ? value.toLocaleString("es-MX", {maximumFractionDigits: 1}) : value;
   return html`
-    <div class="card">
-      <div style="font-size: 0.75rem; color: var(--theme-foreground-muted); margin-bottom: 0.5rem;">
-        ${icon} ${title}
-      </div>
-      <div style="font-size: 2rem; font-weight: 700; color: var(--theme-foreground-focus);">
-        ${formatted}${suffix}
-      </div>
+    <div class="kpi-card">
+      <div class="kpi-icon">${icon}</div>
+      <div class="kpi-value">${formatted}${suffix}</div>
+      <div class="kpi-label">${title}</div>
     </div>
   `;
 }
 ```
 
-<div class="hero">
-  <h3 id="resumen-ejecutivo">Resumen Ejecutivo</h3>
-</div>
-
-<div class="text">
-  <p>La estrategia de ubicación es crítica para el éxito del soft landing de Pastes Kikos en Houston. Este análisis integra datos demográficos, de tráfico vehicular, competencia restaurantera y patrones de drive-through para identificar las ubicaciones óptimas para:</p>
-  <ol>
-    <li><strong>Planta de producción central</strong> — Hub logístico para distribución a múltiples tiendas</li>
-    <li><strong>Primera tienda drive-through</strong> — Punto de venta inicial para validación de mercado</li>
-  </ol>
+<div class="section-intro">
+  <div class="intro-badge">📋 Resumen Ejecutivo</div>
+  <p class="intro-text">La estrategia de ubicación es crítica para el éxito del soft landing de Pastes Kikos en Houston. Este análisis integra datos demográficos, de tráfico vehicular, competencia restaurantera y patrones de drive-through para identificar las ubicaciones óptimas para:</p>
+  <div class="objectives-grid">
+    <div class="objective-card">
+      <div class="objective-number">1</div>
+      <div class="objective-content">
+        <h4>Planta de producción central</h4>
+        <p>Hub logístico para distribución a múltiples tiendas</p>
+      </div>
+    </div>
+    <div class="objective-card">
+      <div class="objective-number">2</div>
+      <div class="objective-content">
+        <h4>Primera tienda drive-through</h4>
+        <p>Punto de venta inicial para validación de mercado</p>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="grid grid-cols-4">
@@ -78,12 +85,12 @@ function kpiCard(title, value, suffix = "", icon = "") {
   ${kpiCard("Tráfico Promedio", avgTrafficAADT, " AADT", "🛣️")}
 </div>
 
-<div class="hero">
-  <h2 id="mapa-estrategico">Mapa Estratégico Interactivo</h2>
-</div>
-
-<div class="text">
-  <p class="lead">Explora las capas de análisis geoespacial. El mapa integra zonas de interés demográfico, red vial principal, ubicación de competidores y densidad de drive-throughs.</p>
+<div class="section-header">
+  <div class="section-icon">🗺️</div>
+  <div>
+    <h2 id="mapa-estrategico">Mapa Estratégico Interactivo</h2>
+    <p class="section-subtitle">Explora las capas de análisis geoespacial. El mapa integra zonas de interés demográfico, red vial principal, ubicación de competidores y densidad de drive-throughs.</p>
+  </div>
 </div>
 
 <div class="grid grid-cols-1">
@@ -102,42 +109,48 @@ function kpiCard(title, value, suffix = "", icon = "") {
   </div>
 </div>
 
-<div class="note" style="margin-top: 1rem;">
-  💡 <strong>Tip:</strong> Usa los controles de capas (arriba derecha del mapa) para activar/desactivar diferentes overlays y análisis temáticos.
+<div class="tip-box">
+  <div class="tip-icon">💡</div>
+  <div class="tip-content">
+    <strong>Tip interactivo:</strong> Usa los controles de capas (arriba derecha del mapa) para activar/desactivar diferentes overlays y análisis temáticos.
+  </div>
 </div>
 
 ---
 
-<div class="hero">
-  <h2 id="planta-produccion">1. Planta de Producción Central</h2>
+<div class="section-header major">
+  <div class="section-icon">🏭</div>
+  <div>
+    <h2 id="planta-produccion">1. Planta de Producción Central</h2>
+    <p class="section-subtitle"><strong>Objetivo:</strong> Hub de producción con capacidad de distribución a 25 millas en <30 minutos y escalabilidad al Triángulo de Texas.</p>
+  </div>
 </div>
 
-<div class="text">
-  <p class="lead"><strong>Objetivo:</strong> Hub de producción con capacidad de distribución a 25 millas en <30 minutos y escalabilidad al Triángulo de Texas.</p>
-  
-  <p><strong>Criterios de Selección</strong></p>
-</div>
+<h3 class="subsection-title">Criterios de Selección</h3>
 
 <div class="grid grid-cols-3">
-  <div class="card">
-    <h3>🛣️ Accesibilidad</h3>
-    <ul style="font-size: 0.875rem; margin: 0.5rem 0;">
+  <div class="criteria-card">
+    <div class="criteria-icon">🛣️</div>
+    <h3>Accesibilidad</h3>
+    <ul>
       <li>Proximidad a I-10, I-45, I-610, US-59</li>
       <li>Tiempo entrega <30 min (valle)</li>
       <li>Radio cobertura: 25 millas</li>
     </ul>
   </div>
-  <div class="card">
-    <h3>📈 Escalabilidad</h3>
-    <ul style="font-size: 0.875rem; margin: 0.5rem 0;">
+  <div class="criteria-card">
+    <div class="criteria-icon">📈</div>
+    <h3>Escalabilidad</h3>
+    <ul>
       <li>Expansión a San Antonio (197 mi)</li>
       <li>Dallas (239 mi), Austin (165 mi)</li>
       <li>Espacio: 5,000-10,000 sq ft</li>
       </ul>
   </div>
-  <div class="card">
-    <h3>💰 Costo</h3>
-    <ul style="font-size: 0.875rem; margin: 0.5rem 0;">
+  <div class="criteria-card">
+    <div class="criteria-icon">💰</div>
+    <h3>Costo</h3>
+    <ul>
       <li>Renta: $6-10/sq ft anual</li>
       <li>Zonificación industrial alimentaria</li>
       <li>Incentivos fiscales (Enterprise Zones)</li>
@@ -145,9 +158,7 @@ function kpiCard(title, value, suffix = "", icon = "") {
   </div>
 </div>
 
-<div class="hero">
-  <h3 id="scoring-planta">Scoring de Zonas Candidatas para Planta</h3>
-</div>
+<h3 class="subsection-title" id="scoring-planta">📊 Scoring de Zonas Candidatas para Planta</h3>
 
 ```js
 // Datos de scoring para planta de producción
@@ -245,54 +256,99 @@ const plantTable = html`<div class="card" style="overflow-x: auto;">
 ```
 
 ```js
-const plantMap = Plot.plot({
-  width: 550,
-  height: 500,
-  projection: {
-    type: "mercator",
-    domain: {
-      type: "MultiPoint",
-      coordinates: plantZonesWithScores.map(z => [z.lon, z.lat])
-    },
-    inset: 40
-  },
-  marks: [
-    Plot.dot(plantZonesWithScores, {
-      x: "lon",
-      y: "lat",
-      r: 12,
-      fill: (d, i) => i === 0 ? "#22c55e" : "#94a3b8",
-      stroke: (d, i) => i === 0 ? "#166534" : "#475569",
-      strokeWidth: 2,
-      tip: true,
-      title: d => `${d.name}\nScore: ${d.totalScore.toFixed(1)}`
-    }),
-    Plot.text(plantZonesWithScores, {
-      x: "lon",
-      y: "lat",
-      text: d => d.rank,
-      fill: "white",
-      fontSize: 14,
-      fontWeight: "bold"
-    })
-  ]
-});
+import mapboxgl from "npm:mapbox-gl@3";
+
+function createPlantMap(width) {
+  const container = document.createElement("div");
+  container.style.width = "100%";
+  container.style.height = "600px";
+  container.style.borderRadius = "0 0 8px 8px";
+  container.style.overflow = "hidden";
+
+  // Calculate bounds for all points
+  const lons = plantZonesWithScores.map(z => z.lon);
+  const lats = plantZonesWithScores.map(z => z.lat);
+  const bounds = [
+    [Math.min(...lons) - 0.1, Math.min(...lats) - 0.1],
+    [Math.max(...lons) + 0.1, Math.max(...lats) + 0.1]
+  ];
+
+  const map = new mapboxgl.Map({
+    container,
+    style: MAPBOX_STYLE,
+    accessToken: MAPBOX_TOKEN,
+    bounds,
+    fitBoundsOptions: { padding: 50 }
+  });
+
+  // Ensure map resizes properly
+  requestAnimationFrame(() => {
+    map.resize();
+  });
+
+  map.on("load", () => {
+    // Force resize after load
+    map.resize();
+    
+    // Add markers for each zone
+    plantZonesWithScores.forEach((zone, i) => {
+      const el = document.createElement("div");
+      el.className = "location-marker";
+      el.style.width = "40px";
+      el.style.height = "40px";
+      el.style.borderRadius = "50%";
+      el.style.backgroundColor = i === 0 ? "#22c55e" : "#94a3b8";
+      el.style.border = `3px solid ${i === 0 ? "#166534" : "#475569"}`;
+      el.style.display = "flex";
+      el.style.alignItems = "center";
+      el.style.justifyContent = "center";
+      el.style.fontWeight = "bold";
+      el.style.fontSize = "18px";
+      el.style.color = "white";
+      el.style.cursor = "pointer";
+      el.style.boxShadow = "0 2px 8px rgba(0,0,0,0.3)";
+      el.textContent = zone.rank;
+
+      const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(
+        `<div style="padding: 8px;">
+          <strong>${zone.name}</strong><br>
+          Score: ${zone.totalScore.toFixed(1)}/10
+        </div>`
+      );
+
+      new mapboxgl.Marker(el)
+        .setLngLat([zone.lon, zone.lat])
+        .setPopup(popup)
+        .addTo(map);
+    });
+
+    // Add navigation controls
+    map.addControl(new mapboxgl.NavigationControl(), "top-right");
+  });
+
+  invalidation.then(() => map.remove());
+  
+  return container;
+}
 ```
 
-<div class="grid grid-cols-2" style="gap: 1.5rem;">
+<div class="grid grid-cols-1" style="gap: 1.5rem;">
   <div>${plantTable}</div>
-  <div class="card">
-    <h3>Ubicaciones Candidatas</h3>
-    ${plantMap}
+  <div class="card" style="padding: 0;">
+    <div style="padding: 1.5rem 1.5rem 1rem 1.5rem;">
+      <h3 style="margin: 0;">Ubicaciones Candidatas</h3>
+    </div>
+    ${createPlantMap()}
   </div>
 </div>
 
-<div class="hero">
-  <h3 id="recomendacion-planta">Recomendación</h3>
-</div>
+<h3 class="subsection-title" id="recomendacion-planta">✅ Recomendación</h3>
 
-<div class="card" style="background: linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(34, 197, 94, 0.05) 100%); border-left: 4px solid #22c55e;">
-  <h3 style="color: #22c55e; margin-top: 0;">🏆 Northwest Houston — Zona Prioritaria</h3>
+<div class="recommendation-card winner">
+  <div class="recommendation-header">
+    <div class="trophy-badge">🏆</div>
+    <h3>Northwest Houston — Zona Prioritaria</h3>
+  </div>
   <div class="grid grid-cols-2" style="gap: 1rem; margin-top: 1rem;">
     <div>
       <h4 style="font-size: 0.875rem; color: var(--theme-foreground-muted); margin: 0.5rem 0;">Ventajas Clave</h4>
@@ -316,41 +372,38 @@ const plantMap = Plot.plot({
 
 ---
 
-<div class="hero">
-  <h2 id="primera-tienda">2. Primera Tienda (Drive-Through)</h2>
-</div>
-
-<div class="text">
-  <p class="lead"><strong>Modelo de Negocio: Drive-Through QSR</strong></p>
-  <p>El formato drive-through es estratégico para Houston debido a:</p>
+<div class="section-header major">
+  <div class="section-icon">🍽️</div>
+  <div>
+    <h2 id="primera-tienda">2. Primera Tienda (Drive-Through)</h2>
+    <p class="section-subtitle"><strong>Modelo de Negocio: Drive-Through QSR</strong> — El formato drive-through es estratégico para Houston debido a:</p>
+  </div>
 </div>
 
 <div class="grid grid-cols-4">
-  <div class="card">
-    <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🚗</div>
-    <h3 style="font-size: 1rem;">Dependencia Vehicular</h3>
-    <p style="font-size: 0.875rem; margin: 0.5rem 0;">85%+ desplazamientos en auto privado</p>
+  <div class="feature-card">
+    <div class="feature-icon">🚗</div>
+    <h3>Dependencia Vehicular</h3>
+    <p>85%+ desplazamientos en auto privado</p>
   </div>
-  <div class="card">
-    <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">⚡</div>
-    <h3 style="font-size: 1rem;">Cultura Grab-and-Go</h3>
-    <p style="font-size: 0.875rem; margin: 0.5rem 0;">Conveniencia como prioridad</p>
+  <div class="feature-card">
+    <div class="feature-icon">⚡</div>
+    <h3>Cultura Grab-and-Go</h3>
+    <p>Conveniencia como prioridad</p>
   </div>
-  <div class="card">
-    <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🌡️</div>
-    <h3 style="font-size: 1rem;">Clima Extremo</h3>
-    <p style="font-size: 0.875rem; margin: 0.5rem 0;">Veranos >95°F, lluvias intensas</p>
+  <div class="feature-card">
+    <div class="feature-icon">🌡️</div>
+    <h3>Clima Extremo</h3>
+    <p>Veranos >95°F, lluvias intensas</p>
   </div>
-  <div class="card">
-    <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">💵</div>
-    <h3 style="font-size: 1rem;">Menor Inversión</h3>
-    <p style="font-size: 0.875rem; margin: 0.5rem 0;">vs. local con comedor completo</p>
+  <div class="feature-card">
+    <div class="feature-icon">💵</div>
+    <h3>Menor Inversión</h3>
+    <p>vs. local con comedor completo</p>
   </div>
 </div>
 
-<div class="hero">
-  <h3 id="criterios-primera-tienda">Criterios de Selección</h3>
-</div>
+<h3 class="subsection-title" id="criterios-primera-tienda">📋 Criterios de Selección</h3>
 
 <div class="text">
   <p><strong>A. Tráfico y Visibilidad</strong></p>
@@ -393,9 +446,7 @@ const plantMap = Plot.plot({
   </ul>
 </div>
 
-<div class="hero">
-  <h3 id="scoring-tiendas">Scoring de Microzonas Prioritarias</h3>
-</div>
+<h3 class="subsection-title" id="scoring-tiendas">📊 Scoring de Microzonas Prioritarias</h3>
 
 ```js
 // Datos de scoring para primera tienda
@@ -521,125 +572,177 @@ const storeTable = html`<div class="card" style="overflow-x: auto;">
 ```
 
 ```js
-const storeMap = Plot.plot({
-  width: 550,
-  height: 500,
-  projection: {
-    type: "mercator",
-    domain: {
-      type: "MultiPoint",
-      coordinates: storeZonesWithScores.map(z => [z.lon, z.lat])
-    },
-    inset: 30
-  },
-  marks: [
-    Plot.dot(storeZonesWithScores, {
-      x: "lon",
-      y: "lat",
-      r: 12,
-      fill: d => {
-        if (d.totalScore >= 8.5) return "#22c55e";
-        if (d.totalScore >= 8.0) return "#84cc16";
-        if (d.totalScore >= 7.5) return "#eab308";
-        if (d.totalScore >= 7.0) return "#f97316";
-        return "#ef4444";
-      },
-      stroke: d => {
-        if (d.totalScore >= 8.5) return "#166534";
-        if (d.totalScore >= 8.0) return "#4d7c0f";
-        if (d.totalScore >= 7.5) return "#a16207";
-        if (d.totalScore >= 7.0) return "#c2410c";
-        return "#991b1b";
-      },
-      strokeWidth: 2,
-      tip: true,
-      title: d => `${d.name}\nScore: ${d.totalScore.toFixed(1)}`
-    }),
-    Plot.text(storeZonesWithScores, {
-      x: "lon",
-      y: "lat",
-      text: (d, i) => i + 1,
-      fill: "white",
-      fontSize: 14,
-      fontWeight: "bold"
-    })
-  ]
-});
+function createStoreMap(width) {
+  const container = document.createElement("div");
+  container.style.width = "100%";
+  container.style.height = "600px";
+  container.style.borderRadius = "0 0 8px 8px";
+  container.style.overflow = "hidden";
+
+  // Calculate bounds for all points
+  const lons = storeZonesWithScores.map(z => z.lon);
+  const lats = storeZonesWithScores.map(z => z.lat);
+  const bounds = [
+    [Math.min(...lons) - 0.15, Math.min(...lats) - 0.15],
+    [Math.max(...lons) + 0.15, Math.max(...lats) + 0.15]
+  ];
+
+  const map = new mapboxgl.Map({
+    container,
+    style: MAPBOX_STYLE,
+    accessToken: MAPBOX_TOKEN,
+    bounds,
+    fitBoundsOptions: { padding: 50 }
+  });
+
+  // Ensure map resizes properly
+  requestAnimationFrame(() => {
+    map.resize();
+  });
+
+  map.on("load", () => {
+    // Force resize after load
+    map.resize();
+    
+    // Add markers for each zone
+    storeZonesWithScores.forEach((zone, i) => {
+      const el = document.createElement("div");
+      el.className = "location-marker";
+      el.style.width = "40px";
+      el.style.height = "40px";
+      el.style.borderRadius = "50%";
+      
+      // Color based on score
+      let fillColor, strokeColor;
+      if (zone.totalScore >= 8.5) {
+        fillColor = "#22c55e";
+        strokeColor = "#166534";
+      } else if (zone.totalScore >= 8.0) {
+        fillColor = "#84cc16";
+        strokeColor = "#4d7c0f";
+      } else if (zone.totalScore >= 7.5) {
+        fillColor = "#eab308";
+        strokeColor = "#a16207";
+      } else if (zone.totalScore >= 7.0) {
+        fillColor = "#f97316";
+        strokeColor = "#c2410c";
+      } else {
+        fillColor = "#ef4444";
+        strokeColor = "#991b1b";
+      }
+      
+      el.style.backgroundColor = fillColor;
+      el.style.border = `3px solid ${strokeColor}`;
+      el.style.display = "flex";
+      el.style.alignItems = "center";
+      el.style.justifyContent = "center";
+      el.style.fontWeight = "bold";
+      el.style.fontSize = "18px";
+      el.style.color = "white";
+      el.style.cursor = "pointer";
+      el.style.boxShadow = "0 2px 8px rgba(0,0,0,0.3)";
+      el.textContent = i + 1;
+
+      const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(
+        `<div style="padding: 8px;">
+          <strong>${zone.name}</strong><br>
+          Score: ${zone.totalScore.toFixed(1)}/10<br>
+          <small style="color: #666;">Rank #${i + 1}</small>
+        </div>`
+      );
+
+      new mapboxgl.Marker(el)
+        .setLngLat([zone.lon, zone.lat])
+        .setPopup(popup)
+        .addTo(map);
+    });
+
+    // Add navigation controls
+    map.addControl(new mapboxgl.NavigationControl(), "top-right");
+  });
+
+  invalidation.then(() => map.remove());
+  
+  return container;
+}
 ```
 
-<div class="grid grid-cols-2" style="gap: 1.5rem;">
+<div class="grid grid-cols-1" style="gap: 1.5rem;">
   <div>${storeTable}</div>
-  <div class="card">
-    <h3>Ubicaciones Candidatas</h3>
-    ${storeMap}
+  <div class="card" style="padding: 0;">
+    <div style="padding: 1.5rem 1.5rem 1rem 1.5rem;">
+      <h3 style="margin: 0;">Ubicaciones Candidatas</h3>
+    </div>
+    ${createStoreMap()}
   </div>
 </div>
 
-<div class="hero">
-  <h3 id="demografia-zonas">Perfil Demográfico por Zona</h3>
-</div>
+<h3 class="subsection-title" id="demografia-zonas">👥 Perfil Demográfico por Zona</h3>
 
 ```js
 // Gráfica de demografía comparativa
-const demoChart = Plot.plot({
-  width: 900,
-  height: 350,
-  marginLeft: 200,
-  style: {
-    background: "transparent",
-    fontSize: "13px"
-  },
-  x: {
-    grid: true,
-    label: "Valor"
-  },
-  y: {
-    label: null
-  },
-  color: {
-    domain: ["% Población Blanca", "Ingreso Medio ($k)"],
-    range: ["#3b82f6", "#22c55e"],
-    legend: true
-  },
-  facet: {
-    data: storeZones.flatMap(z => [
-      { zone: z.name, metric: "% Población Blanca", value: z.whitePercent },
-      { zone: z.name, metric: "Ingreso Medio ($k)", value: z.medianIncome / 1000 }
-    ]),
-    y: "metric",
-    marginLeft: 200
-  },
-  marks: [
-    Plot.barX(
-      storeZones.flatMap(z => [
+function createDemoChart(width) {
+  return Plot.plot({
+    width,
+    height: 350,
+    marginLeft: 200,
+    style: {
+      background: "transparent",
+      fontSize: "13px"
+    },
+    x: {
+      grid: true,
+      label: "Valor"
+    },
+    y: {
+      label: null
+    },
+    color: {
+      domain: ["% Población Blanca", "Ingreso Medio ($k)"],
+      range: ["#3b82f6", "#22c55e"],
+      legend: true
+    },
+    facet: {
+      data: storeZones.flatMap(z => [
         { zone: z.name, metric: "% Población Blanca", value: z.whitePercent },
         { zone: z.name, metric: "Ingreso Medio ($k)", value: z.medianIncome / 1000 }
       ]),
-      {
-        x: "value",
-        y: "zone",
-        fill: "metric",
-        sort: { y: "-x" },
-        tip: true
-      }
-    ),
-    Plot.ruleX([0])
-  ]
-});
+      y: "metric",
+      marginLeft: 200
+    },
+    marks: [
+      Plot.barX(
+        storeZones.flatMap(z => [
+          { zone: z.name, metric: "% Población Blanca", value: z.whitePercent },
+          { zone: z.name, metric: "Ingreso Medio ($k)", value: z.medianIncome / 1000 }
+        ]),
+        {
+          x: "value",
+          y: "zone",
+          fill: "metric",
+          sort: { y: "-x" },
+          tip: true
+        }
+      ),
+      Plot.ruleX([0])
+    ]
+  });
+}
 ```
 
 <div class="grid grid-cols-1">
   <div class="card">
-    ${resize((width) => demoChart)}
+    ${resize((width) => createDemoChart(width))}
   </div>
 </div>
 
-<div class="hero">
-  <h3 id="recomendacion-tienda">Recomendación</h3>
-</div>
+<h3 class="subsection-title" id="recomendacion-tienda">✅ Recomendación</h3>
 
-<div class="card" style="background: linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(34, 197, 94, 0.05) 100%); border-left: 4px solid #22c55e;">
-  <h3 style="color: #22c55e; margin-top: 0;">🏆 Energy Corridor — Zona Prioritaria</h3>
+<div class="recommendation-card winner">
+  <div class="recommendation-header">
+    <div class="trophy-badge">🏆</div>
+    <h3>Energy Corridor — Zona Prioritaria</h3>
+  </div>
   <div class="grid grid-cols-2" style="gap: 1rem; margin-top: 1rem;">
     <div>
       <h4 style="font-size: 0.875rem; color: var(--theme-foreground-muted); margin: 0.5rem 0;">Por qué Energy Corridor</h4>
@@ -667,9 +770,7 @@ const demoChart = Plot.plot({
 
 ---
 
-<div class="hero">
-  <h3 id="analisis-drivethru">Análisis de Prevalencia Drive-Through</h3>
-</div>
+<h3 class="subsection-title" id="analisis-drivethru">🚗 Análisis de Prevalencia Drive-Through</h3>
 
 ```js
 // Calcular estadísticas de drive-through por census tract
@@ -764,8 +865,11 @@ function createDriveThruHistogram(width) {
 
 ---
 
-<div class="hero">
-  <h2 id="metodologia-seleccion">Metodología de Selección Final</h2>
+<div class="section-header">
+  <div class="section-icon">🔄</div>
+  <div>
+    <h2 id="metodologia-seleccion">Metodología de Selección Final</h2>
+  </div>
 </div>
 
 ```js
@@ -874,9 +978,7 @@ const workflow = html`
   ${workflow}
 </div>
 
-<div class="hero">
-  <h3 id="proximos-pasos">Próximos Pasos Accionables</h3>
-</div>
+<h3 class="subsection-title" id="proximos-pasos">📝 Próximos Pasos Accionables</h3>
 
 ```js
 // Checklist interactivo
@@ -950,8 +1052,11 @@ const checklist = html`
 
 ---
 
-<div class="hero">
-  <h2 id="resumen-final">Resumen Ejecutivo de Decisión</h2>
+<div class="section-header">
+  <div class="section-icon">📋</div>
+  <div>
+    <h2 id="resumen-final">Resumen Ejecutivo de Decisión</h2>
+  </div>
 </div>
 
 <div class="grid grid-cols-2" style="gap: 2rem;">
@@ -1318,6 +1423,415 @@ const checklist = html`
 
 .legend-box {
   margin-right: 0.25rem;
+}
+
+/* === UI/UX Improvements === */
+
+/* KPI Cards mejorados */
+.kpi-card {
+  background: var(--theme-background);
+  border: 1px solid var(--theme-foreground-faintest);
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.kpi-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.kpi-card:hover::before {
+  transform: scaleX(1);
+}
+
+.kpi-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+  border-color: var(--theme-foreground-fainter);
+}
+
+.kpi-icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.75rem;
+  filter: grayscale(20%);
+  transition: filter 0.3s ease;
+}
+
+.kpi-card:hover .kpi-icon {
+  filter: grayscale(0%);
+}
+
+.kpi-value {
+  font-size: 2.5rem;
+  font-weight: 800;
+  line-height: 1;
+  background: linear-gradient(135deg, var(--theme-foreground-focus), var(--theme-foreground));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.5rem;
+}
+
+.kpi-label {
+  font-size: 0.875rem;
+  color: var(--theme-foreground-muted);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Section Intro mejorada */
+.section-intro {
+  margin: 2rem 0 3rem;
+  padding: 2rem;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.05) 0%, rgba(139, 92, 246, 0.05) 100%);
+  border-radius: 16px;
+  border: 1px solid var(--theme-foreground-faintest);
+}
+
+.intro-badge {
+  display: inline-block;
+  padding: 0.5rem 1.25rem;
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  color: white;
+  border-radius: 24px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.intro-text {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: var(--theme-foreground);
+  margin-bottom: 1.5rem;
+  max-width: none;
+}
+
+.objectives-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.objective-card {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1.5rem;
+  background: var(--theme-background);
+  border-radius: 12px;
+  border: 2px solid var(--theme-foreground-faintest);
+  transition: all 0.3s ease;
+}
+
+.objective-card:hover {
+  border-color: #3b82f6;
+  transform: translateX(4px);
+  box-shadow: -4px 0 0 0 #3b82f6;
+}
+
+.objective-number {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  color: white;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.objective-content h4 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--theme-foreground-focus);
+}
+
+.objective-content p {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--theme-foreground-muted);
+  line-height: 1.5;
+}
+
+/* Section Headers mejorados */
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin: 3rem 0 2rem;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.05) 0%, transparent 100%);
+  border-left: 4px solid #3b82f6;
+  border-radius: 8px;
+}
+
+.section-header.major {
+  margin-top: 4rem;
+  padding: 2rem;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, rgba(139, 92, 246, 0.05) 100%);
+  border-left: 6px solid #3b82f6;
+}
+
+.section-icon {
+  font-size: 3rem;
+  flex-shrink: 0;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.section-header h2 {
+  margin: 0 0 0.5rem 0;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--theme-foreground-focus);
+}
+
+.section-subtitle {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--theme-foreground-muted);
+  line-height: 1.6;
+}
+
+.subsection-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--theme-foreground-focus);
+  margin: 2.5rem 0 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid var(--theme-foreground-faintest);
+}
+
+/* Criteria Cards */
+.criteria-card {
+  background: var(--theme-background);
+  border: 1px solid var(--theme-foreground-faintest);
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.criteria-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+  border-color: #3b82f6;
+}
+
+.criteria-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.criteria-card h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--theme-foreground-focus);
+  margin: 0 0 1rem 0;
+}
+
+.criteria-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.criteria-card li {
+  padding: 0.5rem 0;
+  font-size: 0.875rem;
+  color: var(--theme-foreground-muted);
+  border-bottom: 1px solid var(--theme-foreground-faintest);
+}
+
+.criteria-card li:last-child {
+  border-bottom: none;
+}
+
+.criteria-card li::before {
+  content: '✓';
+  display: inline-block;
+  margin-right: 0.5rem;
+  color: #22c55e;
+  font-weight: 700;
+}
+
+/* Feature Cards */
+.feature-card {
+  background: var(--theme-background);
+  border: 1px solid var(--theme-foreground-faintest);
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  cursor: default;
+}
+
+.feature-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  border-color: #3b82f6;
+}
+
+.feature-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.feature-card h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--theme-foreground-focus);
+  margin: 0 0 0.75rem 0;
+}
+
+.feature-card p {
+  font-size: 0.875rem;
+  color: var(--theme-foreground-muted);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Recommendation Cards */
+.recommendation-card {
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(34, 197, 94, 0.05) 100%);
+  border: 2px solid #22c55e;
+  border-radius: 16px;
+  padding: 2rem;
+  margin: 2rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.recommendation-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #22c55e, #10b981);
+}
+
+.recommendation-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.trophy-badge {
+  font-size: 3rem;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.recommendation-card h3 {
+  color: #16a34a;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.recommendation-card h4 {
+  font-size: 0.875rem;
+  color: var(--theme-foreground-muted);
+  margin: 0.5rem 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.recommendation-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0;
+}
+
+.recommendation-card li {
+  font-size: 0.875rem;
+  margin: 0.5rem 0;
+  padding-left: 0.5rem;
+}
+
+/* Tip Box */
+.tip-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.25rem;
+  margin: 1.5rem 0;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(139, 92, 246, 0.05) 100%);
+  border-left: 4px solid #3b82f6;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.tip-box:hover {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(139, 92, 246, 0.08) 100%);
+  transform: translateX(4px);
+}
+
+.tip-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.tip-content {
+  font-size: 0.9rem;
+  color: var(--theme-foreground);
+  line-height: 1.6;
+}
+
+.tip-content strong {
+  color: var(--theme-foreground-focus);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .kpi-value {
+    font-size: 2rem;
+  }
+  
+  .section-header {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .section-icon {
+    font-size: 2.5rem;
+  }
+  
+  .objectives-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .objective-card {
+    flex-direction: column;
+    text-align: center;
+  }
 }
 
 </style>

@@ -1,0 +1,169 @@
+{
+  "en": {
+    "industryEvaluation": {
+      "title": "Industry Evaluation",
+      "subtitle": "Houston Restaurant Landscape",
+      "description": "Explore the competitive restaurant landscape in Houston. Interactive map dynamically filters charts by area on hover, showing categories, prices, hours, and reviews.",
+      "tabs": {
+        "overview": "Overview",
+        "categories": "Categories",
+        "prices": "Prices",
+        "reviews": "Reviews",
+        "hours": "Hours"
+      },
+      "kpis": {
+        "totalRestaurants": "Total Restaurants",
+        "selectedArea": "In Selection",
+        "hoursCoverage": "Hours Coverage",
+        "avgRating": "Avg Rating"
+      },
+      "map": {
+        "title": "Houston Industry Evaluation",
+        "resetView": "Reset View",
+        "toggleClusters": "Toggle Clusters",
+        "toggleDensity": "Toggle Density Layer",
+        "selectArea": "Click and drag to select area",
+        "clearSelection": "Press ESC to clear selection",
+        "zoomToResults": "Zoom to Results"
+      },
+      "filters": {
+        "title": "Filters",
+        "category": "Category",
+        "allCategories": "All Categories",
+        "price": "Price",
+        "allPrices": "All Prices",
+        "rating": "Min. Rating",
+        "reviews": "Min. Reviews",
+        "driveThru": "Drive-Thru Only",
+        "openNow": "Open Now",
+        "neighborhood": "Neighborhood",
+        "allNeighborhoods": "All Areas",
+        "reset": "Reset Filters",
+        "share": "Share Link",
+        "collapse": "Collapse",
+        "expand": "Expand",
+        "noActiveFilters": "No active filters",
+        "clearAll": "Clear All",
+        "search": "Search..."
+      },
+      "charts": {
+        "categories": "Restaurant Categories",
+        "priceDistribution": "Price Distribution",
+        "reviews": "Star Distribution (Reviews)",
+        "hours": "Opening Hours Heatmap",
+        "noData": "No data for current selection",
+        "selectAreaPrompt": "Hover over map to filter"
+      },
+      "drawer": {
+        "title": "Restaurant List",
+        "restaurants": "restaurants",
+        "reviews": "reviews",
+        "sortRating": "Rating",
+        "sortReviews": "Reviews",
+        "sortDistance": "Distance",
+        "sortName": "Name",
+        "export": "Export CSV",
+        "close": "Close"
+      },
+      "categories": {
+        "Mexicana": "Mexican",
+        "Hamburguesas": "Burgers",
+        "Café": "Café",
+        "Pizza": "Pizza",
+        "Asiática": "Asian",
+        "Tacos": "Tacos",
+        "BBQ": "BBQ",
+        "Postres": "Desserts",
+        "Other": "Other"
+      },
+      "days": {
+        "short": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+        "long": ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+      }
+    }
+  },
+  "es": {
+    "industryEvaluation": {
+      "title": "Evaluación de Industria",
+      "subtitle": "Panorama de Restaurantes en Houston",
+      "description": "Explora el panorama competitivo de restaurantes en Houston. El mapa interactivo filtra dinámicamente las gráficas por zona al pasar el cursor, mostrando categorías, precios, horarios y reseñas.",
+      "tabs": {
+        "overview": "Resumen",
+        "categories": "Categorías",
+        "prices": "Precios",
+        "reviews": "Reseñas",
+        "hours": "Horarios"
+      },
+      "kpis": {
+        "totalRestaurants": "Restaurantes Totales",
+        "selectedArea": "En Selección",
+        "hoursCoverage": "Cobertura de Horarios",
+        "avgRating": "Calificación Prom."
+      },
+      "map": {
+        "title": "Evaluación de Industria Houston",
+        "resetView": "Restablecer Vista",
+        "toggleClusters": "Alternar Agrupación",
+        "toggleDensity": "Alternar Capa de Densidad",
+        "selectArea": "Haz clic y arrastra para seleccionar área",
+        "clearSelection": "Presiona ESC para limpiar selección",
+        "zoomToResults": "Zoom a Resultados"
+      },
+      "filters": {
+        "title": "Filtros",
+        "category": "Categoría",
+        "allCategories": "Todas las Categorías",
+        "price": "Precio",
+        "allPrices": "Todos los Precios",
+        "rating": "Calificación Mín.",
+        "reviews": "Reseñas Mín.",
+        "driveThru": "Solo Drive-Thru",
+        "openNow": "Abierto Ahora",
+        "neighborhood": "Vecindario",
+        "allNeighborhoods": "Todas las Áreas",
+        "reset": "Restablecer Filtros",
+        "share": "Compartir Enlace",
+        "collapse": "Colapsar",
+        "expand": "Expandir",
+        "noActiveFilters": "Sin filtros activos",
+        "clearAll": "Limpiar Todo",
+        "search": "Buscar..."
+      },
+      "charts": {
+        "categories": "Categorías de restaurantes",
+        "priceDistribution": "Distribución de precios",
+        "reviews": "Distribución de Estrellas (Reviews)",
+        "hours": "Horarios de Apertura (mapa de calor)",
+        "noData": "Sin datos para la selección actual",
+        "selectAreaPrompt": "Pasa el cursor sobre el mapa para filtrar"
+      },
+      "drawer": {
+        "title": "Lista de Restaurantes",
+        "restaurants": "restaurantes",
+        "reviews": "reseñas",
+        "sortRating": "Calificación",
+        "sortReviews": "Reseñas",
+        "sortDistance": "Distancia",
+        "sortName": "Nombre",
+        "export": "Exportar CSV",
+        "close": "Cerrar"
+      },
+      "categories": {
+        "Mexicana": "Mexicana",
+        "Hamburguesas": "Hamburguesas",
+        "Café": "Café",
+        "Pizza": "Pizza",
+        "Asiática": "Asiática",
+        "Tacos": "Tacos",
+        "BBQ": "BBQ",
+        "Postres": "Postres",
+        "Other": "Otro"
+      },
+      "days": {
+        "short": ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"],
+        "long": ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"]
+      }
+    }
+  }
+}
+

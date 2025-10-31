@@ -13,8 +13,47 @@ const { mapboxToken: MAPBOX_TOKEN, mapboxStyle: MAPBOX_STYLE } = MAP_DEFAULTS;
 ```
 
 ```js
+import { safeParseJson, validateJsonSchema } from "../../utils/json.js";
+```
+
+```js
 const industryRaw = await FileAttachment("../../data/static/industry_evaluation_houston.json").text();
-const industryData = JSON.parse(industryRaw.replace(/\bNaN\b/g, "null"));
+const industryData = safeParseJson(industryRaw, {
+  sanitize: true,
+  fallback: { visualizations: { map: { layers: { restaurants: { data: { type: "FeatureCollection", features: [] } } } } } },
+  onError: (err) => console.error("Failed to parse industry data:", err.message)
+});
+
+// Validate expected structure
+const validation = validateJsonSchema(industryData, {
+  required: ["visualizations", "visualizations.map", "visualizations.map.layers"]
+});
+
+if (!validation.valid) {
+  console.warn("Industry data missing expected fields:", validation.missing);
+}
+```
+
+```js
+// Load i18n strings with fallback
+let strings = {
+  filters: { title: "Filtros", category: "Categoría", price: "Precio", rating: "Calificación Mín.", reviews: "Reseñas Mín.", driveThru: "Solo Drive-Thru", openNow: "Abierto Ahora", reset: "Restablecer Filtros", share: "Compartir Enlace" },
+  charts: { categories: "Categorías de restaurantes", priceDistribution: "Distribución de precios", reviews: "Distribución de Estrellas (Reviews)", hours: "Horarios de Apertura (mapa de calor)", noData: "Sin datos", selectAreaPrompt: "Ajustar filtros para ver datos" },
+  map: { title: "Evaluación de Industria Houston", resetView: "Restablecer Vista", toggleClusters: "Alternar Agrupación", toggleDensity: "Alternar Capa de Densidad" },
+  categories: { Mexicana: "Mexicana", Hamburguesas: "Hamburguesas", Café: "Café", Pizza: "Pizza", Asiática: "Asiática", Tacos: "Tacos", BBQ: "BBQ", Postres: "Postres", Other: "Otro" },
+  days: { short: ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"] }
+};
+
+try {
+  const i18nRaw = await FileAttachment("../../i18n/industria.json").text();
+  const i18nStrings = JSON.parse(i18nRaw);
+  const lang = "es";
+  if (i18nStrings[lang]?.industryEvaluation) {
+    strings = i18nStrings[lang].industryEvaluation;
+  }
+} catch (err) {
+  console.warn("Failed to load i18n strings, using fallback:", err.message);
+}
 ```
 
 ```js
@@ -24,7 +63,8 @@ const dashboardEl = IndustryEvaluationDashboard({
   size: { height: 900 },
   mapboxStyle: MAPBOX_STYLE,
   mapboxToken: MAPBOX_TOKEN,
-  data: industryData
+  data: industryData,
+  i18n: strings
 });
 ```
 
@@ -41,8 +81,6 @@ const dashboardEl = IndustryEvaluationDashboard({
   <div class="card">
     ${dashboardEl}
   </div>
-  <div class="note">Nota: Los datos son mock-ups con fines de diseño; la integración de datos reales seguirá esta estructura.</div>
-  
 </div>
 
 ---

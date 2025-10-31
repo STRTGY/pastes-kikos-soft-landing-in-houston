@@ -6,81 +6,54 @@ toc: false
 keywords: propuesta de valor, Pastes Kikos, diferenciadores, frescura, calidad, price, QSR, comida rápida, autenticidad mexicana
 ---
 
+<link rel="stylesheet" href="../../styles/valor.css">
+
+```js
+import * as Plot from "npm:@observablehq/plot";
+import * as d3 from "npm:d3";
+```
+
+```js
+import {ValorFitAnalysis} from "../../components/ValorFitAnalysis.js";
+import {ControlPanel} from "../../components/ControlPanel.js";
+import {KpiCard} from "../../components/common/KpiCard.js";
+import {Alert} from "../../components/common/Alert.js";
+import {MarketPricePercentilesCard} from "../../components/charts/MarketPricePercentilesCard.js";
+import {PricePositionTable} from "../../components/tables/PricePositionTable.js";
+import {PsychologicalPricingTable} from "../../components/tables/PsychologicalPricingTable.js";
+import {ElasticityTable} from "../../components/tables/ElasticityTable.js";
+import {ExportPanel} from "../../components/panels/ExportPanel.js";
+import {
+  normalizeWeights,
+  computeMarketPriceStats,
+  scorePriceFit,
+  scoreSentimentFit,
+  scoreFlavourFit,
+  computeMarketFit,
+  computePricePositioning,
+  computePsychologicalPricing,
+  computeElasticityEstimate
+} from "../../components/core/marketFitUtils.js";
+import {buildExportData, toCSV} from "../../components/core/exportUtils.js";
+```
+
+```js
+// Load data
+const reviews = await FileAttachment("../../data/static/reviews_summary.json").json();
+
+const hexEnriched = await FileAttachment("../../data/static/pricing/hex_r8_overall_enriched.geojson").json();
+const summary = await FileAttachment("../../data/static/pricing/summary.csv").csv();
+const categorySummary = await FileAttachment("../../data/static/pricing/category_summaries.csv").csv({typed: true});
+
+const menuItems = await FileAttachment("../../data/menu/items.json").json();
+const priceStats = await FileAttachment("../../data/menu/price_stats.json").json();
+const flavourStats = await FileAttachment("../../data/menu/flavour_stats.json").json();
+const restaurants = await FileAttachment("../../data/menu/restaurants.json").json();
+```
+
 <div class="hero">
   <h1 id="2-1-propuesta-de-valor">2.1 Propuesta de Valor</h1>
 </div>
-
-```js
-const reviews = await FileAttachment("../../data/static/reviews_summary.json").json();
-
-function kpiCard(title, value, suffix = "") {
-  const formatted = typeof value === "number" ? value.toLocaleString("es-MX", {maximumFractionDigits: 2}) : value;
-  return html`<div class="card"><h2>${title}</h2><span class="big">${formatted}${suffix ? ` ${suffix}` : ""}</span></div>`;
-}
-
-function sentimentDistributionChart(data, {width} = {}) {
-  const dist = data.sentiment.distribution;
-  const chartData = [
-    {sentiment: "Muy negativo", count: dist.very_negative, order: 1},
-    {sentiment: "Negativo", count: dist.negative, order: 2},
-    {sentiment: "Neutral", count: dist.neutral, order: 3},
-    {sentiment: "Positivo", count: dist.positive, order: 4},
-    {sentiment: "Muy positivo", count: dist.very_positive, order: 5}
-  ];
-  return Plot.plot({
-    width,
-    height: 300,
-    marginLeft: 110,
-    x: {label: "Cantidad de reseñas"},
-    y: {label: null, domain: chartData.map(d => d.sentiment)},
-    color: {
-      domain: ["Muy negativo", "Negativo", "Neutral", "Positivo", "Muy positivo"],
-      range: ["#dc2626", "#f97316", "#eab308", "#84cc16", "#22c55e"]
-    },
-    marks: [
-      Plot.barX(chartData, {
-        x: "count",
-        y: "sentiment",
-        fill: "sentiment",
-        tip: true
-      }),
-      Plot.ruleX([0])
-    ]
-  });
-}
-
-function aspectScoresChart(data, {width} = {}) {
-  const aspects = data.top_aspects.map(a => ({
-    aspect: a.aspect,
-    mean_score: a.mean_score || 0,
-    count: a.count
-  }));
-  return Plot.plot({
-    width,
-    height: 400,
-    marginLeft: 110,
-    x: {label: "Score medio (0-5)", domain: [0, 5]},
-    y: {label: null, domain: aspects.map(d => d.aspect)},
-    marks: [
-      Plot.barX(aspects, {
-        x: "mean_score",
-        y: "aspect",
-        fill: "steelblue",
-        tip: true
-      }),
-      Plot.ruleX([3], {stroke: "red", strokeDasharray: "4 2"}),
-      Plot.text(aspects, {
-        x: "mean_score",
-        y: "aspect",
-        text: d => d.count,
-        dx: 15,
-        fill: "currentColor",
-        fontSize: 10
-      })
-    ]
-  });
-}
-```
 
 <div class="text">
   <p>La propuesta de valor de Pastes Kikos se construye sobre tres pilares fundamentales que la distinguen en el competitivo mercado de comida rápida de Houston:</p>
@@ -92,55 +65,272 @@ function aspectScoresChart(data, {width} = {}) {
   <p>Este análisis integra percepciones de valor extraídas de <strong>${reviews.metadata.total_reviews.toLocaleString()} reseñas</strong> de restaurantes competidores en Houston, procesadas mediante análisis de sentimientos y aspectos clave valorados por los consumidores.</p>
 </div>
 
+---
+
+<div class="hero">
+  <h2 id="fit-oferta-valor">2.1.1 Fit de Oferta de Valor (Drive-through)</h2>
+  <h3>Evaluación cuantitativa de alineación con el mercado de Houston</h3>
+</div>
+
+```js
+// Create input controls (not yet bound to view)
+const priceInput = Inputs.checkbox(
+  [5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0, 9.5, 10.0, 11.0, 12.0],
+  {
+    value: [7.0, 7.5, 8.0], 
+    label: "Escenarios de precio (2 piezas)", 
+    format: x => `$${x.toFixed(2)}`
+  }
+);
+
+const categoryInput = Inputs.select(
+  ["overall", ...categorySummary.map(d => d.category)],
+  {value: "overall", label: "Categoría de comparación"}
+);
+
+const mixInput = Inputs.range([0, 100], {
+  value: 70,
+  step: 1,
+  label: "Mezcla de fuentes (% Menú vs Google)"
+});
+
+const coverageInput = Inputs.range([1, 20], {
+  value: 5,
+  step: 1,
+  label: "Cobertura mínima (muestras por celda)"
+});
+
+const priceWeightInput = Inputs.range([0, 100], {
+  value: 40,
+  step: 5,
+  label: "Peso Precio"
+});
+
+const sentimentWeightInput = Inputs.range([0, 100], {
+  value: 40,
+  step: 5,
+  label: "Peso Sentimiento"
+});
+
+const flavourWeightInput = Inputs.range([0, 100], {
+  value: 20,
+  step: 5,
+  label: "Peso Sabor"
+});
+
+const flavoursInput = Inputs.checkbox(
+  (flavourStats.taste_stats || []).map(d => d.taste),
+  {
+    value: ["savory", "umami", "sweet", "spicy"],
+    label: "Sabores objetivo Pastes Kikos"
+  }
+);
+```
+
+```js
+// Bind input controls to reactive variables with view()
+const priceScenarios = view(priceInput);
+const selectedCategoryFit = view(categoryInput);
+const weightMenuFit = view(mixInput);
+const minCoverage = view(coverageInput);
+const weightPrice = view(priceWeightInput);
+const weightSentiment = view(sentimentWeightInput);
+const weightFlavour = view(flavourWeightInput);
+const targetFlavours = view(flavoursInput);
+```
+
+```js
+// Render control panel with input elements and current values
+display(ControlPanel({
+  priceInput,
+  categoryInput,
+  mixInput,
+  coverageInput,
+  priceWeightInput,
+  sentimentWeightInput,
+  flavourWeightInput,
+  flavoursInput,
+  weightPrice,
+  weightSentiment,
+  weightFlavour
+}));
+```
+
+
+```js
+// Normalize weights using utility function
+const {normWeightPrice, normWeightSentiment, normWeightFlavour, hasZeroWeights} = 
+  normalizeWeights(weightPrice, weightSentiment, weightFlavour);
+```
+
+```js
+// Compute market price statistics and scores using utility functions
+const marketPriceStats = computeMarketPriceStats(hexEnriched, selectedCategoryFit, minCoverage, weightMenuFit);
+const priceFitScore = scorePriceFit(priceScenarios, marketPriceStats);
+const sentimentFitScore = scoreSentimentFit(reviews);
+const flavourFitScore = scoreFlavourFit(targetFlavours, flavourStats);
+const marketFitScore = computeMarketFit(priceFitScore, sentimentFitScore, flavourFitScore, normWeightPrice, normWeightSentiment, normWeightFlavour);
+```
+
+
+```js
+// Información de pesos normalizados
+html`<div class="note" style="width: 100%; max-width: 100%;">
+  <strong>Pesos normalizados:</strong> Precio: ${normWeightPrice.toFixed(0)}% | Sentimiento: ${normWeightSentiment.toFixed(0)}% | Sabor: ${normWeightFlavour.toFixed(0)}%
+  ${hasZeroWeights ? html`<div style="margin-top: 0.5rem; padding: 0.5rem; background: #fef3c7; border-left: 3px solid #f59e0b; border-radius: 4px;">
+    ⚠️ Todos los pesos están en 0. Usando valores por defecto: 40% Precio, 40% Sentimiento, 20% Sabor.
+  </div>` : ""}
+</div>`
+```
+
+```js
+// Alerta de escenarios vacíos
+if (!priceScenarios || priceScenarios.length === 0) {
+  display(Alert({
+    type: "warning",
+    title: "⚠️ Sin escenarios de precio seleccionados.",
+    message: "Selecciona al menos un escenario para ver la comparativa de precios y calcular PrecioFit. El índice MarketFit se calculará con PrecioFit = 0.",
+    fullWidth: true
+  }));
+}
+```
+
+```js
+// Market Price Percentiles Visualization
+MarketPricePercentilesCard({marketPriceStats})
+```
+
+```js
+// Price Positioning Analysis by Scenario
+const pricePositionAnalysis = computePricePositioning(priceScenarios, marketPriceStats);
+```
+
+```js
+// Display price positioning table
+PricePositionTable({pricePositionAnalysis})
+```
+
+```js
+// Psychological Pricing Analysis
+const psychologicalPricingAnalysis = computePsychologicalPricing(priceScenarios);
+```
+
+```js
+// Display psychological pricing table
+PsychologicalPricingTable({psychologicalPricingAnalysis})
+```
+
+```js
+// Estimated Price Elasticity (simplified model)
+const elasticityEstimate = computeElasticityEstimate(priceScenarios, marketPriceStats);
+```
+
+```js
+// Display elasticity analysis
+ElasticityTable({elasticityEstimate, marketPriceStats})
+```
+
+<div class="grid grid-cols-4" style="margin: 2rem 0; gap: 1.5rem;">
+  ${KpiCard({title: "MarketFit", value: marketFitScore, suffix: "", explanation: "Índice compuesto"})}
+  ${KpiCard({title: "PrecioFit", value: priceFitScore, suffix: "", explanation: "Percentil vs mercado"})}
+  ${KpiCard({title: "SentimentFit", value: sentimentFitScore, suffix: "", explanation: "Share positivo + aspectos"})}
+  ${KpiCard({title: "FlavourFit", value: flavourFitScore, suffix: "", explanation: "Similitud Jaccard"})}
+</div>
+
+<div style="width: 100%; max-width: 100%;">
+  ${resize((width) => ValorFitAnalysis({
+    reviews,
+    hexEnriched,
+    summary,
+    categorySummary,
+    menuItems,
+    flavourStats,
+    restaurants,
+    priceScenarios,
+    selectedCategoryFit,
+    weightMenuFit,
+    minCoverage,
+    priceFitScore,
+    sentimentFitScore,
+    flavourFitScore,
+    marketFitScore,
+    normWeightPrice,
+    normWeightSentiment,
+    normWeightFlavour,
+    targetFlavours,
+    width
+  }))}
+</div>
+
+```js
+// Build export data and CSV
+const exportData = buildExportData({
+  priceScenarios,
+  selectedCategoryFit,
+  weightMenuFit,
+  minCoverage,
+  normWeightPrice,
+  normWeightSentiment,
+  normWeightFlavour,
+  targetFlavours,
+  marketFitScore,
+  priceFitScore,
+  sentimentFitScore,
+  flavourFitScore,
+  reviews,
+  summary,
+  menuItems
+});
+
+const csvContent = toCSV(
+  exportData,
+  priceScenarios,
+  selectedCategoryFit,
+  weightMenuFit,
+  minCoverage,
+  normWeightPrice,
+  normWeightSentiment,
+  normWeightFlavour,
+  targetFlavours,
+  marketFitScore,
+  priceFitScore,
+  sentimentFitScore,
+  flavourFitScore
+);
+```
+
+```js
+// Export panel
+ExportPanel({exportData, csvContent})
+```
+
+<div class="card">
+  <h3>Enlaces de Profundización</h3>
+  <p>Para explorar en detalle los datos subyacentes a este análisis:</p>
+  <ul>
+    <li><a href="./precios">📍 Análisis de Precios</a> - Distribución espacial y agregaciones</li>
+    <li><a href="./sabores">🌶️ Adaptación de Sabores</a> - Notas de sabor y perfiles</li>
+    <li><a href="#percepcion-general-del-mercado">📊 Percepción de Reseñas</a> - Distribución de sentimientos</li>
+  </ul>
+</div>
+
+---
+
 <div class="hero">
   <h3 id="percepcion-general-del-mercado">Percepción general del mercado</h3>
 </div>
 
-<div class="grid grid-cols-3">
-  ${kpiCard("Sentiment promedio", reviews.sentiment.mean, "")}
-  ${kpiCard("Reseñas analizadas", reviews.metadata.total_reviews)}
-  ${kpiCard("Aspectos identificados", reviews.metadata.unique_aspects_mentioned)}
-</div>
-
-<div class="hero">
-  <h2 id="analisis-de-sentimientos">Distribución de sentimientos en reseñas</h2>
-</div>
-
-<div class="grid grid-cols-1">
-  <div class="card">
-    ${resize((width) => sentimentDistributionChart(reviews, {width}))}
-  </div>
-</div>
-
-<div class="text">
-  <p>La distribución de sentimientos en las reseñas de competidores revela que <strong>${((reviews.sentiment.distribution.positive + reviews.sentiment.distribution.very_positive) / reviews.sentiment.count * 100).toFixed(1)}%</strong> de las experiencias son positivas o muy positivas, lo que indica un mercado exigente pero receptivo a propuestas de calidad.</p>
-</div>
-
-<div class="hero">
-  <h2 id="aspectos-valorados">Aspectos más valorados por consumidores</h2>
-</div>
-
-<div class="grid grid-cols-1">
-  <div class="card">
-    ${resize((width) => aspectScoresChart(reviews, {width}))}
-  </div>
-</div>
-
-<div class="text">
-  <p class="lead"><strong>Hallazgos clave del análisis de aspectos:</strong></p>
-  <ul>
-    <li><strong>Food (comida)</strong>: El aspecto más mencionado con ${reviews.top_aspects[0].count} menciones. Score promedio: ${reviews.top_aspects[0].mean_score.toFixed(2)}/5.0. La calidad y frescura del producto es el diferenciador primario.</li>
-    <li><strong>Service (servicio)</strong>: Crucial para la experiencia del cliente, especialmente en formatos de comida rápida donde la eficiencia es clave.</li>
-    <li><strong>Price (precio)</strong>: La relación calidad-precio es fundamental para la decisión de compra repetida.</li>
-    <li><strong>Staff (personal)</strong>: La amabilidad y eficiencia del equipo impacta directamente la percepción de valor.</li>
-  </ul>
+<div class="grid grid-cols-3" style="margin: 2rem 0; gap: 1.5rem;">
+  ${KpiCard({title: "Sentiment promedio", value: reviews.sentiment.mean, suffix: ""})}
+  ${KpiCard({title: "Reseñas analizadas", value: reviews.metadata.total_reviews})}
+  ${KpiCard({title: "Aspectos identificados", value: reviews.metadata.unique_aspects_mentioned})}
 </div>
 
 <div class="hero">
   <h2 id="diferenciadores-de-kikos">Diferenciadores de Pastes Kikos</h2>
 </div>
 
-<div class="grid grid-cols-3">
+<div class="grid grid-cols-3" style="margin: 2rem 0; gap: 1.5rem;">
   <div class="card">
     <h2>🔥 Frescura Garantizada</h2>
     <p>Producto horneado al momento, sin conservadores ni aditivos artificiales. Contrasta con opciones pre-cocinadas o fritas de la competencia.</p>
@@ -235,126 +425,3 @@ function aspectScoresChart(data, {width} = {}) {
 </div>
 
 ---
-<style>
-
-.hero {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-family: var(--sans-serif);
-  margin: 1.5rem 1rem 2.5rem 1rem;
-  text-wrap: balance;
-  text-align: center;
-}
-
-.hero h1 {
-  max-width: none;
-  font-size: 2.5vw;
-  font-weight: 900;
-  line-height: 1.05;
-  letter-spacing: -0.01em;
-  background: linear-gradient(30deg, var(--theme-foreground-focus), currentColor 80%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin-bottom: 0.5em;
-  transition: font-size 0.2s, color 0.2s;
-}
-
-.hero h2 {
-  margin: 0 0 0.3em 0;
-  max-width: 32em;
-  font-size: 1.35vw;
-  font-style: initial;
-  font-weight: 600;
-  line-height: 1.35;
-  color: var(--theme-foreground-muted);
-  letter-spacing: -0.01em;
-  background: linear-gradient(90deg, var(--theme-foreground-muted), var(--theme-foreground) 80%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  transition: font-size 0.2s, color 0.2s;
-}
-
-.hero h3 {
-  margin: 0.2em 0 0.5em 0;
-  max-width: 30em;
-  font-size: 1.1vw;
-  font-weight: 500;
-  line-height: 1.3;
-  color: var(--theme-foreground-subtle, #64748b);
-  letter-spacing: 0.01em;
-  background: linear-gradient(90deg, var(--theme-foreground-subtle, #64748b), var(--theme-foreground-muted) 80%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  font-style: italic;
-  transition: font-size 0.2s, color 0.2s;
-}
-
-.text {
-  font-family: var(--sans-serif);
-  margin: 1rem 1rem 1.5rem 1rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.text p {
-  margin: 0.6em 0;
-  max-width: none;
-  line-height: 1.6;
-  color: var(--theme-foreground);
-}
-
-.text p.lead {
-  max-width: none;
-  font-weight: 600;
-  color: var(--theme-foreground-muted);
-  letter-spacing: -0.005em;
-}
-
-.text ul, .text ol {
-  margin: 0.2em 0 0.8em .2em;
-  max-width: none;
-}
-
-.text li {
-  margin: 0.25em 0;
-  max-width: none;
-}
-
-.text table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 1em 0;
-}
-
-.text table th,
-.text table td {
-  padding: 0.75em;
-  text-align: left;
-  border-bottom: 1px solid var(--theme-foreground-faintest);
-}
-
-.text table th {
-  font-weight: 600;
-  background: var(--theme-background-alt);
-}
-
-@media (min-width: 640px) {
-  .hero h1 {
-    font-size: 50px;
-  }
-  .hero h2 {
-    font-size: 28px;
-  }
-  .hero h3 {
-    font-size: 20px;
-  }
-}
-
-</style>
-
-

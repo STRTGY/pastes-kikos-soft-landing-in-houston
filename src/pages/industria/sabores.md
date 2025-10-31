@@ -21,15 +21,15 @@ const tasteOptions = ["all", ...(flavourStats.taste_stats || []).map(d => d.tast
 // Filtros interactivos
 const selectedTaste = view(Inputs.select(
   tasteOptions,
-  {value: "all", label: "Filtrar por sabor"}
+  {value: "all", label: "🔍 Filtrar por sabor"}
 ));
 
-const topN = view(Inputs.range([5, 50], {value: 30, step: 5, label: "Top N elementos a mostrar"}));
+const topN = view(Inputs.range([5, 50], {value: 30, step: 5, label: "📊 Top N restaurantes"}));
 ```
 
 ```js
 // Heatmap visualization
-const heatmapPlot = (() => {
+const heatmapPlot = resize((width) => {
   // Filtrar heatmap data
   let heatmapData = flavourStats.restaurant_taste_heatmap || [];
   
@@ -53,10 +53,13 @@ const heatmapPlot = (() => {
   const filteredData = heatmapData.filter(d => topRestaurants.includes(d.restaurant));
   
   if (filteredData.length === 0) {
-    return html`<p>No hay datos para mostrar con los filtros actuales.</p>`;
+    const emptyDiv = document.createElement("div");
+    emptyDiv.innerHTML = `<p style="padding: 2rem; text-align: center; color: var(--theme-foreground-muted);">No hay datos para mostrar con los filtros actuales.</p>`;
+    return emptyDiv;
   }
   
   return Plot.plot({
+    width,
     height: Math.max(400, topRestaurants.length * 15),
     marginLeft: 200,
     marginBottom: 60,
@@ -84,12 +87,12 @@ const heatmapPlot = (() => {
       })
     ]
   });
-})();
+});
 ```
 
 ```js
 // Top specific flavours visualization
-const specificFlavoursPlot = (() => {
+const specificFlavoursPlot = resize((width) => {
   let specificData = flavourStats.top_specific_flavours || [];
   
   // Filtrar por taste si está seleccionado
@@ -123,10 +126,13 @@ const specificFlavoursPlot = (() => {
   }
   
   if (specificData.length === 0) {
-    return html`<p>No hay sabores específicos registrados para el filtro seleccionado.</p>`;
+    const emptyDiv = document.createElement("div");
+    emptyDiv.innerHTML = `<p style="padding: 2rem; text-align: center; color: var(--theme-foreground-muted);">No hay sabores específicos registrados para el filtro seleccionado.</p>`;
+    return emptyDiv;
   }
   
   return Plot.plot({
+    width,
     height: 400,
     marginLeft: 120,
     x: {
@@ -147,12 +153,12 @@ const specificFlavoursPlot = (() => {
       Plot.ruleX([0])
     ]
   });
-})();
+});
 ```
 
 ```js
 // Co-occurrences visualization
-const cooccurrencesPlot = (() => {
+const cooccurrencesPlot = resize((width) => {
   let cooc = flavourStats.taste_cooccurrences || [];
   
   // Filtrar co-ocurrencias por taste seleccionado
@@ -163,43 +169,53 @@ const cooccurrencesPlot = (() => {
   }
   
   if (cooc.length === 0) {
-    return html`<p>No hay datos de co-ocurrencias para el filtro seleccionado.</p>`;
+    const emptyDiv = document.createElement("div");
+    emptyDiv.innerHTML = `<p style="padding: 2rem; text-align: center; color: var(--theme-foreground-muted);">No hay datos de co-ocurrencias para el filtro seleccionado.</p>`;
+    return emptyDiv;
   }
   
-  return html`<div>
-    ${Plot.plot({
-      height: 350,
-      marginLeft: 80,
-      marginRight: 80,
-      x: {
-        label: "Frecuencia de co-ocurrencia",
-        grid: true
-      },
-      y: {
-        label: null
-      },
-      marks: [
-        Plot.barX(cooc, {
-          x: "count",
-          y: d => `${d.taste1} + ${d.taste2}`,
-          fill: "count",
-          sort: {y: "-x"},
-          tip: true
-        }),
-        Plot.ruleX([0])
-      ],
-      color: {
-        scheme: "Blues"
-      }
-    })}
-    <div style="margin-top: 1rem;">
-      <h4 style="font-size: 14px; margin-bottom: 0.5rem;">Top 5 Combinaciones:</h4>
-      <ol style="font-size: 13px; line-height: 1.8;">
-        ${cooc.slice(0, 5).map(d => html`<li><strong>${d.taste1}</strong> + <strong>${d.taste2}</strong>: ${d.count} items</li>`)}
-      </ol>
-    </div>
-  </div>`;
-})();
+  const container = document.createElement("div");
+  const plot = Plot.plot({
+    width,
+    height: 350,
+    marginLeft: 80,
+    marginRight: 80,
+    x: {
+      label: "Frecuencia de co-ocurrencia",
+      grid: true
+    },
+    y: {
+      label: null
+    },
+    marks: [
+      Plot.barX(cooc, {
+        x: "count",
+        y: d => `${d.taste1} + ${d.taste2}`,
+        fill: "count",
+        sort: {y: "-x"},
+        tip: true
+      }),
+      Plot.ruleX([0])
+    ],
+    color: {
+      scheme: "Blues"
+    }
+  });
+  
+  container.appendChild(plot);
+  
+  const topList = document.createElement("div");
+  topList.style.marginTop = "1rem";
+  topList.innerHTML = `
+    <h4 style="font-size: 14px; margin-bottom: 0.5rem; font-weight: 600;">Top 5 Combinaciones:</h4>
+    <ol style="font-size: 13px; line-height: 1.8; padding-left: 1.5rem;">
+      ${cooc.slice(0, 5).map(d => `<li><strong>${d.taste1}</strong> + <strong>${d.taste2}</strong>: ${d.count} items</li>`).join('')}
+    </ol>
+  `;
+  
+  container.appendChild(topList);
+  return container;
+});
 ```
 
 ```js
@@ -215,6 +231,14 @@ const avgNotesPerItem = itemsWithFlavours > 0
 <div class="hero">
   <h1>2.3 Adaptación de Sabores</h1>
   <h2>Análisis de notas de sabor extraídas de menús</h2>
+</div>
+
+<div class="card filter-panel" style="margin-bottom: 2rem; background: var(--theme-background-alt);">
+  <h3 style="font-size: 16px; margin-bottom: 1rem; font-weight: 600;">⚙️ Controles de Filtrado</h3>
+  <div class="grid grid-cols-2" style="gap: 1.5rem;">
+    <div>${selectedTaste}</div>
+    <div>${topN}</div>
+  </div>
 </div>
 
 <div class="grid grid-cols-4" style="margin-bottom: 2rem;">
@@ -241,7 +265,8 @@ const avgNotesPerItem = itemsWithFlavours > 0
 
 <div class="card">
   <h3>Frecuencia de Sabores Identificados</h3>
-  ${Plot.plot({
+  ${resize((width) => Plot.plot({
+    width,
     height: 300,
     marginLeft: 100,
     x: {
@@ -269,8 +294,8 @@ const avgNotesPerItem = itemsWithFlavours > 0
       legend: true,
       label: "Intensidad promedio"
     }
-  })}
-  <p style="font-size: 13px; color: var(--theme-foreground-muted); margin-top: 1rem;">
+  }))}
+  <p style="font-size: 13px; color: var(--theme-foreground-muted); margin-top: 1rem; line-height: 1.6;">
     Los sabores más comunes son <strong>${(flavourStats.taste_stats || []).sort((a, b) => b.count - a.count).slice(0, 3).map(d => d.taste).join(", ")}</strong>.
     La intensidad promedio indica qué tan pronunciado es cada sabor en los platillos que lo tienen.
   </p>
@@ -279,23 +304,22 @@ const avgNotesPerItem = itemsWithFlavours > 0
 ## Intensidad por Restaurante
 
 <div class="card">
-  <h3>Heatmap: Restaurante × Sabor (Top ${topN})</h3>
-  <div style="margin-bottom: 1rem;">${selectedTaste}</div>
+  <h3>Heatmap: Restaurante × Sabor (Top ${topN} restaurantes)</h3>
   ${heatmapPlot}
-  <p style="font-size: 13px; color: var(--theme-foreground-muted); margin-top: 1rem;">
+  <p style="font-size: 13px; color: var(--theme-foreground-muted); margin-top: 1rem; line-height: 1.6;">
     Este heatmap muestra la intensidad promedio de cada sabor por restaurante. Los restaurantes se ordenan por su "score de sabor" total.
-    Usa el filtro para enfocarte en un sabor específico.
+    Usa el panel de filtros arriba para enfocarte en un sabor específico o ajustar el número de restaurantes mostrados.
   </p>
 </div>
 
 ## Sabores Específicos Destacados
 
 <div class="card">
-  <h3>Top Sabores Específicos Mencionados</h3>
+  <h3>Top 20 Sabores Específicos Mencionados</h3>
   ${specificFlavoursPlot}
-  <p style="font-size: 13px; color: var(--theme-foreground-muted); margin-top: 1rem;">
+  <p style="font-size: 13px; color: var(--theme-foreground-muted); margin-top: 1rem; line-height: 1.6;">
     Sabores específicos como <strong>${(flavourStats.top_specific_flavours || []).slice(0, 5).map(d => d.specific_flavour).join(", ")}</strong>
-    son los más frecuentemente mencionados en las descripciones de menú.
+    son los más frecuentemente mencionados en las descripciones de menú. Este gráfico se actualiza dinámicamente según el sabor filtrado.
   </p>
 </div>
 
@@ -304,17 +328,17 @@ const avgNotesPerItem = itemsWithFlavours > 0
 <div class="card">
   <h3>Pares de Sabores que Aparecen Juntos</h3>
   ${cooccurrencesPlot}
-  <p style="font-size: 13px; color: var(--theme-foreground-muted); margin-top: 1rem;">
+  <p style="font-size: 13px; color: var(--theme-foreground-muted); margin-top: 1rem; line-height: 1.6;">
     Estas combinaciones muestran qué sabores tienden a presentarse juntos en un mismo platillo.
-    Útil para entender perfiles de sabor complejos y tendencias culinarias.
+    Útil para entender perfiles de sabor complejos y tendencias culinarias. El filtro muestra co-ocurrencias que incluyen el sabor seleccionado.
   </p>
 </div>
 
 ## Hallazgos Clave
 
 <div class="card">
-  <h3>Insights y Recomendaciones</h3>
-  <ul>
+  <h3>💡 Insights y Recomendaciones</h3>
+  <ul style="line-height: 1.8; font-size: 14px;">
     <li><strong>Cobertura de datos:</strong> ${((itemsWithFlavours / totalItems) * 100).toFixed(1)}% de los items de menú tienen notas de sabor extraídas.</li>
     <li><strong>Sabores dominantes:</strong> ${(flavourStats.taste_stats || []).sort((a, b) => b.count - a.count).slice(0, 3).map(d => `${d.taste} (${d.count})`).join(", ")} son los más frecuentes.</li>
     <li><strong>Intensidades:</strong> Los sabores con mayor intensidad promedio son ${(flavourStats.taste_stats || []).sort((a, b) => (b.avg_intensity || 0) - (a.avg_intensity || 0)).slice(0, 3).map(d => `${d.taste} (${d.avg_intensity?.toFixed(2) || "N/A"})`).join(", ")}.</li>
@@ -326,26 +350,26 @@ const avgNotesPerItem = itemsWithFlavours > 0
 
 ---
 
-## Fuentes y Metodología
+## 📚 Fuentes y Metodología
 
 <div style="
   background: var(--theme-background-alt);
-  border-left: 4px solid #1f77b4;
-  padding: 1.25rem;
+  border-left: 4px solid var(--theme-foreground-focus);
+  padding: 1.5rem;
   margin: 2rem 0;
-  border-radius: 6px;
+  border-radius: 8px;
   font-size: 0.9rem;
-  line-height: 1.7;
+  line-height: 1.8;
 ">
 
-### Fuentes de Datos
+### 📊 Fuentes de Datos
 
 - **Datos de menús** — Datasets extraídos de imágenes de menús públicos vía Google Maps
   - `data/menu/items.json` — ${totalItems.toLocaleString()} items de menú con descripciones y precios
   - `data/menu/flavour_stats.json` — Estadísticas agregadas de notas de sabor por restaurante, taste y co-ocurrencias
   - `data/menu/restaurants.json` — ${totalRestaurants} restaurantes analizados con perfil de sabores
 
-### Metodología de Extracción
+### 🔬 Metodología de Extracción
 
 - **Procesamiento NLP:** Análisis de descripciones de menú para identificar notas de sabor (taste: spicy, savory, sweet, umami, bitter, sour, tangy, smoky) y sabores específicos (specific_flavour: garlic, lemon, cheese, etc.)
 - **Intensidad:** Escala 0.0-1.0 inferida del contexto lingüístico (ej. "very spicy" = intensidad alta)
@@ -353,21 +377,21 @@ const avgNotesPerItem = itemsWithFlavours > 0
 - **Promedio:** ${avgNotesPerItem} notas de sabor por item (items con notas)
 - **Validación:** Muestra manual de 50 items verificó precisión >85% en identificación de taste primario
 
-### Limitaciones
+### ⚠️ Limitaciones
 
 - La extracción depende de la calidad y completitud de las descripciones de menú
 - Sabores implícitos (ej. ingredientes sin descriptores explícitos) pueden no ser capturados
 - Intensidad es estimada, no medida objetivamente
 - Cobertura varía por restaurante según disponibilidad de imágenes de menú legibles
 
-### Aplicación Estratégica
+### 🎯 Aplicación Estratégica
 
 Estos datos permiten:
 - Identificar sabores dominantes en el mercado Houston (benchmark competitivo)
 - Adaptar sabores de Pastes Kikos a preferencias locales documentadas
 - Detectar gaps (combinaciones de sabores poco explotadas) como oportunidades de diferenciación
 
-### Fecha de Actualización
+### 📅 Fecha de Actualización
 
 **Última actualización:** 29 de octubre de 2024
 
@@ -381,7 +405,7 @@ Estos datos permiten:
   flex-direction: column;
   align-items: center;
   font-family: var(--sans-serif);
-  margin: 1.5rem 1rem 2rem 1rem;
+  margin: 2rem 1rem 3rem 1rem;
   text-align: center;
 }
 .hero h1 {
@@ -401,6 +425,20 @@ Estos datos permiten:
   color: var(--theme-foreground-muted);
   letter-spacing: -0.01em;
   margin: 0;
+}
+
+.filter-panel {
+  border: 1px solid var(--theme-foreground-faintest);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.card h3 {
+  font-weight: 600;
+  margin-top: 0;
+}
+
+.card p {
+  margin-bottom: 0;
 }
 </style>
 

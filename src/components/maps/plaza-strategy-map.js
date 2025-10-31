@@ -49,7 +49,7 @@ export default async function plazaStrategyMap({
 			{ 
 				data: demographics, 
 				name: "Demografía (% Población Blanca)", 
-				property: "PERCWHITE",
+				property: "White_vs_Total",
 				colors: ["#dbeafe", "#93c5fd", "#3b82f6", "#1d4ed8", "#1e3a8a"]
 			}
 		],
@@ -57,7 +57,7 @@ export default async function plazaStrategyMap({
 		lineOverlays: [{
 			data: trafficRoads,
 			name: "Carreteras Principales",
-			property: "FUNCTIONAL",
+			property: "F_SYSTEM",
 			styleMap: {
 				"2": "#ef4444", // Interstate/Principal
 				"3": "#f59e0b"  // Other Principal Arterial

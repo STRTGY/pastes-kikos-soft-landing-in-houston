@@ -1,0 +1,387 @@
+/* Full-width dashboard layout */
+body {
+  max-width: 100% !important;
+}
+
+#observablehq-main {
+  max-width: 100% !important;
+  padding: 0 1rem !important;
+}
+
+.observablehq {
+  max-width: 100% !important;
+}
+
+/* Hero sections - full width */
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: var(--sans-serif);
+  margin: 1.5rem 0 2.5rem 0;
+  text-wrap: balance;
+  text-align: center;
+  max-width: 100%;
+}
+
+.hero h1 {
+  max-width: none;
+  font-size: 2.5vw;
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  background: linear-gradient(30deg, var(--theme-foreground-focus), currentColor 80%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.5em;
+  transition: font-size 0.2s, color 0.2s;
+}
+
+.hero h2 {
+  margin: 0 0 0.3em 0;
+  max-width: 32em;
+  font-size: 1.35vw;
+  font-style: initial;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--theme-foreground-muted);
+  letter-spacing: -0.01em;
+  background: linear-gradient(90deg, var(--theme-foreground-muted), var(--theme-foreground) 80%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  transition: font-size 0.2s, color 0.2s;
+}
+
+.hero h3 {
+  margin: 0.2em 0 0.5em 0;
+  max-width: 30em;
+  font-size: 1.1vw;
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--theme-foreground-subtle, #64748b);
+  letter-spacing: 0.01em;
+  background: linear-gradient(90deg, var(--theme-foreground-subtle, #64748b), var(--theme-foreground-muted) 80%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-style: italic;
+  transition: font-size 0.2s, color 0.2s;
+}
+
+.text {
+  font-family: var(--sans-serif);
+  margin: 1rem 0 1.5rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 100%;
+}
+
+/* Cards - full width optimization */
+.card {
+  max-width: 100% !important;
+  width: 100% !important;
+  margin-bottom: 1.5rem;
+  padding: 1.5rem;
+  box-sizing: border-box;
+  background: var(--theme-background);
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+/* Grid layouts - optimized spacing */
+.grid {
+  width: 100%;
+  max-width: 100%;
+  gap: 1.5rem;
+  margin: 2rem 0;
+  display: grid;
+}
+
+.grid-cols-2 {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 500px), 1fr));
+}
+
+.grid-cols-3 {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 350px), 1fr));
+}
+
+.grid-cols-4 {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+}
+
+.grid-cols-5 {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+}
+
+/* Responsive adjustments */
+@media (max-width: 1400px) {
+  .grid-cols-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .grid-cols-5 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .grid-cols-2,
+  .grid-cols-3,
+  .grid-cols-4,
+  .grid-cols-5 {
+    grid-template-columns: 1fr;
+  }
+  
+  #observablehq-main {
+    padding: 0 0.5rem !important;
+  }
+}
+
+.text p {
+  margin: 0.6em 0;
+  max-width: none;
+  line-height: 1.6;
+  color: var(--theme-foreground);
+}
+
+.text p.lead {
+  max-width: none;
+  font-weight: 600;
+  color: var(--theme-foreground-muted);
+  letter-spacing: -0.005em;
+}
+
+.text ul, .text ol {
+  margin: 0.2em 0 0.8em .2em;
+  max-width: none;
+}
+
+.text li {
+  margin: 0.25em 0;
+  max-width: none;
+}
+
+.text table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0;
+}
+
+.text table th,
+.text table td {
+  padding: 0.75em;
+  text-align: left;
+  border-bottom: 1px solid var(--theme-foreground-faintest);
+}
+
+.text table th {
+  font-weight: 600;
+  background: var(--theme-background-alt);
+}
+
+@media (min-width: 640px) {
+  .hero h1 {
+    font-size: 50px;
+  }
+  .hero h2 {
+    font-size: 28px;
+  }
+  .hero h3 {
+    font-size: 20px;
+  }
+}
+
+.tooltip {
+  cursor: help;
+  font-size: 14px;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.tooltip:hover {
+  opacity: 1;
+}
+
+.button {
+  padding: 0.5rem 1rem;
+  background: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.2s;
+}
+
+.button:hover {
+  background: #2563eb;
+}
+
+.note {
+  font-size: 13px;
+  color: var(--theme-foreground-muted);
+  padding: 0.75rem 1rem;
+  background: var(--theme-background-alt);
+  border-radius: 6px;
+  margin: 0.5rem 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Dashboard KPI cards - optimized */
+.big {
+  font-size: clamp(2rem, 4vw, 3rem) !important;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+/* Tables - full width */
+table {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+/* Ensure all visualizations are responsive */
+svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Spacing optimization for dashboard - CRITICAL for no overlapping */
+.card + .card {
+  margin-top: 2rem;
+}
+
+.grid + .grid {
+  margin-top: 2.5rem;
+}
+
+.card + .grid {
+  margin-top: 2rem;
+}
+
+.grid + .card {
+  margin-top: 2rem;
+}
+
+/* Ensure sections have proper spacing */
+.hero + .grid,
+.hero + .card,
+.hero + div {
+  margin-top: 2rem;
+}
+
+/* Clear floats and prevent overlaps */
+.card::after,
+.grid::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+/* Ensure proper stacking context */
+.card,
+.grid {
+  position: relative;
+  z-index: 1;
+}
+
+/* Observable Plot responsive sizing */
+.observablehq-plot {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+/* Prevent margin collapse */
+#observablehq-main > * {
+  margin-bottom: 1.5rem;
+}
+
+#observablehq-main > .card,
+#observablehq-main > .grid {
+  margin-bottom: 2rem;
+}
+
+/* Specific spacing for dynamic HTML blocks */
+#observablehq-main > div[class*="observablehq"] {
+  margin-bottom: 1.5rem;
+}
+
+/* Ensure note elements don't overlap */
+.note {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  clear: both;
+}
+
+/* Grid items should not overlap */
+.grid > * {
+  min-height: 100px;
+  margin: 0;
+}
+
+/* Ensure proper spacing for nested structures */
+.card .grid {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.grid .card {
+  margin-bottom: 0;
+}
+
+/* Fix for Observable's dynamic content */
+.observablehq > div,
+.observablehq > figure {
+  margin-bottom: 1.5rem;
+}
+
+/* Ensure HTML blocks from JS have proper spacing */
+#observablehq-main > div:not(.grid):not(.card):not(.hero):not(.text) {
+  margin: 1.5rem 0;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Specific fix for inline styles that might cause overlap */
+#observablehq-main > div[style*="width: 100%"] {
+  display: block;
+  margin-bottom: 2rem;
+}
+
+/* Prevent negative margins */
+* {
+  min-height: 0;
+  min-width: 0;
+}
+
+.card * {
+  box-sizing: border-box;
+}
+
+.grid * {
+  box-sizing: border-box;
+}
+
+/* Ensure separators have space */
+hr {
+  margin: 2rem 0;
+  border: none;
+  border-top: 1px solid var(--theme-foreground-faintest);
+}
+
+/* Fix for H2/H3 spacing */
+h2, h3 {
+  margin-top: 2.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.hero h2,
+.hero h3 {
+  margin-top: 0;
+}
+
