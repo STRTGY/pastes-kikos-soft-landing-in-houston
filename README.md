@@ -81,7 +81,22 @@ Los archivos generados estarán en el directorio `dist/`.
 
 ### Despliegue
 
-Despliega el proyecto a Observable:
+#### GitHub Pages (Automático)
+
+El proyecto se despliega automáticamente a GitHub Pages cuando se hace push a la rama `main`. El workflow de GitHub Actions:
+
+1. Construye el proyecto con `npm run build`
+2. Sube los archivos de `dist/` a GitHub Pages
+3. El sitio estará disponible en: `https://strtgy.github.io/pastes-kikos-soft-landing-in-houston/`
+
+**Configuración necesaria en GitHub:**
+- Ve a Settings → Pages
+- Source: GitHub Actions
+- No necesitas configurar branch ni folder
+
+#### Observable Cloud (Manual)
+
+Para desplegar a Observable Cloud:
 
 ```bash
 npm run deploy
