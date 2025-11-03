@@ -21,17 +21,17 @@ keywords: soft landing, Houston, Pastes Kikos, expansión, mercado, análisis es
   <div class="card">
     <h2>📊 Esquema de Datos</h2>
     <p>Estructura, fuentes y licencias de todos los datasets utilizados.</p>
-    <p><a href="../../../pasteskikos_softlanding_houston/docs/README_DATOS.md" target="_blank">Ver README_DATOS.md</a></p>
+    <p><a href="../../docs/README_DATOS" target="_blank">Ver README_DATOS.md</a></p>
   </div>
   <div class="card">
     <h2>🔬 Metodología</h2>
     <p>Pipeline técnico completo: desde recolección hasta visualización.</p>
-    <p><a href="../../../pasteskikos_softlanding_houston/docs/METODOLOGIA.md" target="_blank">Ver METODOLOGIA.md</a></p>
+    <p><a href="../../docs/METODOLOGIA" target="_blank">Ver METODOLOGIA.md</a></p>
   </div>
   <div class="card">
     <h2>📝 Changelog</h2>
     <p>Historial de versiones y evolución del proyecto.</p>
-    <p><a href="../../../pasteskikos_softlanding_houston/docs/CHANGELOG.md" target="_blank">Ver CHANGELOG.md</a></p>
+    <p><a href="../../docs/CHANGELOG" target="_blank">Ver CHANGELOG.md</a></p>
   </div>
 </div>
 
